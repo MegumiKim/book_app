@@ -15,6 +15,7 @@ router.post("/", async (req, res) => {
       title: req.body.title,
       author: req.body.author,
       yearPublished: req.body.yearPublished,
+      reviews: [],
     };
 
     const book = await Book.create(newBook);
@@ -39,6 +40,21 @@ router.get("/", async (req, res) => {
     res.status(500).send({ message: err.message });
   }
 });
+//Route: Fetch a single book
+router.get("/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const result = await Book.findById(id);
+
+    if (!result) {
+      return res.status(404).json({ message: "Book not found" });
+    }
+    return res.status(200).json(result);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send({ message: err.message });
+  }
+});
 //Route: Update a book
 router.put("/:id", async (req, res) => {
   try {
@@ -56,6 +72,35 @@ router.put("/:id", async (req, res) => {
       return res.status(404).json({ message: "Book not found" });
     }
     return res.status(200).json({ message: "Book updated" });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send({ message: err.message });
+  }
+});
+
+// Add a review
+router.put("/review/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { name, text, rating } = req.body;
+
+    const result = await Book.findByIdAndUpdate(
+      id,
+      {
+        $push: {
+          reviews: {
+            name,
+            text,
+            rating,
+          },
+        },
+      },
+      { new: true }
+    );
+    if (!result) {
+      return res.status(404).json({ message: "Book not found" });
+    }
+    return res.status(200).json({ message: "Review Posted" });
   } catch (err) {
     console.log(err);
     res.status(500).send({ message: err.message });

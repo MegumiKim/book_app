@@ -10,10 +10,31 @@ const bookSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    genre: {
+      type: String,
+      enum: [
+        "novel",
+        "non-fiction",
+        "Si-Fi",
+        "mystery",
+        "romance",
+        "kids",
+        "history",
+        "fantasy",
+        "biography",
+      ],
+    },
     yearPublished: {
       type: Number,
       required: true,
     },
+    reviews: [
+      {
+        name: String,
+        text: String,
+        rating: Number,
+      },
+    ],
   },
   {
     timestamps: true,

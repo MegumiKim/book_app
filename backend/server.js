@@ -2,6 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import { config } from "dotenv";
 import booksRoute from "./routes/booksRoute.js";
+import usersRoute from "./routes/users.Route.js";
 import cors from "cors";
 
 config();
@@ -21,8 +22,9 @@ app.use(
   // })
 );
 
-//Route for books
+//Routes
 app.use("/books", booksRoute);
+app.use("/users", usersRoute);
 
 mongoose
   .connect(process.env.MONGO_DB)
