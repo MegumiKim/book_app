@@ -2,10 +2,10 @@ import { Link } from "react-router-dom";
 
 const BookCard = (props) => {
   const data = props.data;
-  console.log(props.id);
+  // console.log(data);
 
   return (
-    <div className="card card-side bg-base-100 shadow-xl w-96">
+    <div className="card card-side w-full shadow-xl text-left">
       <figure className="w-36">
         <img
           className=""
@@ -19,12 +19,12 @@ const BookCard = (props) => {
       </figure>
       <div className="card-body flex-1">
         <h2 className="card-title">{data.title}</h2>
-        {data.authors?.map((author) => (
+        {data.authors?.map((author: string) => (
           <ul>
             <li>{author}</li>
           </ul>
         ))}
-        {data.categories?.map((category) => (
+        {data.categories?.map((category: string) => (
           <ul>
             <li>{category}</li>
           </ul>

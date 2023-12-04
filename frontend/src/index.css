@@ -1,3 +1,18 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+#background {
+  background-image: url("/camp-7103189_1920.png");
+  z-index: -1;
+  position: fixed;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  background-repeat: no-repeat;
+  background-position-x: center;
+  background-position-y: top;
+  margin: auto;
+  /* opacity: 50%; */
+}

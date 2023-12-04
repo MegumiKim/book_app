@@ -6,16 +6,20 @@ const router = express.Router();
 //Route: create a new book
 router.post("/", async (req, res) => {
   try {
-    if (!req.body.title || !req.body.author || !req.body.yearPublished) {
-      return res.status(400).send({
-        message: "Title, author and published year have to be filled",
-      });
-    }
+    console.log(req.body);
+    // if (!req.body.title || !req.body.author || !req.body.yearPublished) {
+    //   return res.status(400).send({
+    //     message: "Title, author and published year have to be filled",
+    //   });
+    // }
+
     const newBook = {
       title: req.body.title,
       author: req.body.author,
-      yearPublished: req.body.yearPublished,
-      reviews: [],
+      reviews: req.body.reviews,
+      id: req.body.id,
+      image: req.body.image,
+      status: req.body.status,
     };
 
     const book = await Book.create(newBook);
@@ -44,7 +48,10 @@ router.get("/", async (req, res) => {
 router.get("/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    const result = await Book.findById(id);
+    const query = { id: id };
+
+    const result = await Book.findOne(query);
+    // const result = await Book.findById(id);
 
     if (!result) {
       return res.status(404).json({ message: "Book not found" });
@@ -82,7 +89,7 @@ router.put("/:id", async (req, res) => {
 router.put("/review/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    const { name, text, rating } = req.body;
+    const { name, subject, review, rating } = req.body;
 
     const result = await Book.findByIdAndUpdate(
       id,
@@ -90,7 +97,8 @@ router.put("/review/:id", async (req, res) => {
         $push: {
           reviews: {
             name,
-            text,
+            subject,
+            review,
             rating,
           },
         },
@@ -109,6 +117,7 @@ router.put("/review/:id", async (req, res) => {
 //Route: Delete by id
 router.delete("/:id", async (req, res) => {
   try {
+    // const { id } = req.body._id;
     const { id } = req.params;
 
     const result = await Book.findByIdAndDelete(id);

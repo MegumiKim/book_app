@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import ReviewForm from "../components/ReviewModal";
+import ReviewForm from "./ReviewForm";
 
 const URL = import.meta.env.VITE_REACT_APP_API_URL;
 

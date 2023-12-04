@@ -1,78 +1,107 @@
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import ReviewForm from "../components/ReviewModal";
+import { useParams, useNavigate, Link } from "react-router-dom";
+import { useFetch } from "../hooks/useFetch.tsx";
+import ReviewForm from "./ReviewForm.tsx";
+import MyReview from "./MyReview.tsx";
+import { useState } from "react";
+import AddToRead from "./AddToRead.tsx";
 
 const URL = import.meta.env.VITE_REACT_APP_GOOGLE_BOOK_API;
 
 const SingleBook = () => {
-  const [book, setBook] = useState({});
-  let { id } = useParams();
+  const { id } = useParams();
 
-  async function getBook() {
-    try {
-      const data = await fetch(`${URL}volumes/${id}`);
-      const json = await data.json();
-      console.log(json.volumeInfo);
-      console.log(json.volumeInfo.imageLinks.small);
-      if (json) {
-        setBook(json.volumeInfo);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  }
+  const { data, isLoading, error } = useFetch(`${URL}volumes/${id}`);
+  const [userFeedback, setUserFeedback] = useState("");
+  // const [showModal, setShowModal] = useState(false);
+  const book = data?.volumeInfo;
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    getBook();
-  }, []);
-
-  function onSubmit() {
-    console.log("submit");
-  }
+  const updateUserFeedback = (feedback) => {
+    setUserFeedback(feedback);
+  };
 
   return (
-    <main>
+    <main className="px-4 max-w-6xl mx-auto">
+      <button
+        className="underline mb-5 hover:bg-slate-500 hover:text-slate-100 px-2 rounded-lg"
+        onClick={() => navigate(-1)}
+      >
+        Back
+      </button>
+      {isLoading && <p>Loading...</p>}
+      {error && <p>Failed to load page...</p>}
       {book && (
-        <div>
-          <h1 className="text-5xl">{book.title}</h1>
-          <p>
-            <ul>
-              {book.categories?.map((category) => (
-                <li>{category}</li>
+        <div className="container mx-auto px-4 max-w-screen-xl" id="container">
+          <div className=" sm:grid grid-flow-col gap-3 grid-cols-3">
+            <div className="left col-span-1">
+              <img
+                className="m-auto"
+                alt=""
+                src={
+                  book.imageLinks
+                    ? book.imageLinks.thumbnail
+                    : "../../public/night.jpg"
+                }
+              />
+            </div>
+            <div className="right col-span-2">
+              <div className="sm:flex justify-between">
+                <div>
+                  <h1 className="text-5xl">{book.title}</h1>
+                  {book.subtitle && (
+                    <h2 className="text-2xl">{` ${book.subtitle}`}</h2>
+                  )}
+                  <ul className="flex gap-5">
+                    {book.authors?.map((author: string) => (
+                      <li key={author}>{author}</li>
+                    ))}
+                  </ul>
+                  <div className="flex gap-4">
+                    <p>{book.publishedDate ? book.publishedDate : ""}</p>
+                    {book.publisher && <p>{book.publisher}</p>}
+                  </div>
+                  {book.averageRating && <p>Rating: {book.averageRating}</p>}
+                  <div className="my-5 flex gap-4">
+                    <button
+                      className="btn btn-primary"
+                      onClick={() => {
+                        document.getElementById("my_modal_2").showModal();
+                      }}
+                    >
+                      Write a review
+                    </button>
+                    <AddToRead
+                      data={data}
+                      id={id}
+                      updateUserFeedback={updateUserFeedback}
+                    />
+                  </div>
+                  <p className="text-green-400">{userFeedback}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="sm:grid grid-flow-col gap-3 grid-cols-3">
+            <ul className="col-span-1">
+              {book.categories?.map((category: string) => (
+                <li key={category}>{category}</li>
               ))}
             </ul>
-          </p>
+            <div
+              className="my-8 col-span-2"
+              dangerouslySetInnerHTML={{ __html: book.description }}
+            ></div>
+          </div>
 
-          <ul>
-            {book.authors?.map((author) => (
-              <li>{author}</li>
-            ))}
-          </ul>
+          <MyReview id={id} />
 
-          <p>Published: {book.publishedDate ? book.publishedDate : ""}</p>
-          <p>Rating: {book.averageRating}</p>
-          <p>{book.description}</p>
-
-          <img alt="" src={book.imageLinks.thumbnail} />
+          <dialog id="my_modal_2" className="modal">
+            <div className="modal-box">
+              <ReviewForm data={data} />
+            </div>
+          </dialog>
         </div>
       )}
-      {/* Open the modal using document.getElementById('ID').showModal() method */}
-      <button
-        className="btn"
-        onClick={() => document.getElementById("my_modal_2").showModal()}
-      >
-        White a review
-      </button>
-      <dialog id="my_modal_2" className="modal">
-        <div className="modal-box">
-          <h3 className="font-bold text-lg">Write review</h3>
-          <p className="py-4">Press ESC key or click outside to close</p>
-          <ReviewForm onSubmit={onSubmit} />
-        </div>
-        <form method="dialog" className="modal-backdrop">
-          <button>close</button>
-        </form>
-      </dialog>
     </main>
   );
 };
