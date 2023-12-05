@@ -1,6 +1,12 @@
-const Tabs = ({ tabs, onSelectTab, selectedTab }) => {
+interface TabsProps {
+  tabs: { value: string; label: string; count: number }[];
+  selectedTab: string;
+  onSelectTab: (value: string) => void;
+}
+
+const Tabs: React.FC<TabsProps> = ({ tabs, onSelectTab, selectedTab }) => {
   return (
-    <div role="tablist" className="tabs tabs-bordered">
+    <div role="tablist" className="tabs tabs-bordered mb-10 ">
       {tabs.map((tab) => (
         <button
           key={tab.value}

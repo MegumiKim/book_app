@@ -1,7 +1,7 @@
 import MyPageCard from "./MyPageCard";
 import { useFetch } from "../../hooks/useFetch";
 import { useEffect, useState } from "react";
-import { MyBookType } from "../../types";
+import { MyBookType, BookDataType } from "../../types";
 import Tabs from "./Tabs";
 
 const MyPage = () => {
@@ -11,13 +11,29 @@ const MyPage = () => {
   const myBooks = data?.data || [];
   const [booksToDisplay, setBooksToDisplay] = useState([]);
   const [selectedTab, setSelectedTab] = useState("all");
+  const [userFeedback, setUserFeedback] = useState("");
 
   useEffect(() => {
     setBooksToDisplay(myBooks);
+    setUserFeedback("");
   }, [data]);
 
-  const booksToRead = myBooks.filter((book) => book.status === "to-read");
-  const booksHaveRead = myBooks.filter((book) => book.status === "read");
+  const booksToRead = myBooks.filter(
+    (book: BookDataType) => book.status === "to-read"
+  );
+  const booksHaveRead = myBooks.filter(
+    (book: BookDataType) => book.status === "read"
+  );
+
+  async function updateBookList(title) {
+    const res = await fetch(apiURL);
+    const json = await res.json();
+
+    if (res.ok) {
+      setUserFeedback(`Removed "${title}" from bookshelf`);
+      setBooksToDisplay(json?.data || []);
+    }
+  }
 
   function onSelectTab(value) {
     setSelectedTab(value);
@@ -45,41 +61,26 @@ const MyPage = () => {
   }
 
   return (
-    <main className="p-4 max-w-6xl m-auto">
-      <h1 className="text-2xl my-5">My Book Shelf</h1>
-
-      {/* <div role="tablist" className="tabs tabs-bordered">
-        {["all", "to-read", "have-read"].map((tab) => (
-          <button
-            key={tab}
-            value={tab}
-            className={`tab ${selectedTab === tab && "tab-active"}`}
-            onClick={(e) =>
-              onSelectTab(
-                e,
-                tab === "all"
-                  ? myBooks
-                  : tab === "to-read"
-                  ? booksToRead
-                  : booksHaveRead
-              )
-            }
-          >
-            {tab.charAt(0).toUpperCase() + tab.slice(1)}{" "}
-            {booksToDisplay.length && `(${booksToDisplay.length})`}
-          </button>
-        ))}
-      </div> */}
-      <Tabs onSelectTab={onSelectTab} selectedTab={selectedTab} tabs={tabs} />
-
-      <div className="grid gap-10 mx-auto my-5 sm:grid-cols-2 " id="toRead">
-        {booksToDisplay.length ? (
-          booksToDisplay.map((book) => (
-            <MyPageCard key={book._id} data={book} />
-          ))
-        ) : (
-          <p>No books available</p>
-        )}
+    <main id="background3">
+      <div className="max-w-6xl self-center w-full m-auto mt-28">
+        <div className="sm:flex gap-5 align-middle my-5">
+          <h1 className="text-2xl ">My Book Shelf</h1>
+          <p className="text-red-400">{userFeedback}</p>
+        </div>
+        <Tabs onSelectTab={onSelectTab} selectedTab={selectedTab} tabs={tabs} />
+        <div className="grid gap-10 mx-auto my-5 sm:grid-cols-2 " id="toRead">
+          {booksToDisplay.length ? (
+            booksToDisplay.map((book: BookDataType) => (
+              <MyPageCard
+                key={book._id}
+                data={book}
+                onRemove={(book) => updateBookList(book)}
+              />
+            ))
+          ) : (
+            <p>No books available</p>
+          )}
+        </div>
       </div>
     </main>
   );

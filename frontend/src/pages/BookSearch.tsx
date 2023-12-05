@@ -8,19 +8,13 @@ type Inputs = {
 
 const BookSearch = () => {
   const [searchResults, setSearchResults] = useState([]);
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm<Inputs>();
+  const { register, handleSubmit } = useForm<Inputs>();
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     searchBook(data);
-    console.log(searchResults);
   };
 
-  async function searchBook(data) {
+  async function searchBook(data: { title: string }) {
     const URL = `https://www.googleapis.com/books/v1/volumes?q=${data.title}`;
     try {
       const result = await fetch(URL);
@@ -28,6 +22,8 @@ const BookSearch = () => {
 
       if (json) {
         setSearchResults(json.items);
+      } else {
+        throw new Error();
       }
     } catch (error) {
       console.log(error);
@@ -43,15 +39,14 @@ const BookSearch = () => {
           className="input input-bordered input-secondary w-full bg-transparent"
           {...register("title", {
             required: "Type your search keyword",
-            minLength: { value: 3, message: "Minimum 3 charactors" },
+            minLength: { value: 3, message: "Minimum 3 characters" },
           })}
         />
-        {/* <input type="submit" className="btn btn-primary" /> */}
       </form>
 
       <div className="mx-auto ">
         {searchResults?.length ? (
-          <div className="grid gap-10 mx-auto my-5 grid-cols-2 max-w-6xl">
+          <div className="grid gap-5 mx-auto my-5 sm:grid-cols-2 lg:grid-cols-3 max-w-6xl">
             {searchResults.map((item) => (
               <BookCard key={item.id} data={item.volumeInfo} id={item.id} />
             ))}

@@ -1,6 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import NavBar from "./components/NavBar";
-import Book from "./pages/Book";
 import MyPage from "./pages/MyPage/MyPage";
 import SingleBook from "./pages/SingleBook";
 import ReviewForm from "./pages/ReviewForm";
@@ -16,7 +15,6 @@ const App = () => {
         <NavBar />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/book/:id" element={<Book />} />
           <Route path="/user" element={<MyPage />} />
           <Route path="/details/:id" element={<SingleBook />} />
           <Route path="/review-form/:id" element={<ReviewForm />} />

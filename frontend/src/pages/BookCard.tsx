@@ -1,42 +1,39 @@
 import { Link } from "react-router-dom";
+import { GoogleBookDataType } from "../types";
 
-const BookCard = (props) => {
-  const data = props.data;
-  // console.log(data);
-
+interface BookCardProps {
+  data: GoogleBookDataType;
+  id: string;
+}
+const BookCard: React.FC<BookCardProps> = ({ data, id }) => {
   return (
-    <div className="card card-side w-full shadow-xl text-left">
-      <figure className="w-36">
+    <Link
+      to={`details/${id}`}
+      className="card card-side w-full shadow-md px-4 text-left bg-opacity-20 bg-slate-700 hover:bg-opacity-60"
+    >
+      <figure className="">
         <img
           className=""
           src={
             data.imageLinks?.smallThumbnail
               ? data.imageLinks?.smallThumbnail
-              : "../../public/night.jpg"
+              : "/public/night.jpg"
           }
           alt={data.title}
         />
       </figure>
-      <div className="card-body flex-1">
-        <h2 className="card-title">{data.title}</h2>
-        {data.authors?.map((author: string) => (
-          <ul>
-            <li>{author}</li>
-          </ul>
-        ))}
-        {data.categories?.map((category: string) => (
-          <ul>
-            <li>{category}</li>
-          </ul>
-        ))}
-        {/* <p>If a dog chews shoes whose shoes does he choose?</p> */}
-        <div className="card-actions justify-end">
-          <Link to={`details/${props.id}`} className="btn btn-primary">
-            Read
-          </Link>
+      <div className="card-body flex-1 ">
+        <h2 className="card-title line-clamp-3">{data.title}</h2>
+        <div className="divide-y divide-solid divide-slate-500 flex flex-col gap-5">
+          {data.authors?.length && <p>{data.authors[0]}</p>}
+          {data.categories?.map((category: string, i: number) => (
+            <ul className="pt-2">
+              <li key={i}>{category}</li>
+            </ul>
+          ))}
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 

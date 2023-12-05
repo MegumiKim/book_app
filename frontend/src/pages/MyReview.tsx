@@ -1,9 +1,13 @@
+import RatingStars from "../components/RatingStars";
 import { useFetch } from "../hooks/useFetch";
 
-const MyReview = (props: { id: string }) => {
-  const id = props.id;
+const MyReview = ({ id }) => {
   const URL = `http://localhost:5000/books/${id}`;
   const { data } = useFetch(URL);
+
+  if (!data) {
+    return <></>;
+  }
 
   return (
     <>
@@ -13,7 +17,7 @@ const MyReview = (props: { id: string }) => {
           {data.reviews.map((rev, i) => (
             <div key={i}>
               <div>Name: {rev.name}</div>
-              <div>Rating: {rev.rating}</div>
+              <RatingStars rating={rev.rating} />
               <div>Subject: {rev.subject}</div>
               <div>{rev.review}</div>
             </div>

@@ -18,3 +18,26 @@ export interface ReviewType {
   rating: number;
   review: string;
 }
+
+export interface BookDataType {
+  author: [];
+  createdAt: string;
+  id: string;
+  image: string;
+  reviews: [];
+  status: string;
+  title: string;
+  updatedAt: string;
+  __v: number;
+  _id: string;
+}
+
+export type GoogleBookDataType = {
+  title: string;
+  authors: string[];
+  description: string;
+  imageLinks: { smallThumbnail: string };
+  categories?: string[];
+  averageRatings?: number;
+  subtitle?: string;
+};
