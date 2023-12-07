@@ -1,10 +1,10 @@
 import { useParams, useNavigate, Link } from "react-router-dom";
-import { useFetch } from "../hooks/useFetch.tsx";
+import { useFetch } from "../../hooks/useFetch.tsx";
 import ReviewForm from "./ReviewForm.tsx";
 import MyReview from "./MyReview.tsx";
 import { useState } from "react";
 import AddToRead from "./AddToRead.tsx";
-import RatingStars from "../components/RatingStars.tsx";
+import RatingStars from "../../components/RatingStars.tsx";
 
 const URL = import.meta.env.VITE_REACT_APP_GOOGLE_BOOK_API;
 
@@ -13,6 +13,8 @@ const SingleBook = () => {
 
   const { data, isLoading, error } = useFetch(`${URL}volumes/${id}`);
   const [userFeedback, setUserFeedback] = useState("");
+  const [reviewUpdated, setReviewUpdated] = useState(false);
+
   // const [showModal, setShowModal] = useState(false);
   const book = data?.volumeInfo;
   const navigate = useNavigate();
@@ -21,9 +23,14 @@ const SingleBook = () => {
     setUserFeedback(feedback);
   };
 
+  const handleReviewPosted = () => {
+    // Update the state to trigger a re-render
+    setReviewUpdated((prev) => !prev);
+  };
   return (
-    <main id="background2">
-      <div className="px-4 max-w-6xl mx-auto mt-24 bg-slate-700 bg-opacity-80 text-slate-100">
+    <main className="">
+      <div id="background2"></div>
+      <div className="max-w-6xl p-4 mx-auto bg-slate-700 bg-opacity-80 text-slate-100 rounded-md">
         <button
           className="underline mb-5 hover:bg-slate-500 hover:text-slate-100 px-2 rounded-lg"
           onClick={() => navigate(-1)}
@@ -43,9 +50,7 @@ const SingleBook = () => {
                   className="m-auto"
                   alt=""
                   src={
-                    book.imageLinks
-                      ? book.imageLinks.thumbnail
-                      : "../../public/night.jpg"
+                    book.imageLinks ? book.imageLinks.thumbnail : "/night.jpg"
                   }
                 />
               </div>
@@ -88,23 +93,24 @@ const SingleBook = () => {
                 </div>
               </div>
             </div>
-            <div className="sm:grid grid-flow-col gap-3 grid-cols-3">
-              <ul className="col-span-1">
+            <div className="sm:grid grid-flow-col gap-3 grid-cols-3 mb-10">
+              <ul className="col-span-1 mx-auto my-5">
                 {book.categories?.map((category: string) => (
                   <li key={category}>{category}</li>
                 ))}
               </ul>
-              <div
-                className="my-8 col-span-2 leading-7  p-7 rounded-md"
-                dangerouslySetInnerHTML={{ __html: book.description }}
-              ></div>
+              <div className="col-span-2 ">
+                <div
+                  className="leading-7"
+                  dangerouslySetInnerHTML={{ __html: book.description }}
+                ></div>
+                <MyReview id={id} reviewUpdated={reviewUpdated} />
+              </div>
             </div>
-
-            <MyReview id={id} />
 
             <dialog id="my_modal_2" className="modal">
               <div className="modal-box">
-                <ReviewForm data={data} />
+                <ReviewForm data={data} onReviewPosted={handleReviewPosted} />
               </div>
             </dialog>
           </div>

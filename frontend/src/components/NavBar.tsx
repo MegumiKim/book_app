@@ -2,16 +2,18 @@ import { Link } from "react-router-dom";
 
 const NavBar = () => {
   return (
-    <nav className="navbar bg-transparent max-w-6xl m-auto">
+    <nav className="navbar bg-transparent max-w-6xl m-auto text-slate-200">
       <div className="flex-1">
-        <Link to="/" className="btn btn-ghost text-xl">
-          Book Journal
+        <Link to="/" className="btn btn-ghost text-xl sm:text-3xl">
+          BookGarden
         </Link>
       </div>
       <div className="flex-none">
-        <ul className="menu menu-horizontal px-1">
+        <ul className="menu menu-horizontal px-1 sm:text-xl">
           <li>
-            <Link to="/">Link</Link>
+            <Link to="/" className="hidden sm:block">
+              Home
+            </Link>
           </li>
           <li>
             <Link to="/user">My Bookshelf</Link>

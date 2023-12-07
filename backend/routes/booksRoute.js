@@ -6,12 +6,15 @@ const router = express.Router();
 //Route: create a new book
 router.post("/", async (req, res) => {
   try {
-    console.log(req.body);
-    // if (!req.body.title || !req.body.author || !req.body.yearPublished) {
-    //   return res.status(400).send({
-    //     message: "Title, author and published year have to be filled",
-    //   });
-    // }
+    const { id } = req.body;
+    // Check if the book already exists based on title and author
+    const existingBook = await Book.findOne({ id });
+
+    if (existingBook) {
+      return res.status(400).send({
+        message: "Book with the same title and author already exists",
+      });
+    }
 
     const newBook = {
       title: req.body.title,
@@ -65,19 +68,23 @@ router.get("/:id", async (req, res) => {
 //Route: Update a book
 router.put("/:id", async (req, res) => {
   try {
-    if (!req.body.title || !req.body.author || !req.body.yearPublished) {
-      return res.status(400).send({
-        message: "Title, author and published year have to be filled",
-      });
-    }
-
     const { id } = req.params;
 
-    const result = await Book.findByIdAndUpdate(id, req.body);
+    const { title, author, review, image, status } = req.body;
 
-    if (!result) {
-      return res.status(404).json({ message: "Book not found" });
-    }
+    const result = await Book.findOneAndUpdate(
+      { id: id },
+      {
+        $set: {
+          title,
+          author,
+          review,
+          image,
+          status,
+        },
+      },
+      { new: true, upsert: true }
+    );
     return res.status(200).json({ message: "Book updated" });
   } catch (err) {
     console.log(err);
@@ -86,34 +93,31 @@ router.put("/:id", async (req, res) => {
 });
 
 // Add a review
-router.put("/review/:id", async (req, res) => {
-  try {
-    const { id } = req.params;
-    const { name, subject, review, rating } = req.body;
+// router.put("/review/:id", async (req, res) => {
+//   try {
+//     const { id } = req.params;
+//     const { name, subject, review, rating } = req.body;
 
-    const result = await Book.findByIdAndUpdate(
-      id,
-      {
-        $push: {
-          reviews: {
-            name,
-            subject,
-            review,
-            rating,
-          },
-        },
-      },
-      { new: true }
-    );
-    if (!result) {
-      return res.status(404).json({ message: "Book not found" });
-    }
-    return res.status(200).json({ message: "Review Posted" });
-  } catch (err) {
-    console.log(err);
-    res.status(500).send({ message: err.message });
-  }
-});
+//     const result = await Book.findByIdAndUpdate(
+//       {
+//         $push: {
+//           reviews: {
+//             name,
+//             subject,
+//             review,
+//             rating,
+//           },
+//         },
+//       },
+//       { new: true, upsert: true }
+//     );
+
+//     return res.status(200).json({ message: "Review Posted" });
+//   } catch (err) {
+//     console.log(err);
+//     res.status(500).send({ message: err.message });
+//   }
+// });
 //Route: Delete by id
 router.delete("/:id", async (req, res) => {
   try {
@@ -126,6 +130,18 @@ router.delete("/:id", async (req, res) => {
     }
 
     return res.status(200).json({ message: "Book Deleted" });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send({ message: err.message });
+  }
+});
+
+// Route: Clear all books
+router.delete("/", async (req, res) => {
+  try {
+    const result = await Book.deleteMany({});
+
+    return res.status(200).json({ message: "All Books Cleared" });
   } catch (err) {
     console.log(err);
     res.status(500).send({ message: err.message });

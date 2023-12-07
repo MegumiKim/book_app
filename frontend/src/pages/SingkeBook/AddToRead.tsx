@@ -1,8 +1,9 @@
-import { MyBookType } from "../types";
+import { MyBookType } from "../../types";
 
 const AddToRead = (props) => {
   const book = props.data?.volumeInfo;
   const id = props.id;
+  console.log(id);
 
   const bookBody: MyBookType = {
     id,
@@ -37,7 +38,7 @@ const AddToRead = (props) => {
       }
     } catch (error) {
       console.log(error);
-      props.updateUserFeedback("Failed to add :-/");
+      props.updateUserFeedback("Book is already in the shelf");
     }
   }
 

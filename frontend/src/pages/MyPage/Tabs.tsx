@@ -11,7 +11,9 @@ const Tabs: React.FC<TabsProps> = ({ tabs, onSelectTab, selectedTab }) => {
         <button
           key={tab.value}
           value={tab.value}
-          className={`tab ${selectedTab === tab.value && "tab-active"}`}
+          className={`tab text-xl text-slate-200 ${
+            selectedTab === tab.value && "tab-active"
+          }`}
           onClick={() => onSelectTab(tab.value)}
         >
           {tab.label} {tab.count && `(${tab.count})`}

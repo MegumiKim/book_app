@@ -6,7 +6,7 @@ type Inputs = {
   title: string;
 };
 
-const BookSearch = () => {
+const BookSearch = ({ handleSearch }) => {
   const [searchResults, setSearchResults] = useState([]);
   const { register, handleSubmit } = useForm<Inputs>();
 
@@ -21,7 +21,8 @@ const BookSearch = () => {
       const json = await result.json();
 
       if (json) {
-        setSearchResults(json.items);
+        // setSearchResults(json.items);
+        handleSearch(json.items);
       } else {
         throw new Error();
       }
@@ -43,18 +44,6 @@ const BookSearch = () => {
           })}
         />
       </form>
-
-      <div className="mx-auto ">
-        {searchResults?.length ? (
-          <div className="grid gap-5 mx-auto my-5 sm:grid-cols-2 lg:grid-cols-3 max-w-6xl">
-            {searchResults.map((item) => (
-              <BookCard key={item.id} data={item.volumeInfo} id={item.id} />
-            ))}
-          </div>
-        ) : (
-          ""
-        )}
-      </div>
     </section>
   );
 };

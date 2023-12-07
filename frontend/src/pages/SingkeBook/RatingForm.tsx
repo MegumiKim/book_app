@@ -1,4 +1,4 @@
-const RatingStars = ({ rating }) => {
+const RatingForm = ({ handleChange }) => {
   // console.log(rating);
 
   return (
@@ -9,13 +9,13 @@ const RatingStars = ({ rating }) => {
           type="radio"
           value={index}
           name="rating-2"
-          className="mask mask-star-2 bg-orange-400"
-          defaultChecked={rating >= index}
-          disabled
+          className="mask mask-star-2 bg-green-400 "
+          // defaultChecked={rating >= index}
+          onChange={handleChange}
         />
       ))}
     </div>
   );
 };
 
-export default RatingStars;
+export default RatingForm;

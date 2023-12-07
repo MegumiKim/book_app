@@ -52,25 +52,32 @@ const MyPage = () => {
     { value: "have-read", label: "Have Read", count: booksHaveRead.length },
   ];
 
-  if (error) {
-    return <div>Oops, Failed to fetch data :-/</div>;
-  }
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
+  const clearShelf = async () => {
+    const res = await fetch("http://localhost:5000/books", {
+      method: "DELETE",
+    });
+    console.log(res);
+  };
   return (
-    <main id="background3">
-      <div className="max-w-6xl self-center w-full m-auto mt-28">
+    <main className="text-slate-200 ">
+      <div id="background3"></div>
+      <div className="max-w-6xl self-center w-full m-auto mt-28 px-4">
         <div className="sm:flex gap-5 align-middle my-5">
-          <h1 className="text-2xl ">My Book Shelf</h1>
+          <h1 className="text-3xl ">My Book Shelf</h1>
           <p className="text-red-400">{userFeedback}</p>
+          <button className="btn btn-primary" onClick={clearShelf}>
+            Clear Bookshelf
+          </button>
         </div>
+        {loading && <div>Loading...</div>}
+        {error && (
+          <div className="text-red-400 text-xl">Failed to fetch data :-/</div>
+        )}
         <Tabs onSelectTab={onSelectTab} selectedTab={selectedTab} tabs={tabs} />
-        <div className="grid gap-10 mx-auto my-5 sm:grid-cols-2 " id="toRead">
-          {booksToDisplay.length ? (
+        <div className="grid gap-10 mx-auto my-5 sm:grid-cols-2 ">
+          {booksToDisplay?.length ? (
             booksToDisplay.map((book: BookDataType) => (
+              // <p>hi</p>
               <MyPageCard
                 key={book._id}
                 data={book}

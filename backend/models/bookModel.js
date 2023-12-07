@@ -28,14 +28,12 @@ const bookSchema = mongoose.Schema(
     //   type: Number,
     //   required: true,
     // },
-    reviews: [
-      {
-        name: String,
-        subject: String,
-        review: String,
-        rating: Number,
-      },
-    ],
+    review: {
+      // name: String,
+      rating: Number,
+      text: String,
+    },
+
     image: { type: String },
     id: { type: String },
     status: { type: String, enum: ["to-read", "read", "reading"] },
