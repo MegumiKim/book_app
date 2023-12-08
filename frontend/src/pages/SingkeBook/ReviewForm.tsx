@@ -9,6 +9,8 @@ const ReviewForm = (props) => {
   const [rating, setRating] = useState(0);
 
   const handleRatingChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(event.target.defaultChecked);
+
     setRating(Number(event.target.value));
   };
 

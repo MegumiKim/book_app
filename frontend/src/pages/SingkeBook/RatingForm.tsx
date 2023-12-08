@@ -9,9 +9,9 @@ const RatingForm = ({ handleChange }) => {
           type="radio"
           value={index}
           name="rating-2"
-          className="mask mask-star-2 bg-green-400 "
-          // defaultChecked={rating >= index}
+          className="mask mask-star-2 "
           onChange={handleChange}
+          defaultChecked={false}
         />
       ))}
     </div>

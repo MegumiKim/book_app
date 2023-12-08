@@ -5,7 +5,7 @@ const NavBar = () => {
     <nav className="navbar bg-transparent max-w-6xl m-auto text-slate-200">
       <div className="flex-1">
         <Link to="/" className="btn btn-ghost text-xl sm:text-3xl">
-          BookGarden
+          BookJournal
         </Link>
       </div>
       <div className="flex-none">

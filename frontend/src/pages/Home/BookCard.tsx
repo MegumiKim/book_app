@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { GoogleBookDataType } from "../types";
+import { GoogleBookDataType } from "../../types";
 
 interface BookCardProps {
   data: GoogleBookDataType;
@@ -13,7 +13,7 @@ const BookCard: React.FC<BookCardProps> = ({ data, id }) => {
       to={`details/${id}`}
       className="card card-side w-full shadow-md px-4 text-left text-slate-200 bg-opacity-20 bg-slate-700 hover:bg-opacity-60 "
     >
-      <figure className="">
+      <figure className="w-40">
         <img
           src={
             data.imageLinks?.thumbnail

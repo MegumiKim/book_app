@@ -3,7 +3,7 @@ import NavBar from "./components/NavBar";
 import MyPage from "./pages/MyPage/MyPage";
 import SingleBook from "./pages/SingkeBook/SingleBook";
 import ReviewForm from "./pages/SingkeBook/ReviewForm";
-import Home from "./pages/Home";
+import Home from "./pages/Home/Home";
 
 const App = () => {
   return (
