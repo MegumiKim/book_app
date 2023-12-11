@@ -33,7 +33,7 @@ const ReviewForm = (props) => {
         text: data.review,
       },
 
-      image: book.imageLinks.thumbnail,
+      image: book.imageLinks?.thumbnail ? book.imageLinks.thumbnail : "",
       status: "read",
       id: props.data.id,
     };
@@ -82,51 +82,7 @@ const ReviewForm = (props) => {
         id="review-form"
       >
         <h3 className="font-bold text-lg mb-4">Write a review</h3>
-        {/* <h3 className="font-bold text-lg">Write a review on {book.title}</h3> */}
 
-        {/* <div className="mb-4">
-          <div className="rating">
-            <input
-              type="radio"
-              name="rating"
-              value="1"
-              className="mask mask-star-2 bg-orange-400"
-              onChange={handleRatingChange}
-            />
-            <input
-              type="radio"
-              name="rating"
-              value="2"
-              className="mask mask-star-2 bg-orange-400"
-              onChange={handleRatingChange}
-            />
-            <input
-              type="radio"
-              name="rating"
-              value="3"
-              className="mask mask-star-2 bg-orange-400"
-              onChange={handleRatingChange}
-            />
-            <input
-              type="radio"
-              name="rating"
-              value="4"
-              className="mask mask-star-2 bg-orange-400"
-              onChange={handleRatingChange}
-            />
-            <input
-              type="radio"
-              name="rating"
-              value="5"
-              className="mask mask-star-2 bg-orange-400"
-              onChange={handleRatingChange}
-            />
-          </div>
-
-          {errors.rating && (
-            <p className="text-red-500 text-xs mt-1">{errors.rating.message}</p>
-          )}
-        </div> */}
         <RatingForm handleChange={handleRatingChange} />
         <div className="mb-4">
           <label htmlFor="review" className="block text-sm font-bold mb-2">
@@ -143,7 +99,6 @@ const ReviewForm = (props) => {
             <p className="text-red-500 text-xs mt-1">{errors.review.message}</p>
           )}
         </div>
-
         <div className="mb-4">
           <button
             type="submit"

@@ -47,10 +47,12 @@ const SingleBook = () => {
             <div className=" sm:grid grid-flow-col gap-3 grid-cols-3">
               <div className="left col-span-1">
                 <img
-                  className="m-auto"
+                  className="m-auto max-w-[250px]"
                   alt=""
                   src={
-                    book.imageLinks ? book.imageLinks.thumbnail : "/night.jpg"
+                    book.imageLinks?.thumbnail
+                      ? book.imageLinks.thumbnail
+                      : "/night.jpg"
                   }
                 />
               </div>

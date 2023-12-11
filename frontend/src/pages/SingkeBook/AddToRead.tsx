@@ -14,11 +14,10 @@ const AddToRead = (props) => {
 
   const book = props.data?.volumeInfo;
   const id = props.id;
-  console.log(id);
 
   const bookBody: MyBookType = {
     id,
-    image: book.imageLinks.thumbnail,
+    image: book.imageLinks?.thumbnail ? book.imageLinks.thumbnail : "",
     title: book.title,
     author: book.authors,
     reviews: [],

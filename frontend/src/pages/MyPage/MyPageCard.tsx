@@ -39,7 +39,7 @@ const MyPageCard: React.FC<MyPageCardProps> = ({ data, onRemove }) => {
     <div className="card card-side shadow-xl text-left overflow-x-clip bg-slate-700 bg-opacity-70 text-slate-200 ">
       <figure className="">
         <img
-          className=""
+          className="max-h-[200px]"
           src={data.image ? data.image : "/night.jpg"}
           alt={data.title}
         />
