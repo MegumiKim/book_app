@@ -64,7 +64,7 @@ const MyPage = () => {
       <div id="background3"></div>
       <div className="max-w-6xl self-center w-full m-auto mt-28 px-4">
         <div className="sm:flex gap-5 align-middle my-5">
-          <h1 className="text-3xl ">My Book Shelf</h1>
+          <h1 className="text-3xl ">Book Shelf</h1>
           <p className="text-red-400">{userFeedback}</p>
           {/* <button className="btn btn-primary" onClick={clearShelf}>
             Clear Bookshelf

@@ -16,7 +16,7 @@ const NavBar = () => {
             </Link>
           </li>
           <li>
-            <Link to="/user">My Bookshelf</Link>
+            <Link to="/user">Bookshelf</Link>
           </li>
         </ul>
       </div>
