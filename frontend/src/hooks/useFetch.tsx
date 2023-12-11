@@ -1,8 +1,14 @@
 import { useEffect, useState } from "react";
 
-export function useFetch(url: string, options = {}) {
-  const [data, setData] = useState([]);
-  const [error, setError] = useState(null);
+interface FetchResult<T> {
+  data: T | unknown;
+  loading: boolean;
+  error: boolean;
+}
+
+export function useFetch<T>(url: string, options = {}): FetchResult<T> {
+  const [data, setData] = useState<T | unknown>();
+  const [error, setError] = useState<boolean>(false);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -22,7 +28,7 @@ export function useFetch(url: string, options = {}) {
         }
       } catch (e) {
         console.log(e);
-        setError(e);
+        setError(true);
       } finally {
         setLoading(false);
       }

@@ -1,4 +1,8 @@
-const RatingForm = ({ handleChange }) => {
+const RatingForm = ({
+  handleChange,
+}: {
+  handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+}) => {
   // console.log(rating);
 
   return (

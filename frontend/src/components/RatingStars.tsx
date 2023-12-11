@@ -1,4 +1,4 @@
-const RatingStars = ({ rating }) => {
+const RatingStars = ({ rating }: { rating: number }) => {
   // console.log(rating);
 
   return (

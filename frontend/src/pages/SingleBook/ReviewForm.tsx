@@ -2,15 +2,17 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import RatingForm from "./RatingForm";
+import { MyBookType } from "../../types";
 
-const ReviewForm = (props) => {
+const ReviewForm = (props: {
+  data: { volumeInfo: any; id: string };
+  onReviewPosted: () => void;
+}) => {
   const book = props.data.volumeInfo;
 
   const [rating, setRating] = useState(0);
 
   const handleRatingChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(event.target.defaultChecked);
-
     setRating(Number(event.target.value));
   };
 
@@ -24,19 +26,19 @@ const ReviewForm = (props) => {
   // const apiURL = "http://localhost:5000/books/" + props.data.id;
   const apiURL = "https://book-share-app.onrender.com/books/" + props.data.id;
 
-  const onSubmitHandler = async (data: { review: string }) => {
+  const onSubmitHandler = async (data: MyBookType) => {
     const body = {
       title: book.title,
       author: book.authors,
       review: {
         rating: rating,
-        text: data.review,
+        text: data.reviews,
       },
-
       image: book.imageLinks?.thumbnail ? book.imageLinks.thumbnail : "",
       status: "read",
       id: props.data.id,
     };
+
     const options = {
       method: "PUT",
       headers: {
@@ -50,9 +52,9 @@ const ReviewForm = (props) => {
       const result = await fetch(apiURL, options);
       const json = await result.json();
 
-      console.log(json);
-
       if (result.ok) {
+        // Handle the json response, if needed
+        console.log(json);
         props.onReviewPosted();
       } else {
         throw new Error("failed to post review");
@@ -96,7 +98,7 @@ const ReviewForm = (props) => {
             placeholder="Summary / Key take-away / Quotes etc..."
           ></textarea>
           {errors.review && (
-            <p className="text-red-500 text-xs mt-1">{errors.review.message}</p>
+            <p className="text-red-500 text-xs mt-1">An Error occurred</p>
           )}
         </div>
         <div className="mb-4">

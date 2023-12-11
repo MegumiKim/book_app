@@ -1,13 +1,14 @@
 import MyPageCard from "./MyPageCard";
 import { useFetch } from "../../hooks/useFetch";
-import { useEffect, useState } from "react";
-import { MyBookType, BookDataType } from "../../types";
+import { SetStateAction, useEffect, useState } from "react";
+import { BookDataType } from "../../types";
 import Tabs from "./Tabs";
 
 const MyPage = () => {
   // const apiURL = "http://localhost:5000/books";
   const apiURL = "https://book-share-app.onrender.com/books";
   const { data, loading, error } = useFetch(apiURL);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const myBooks = data?.data || [];
   const [booksToDisplay, setBooksToDisplay] = useState([]);
   const [selectedTab, setSelectedTab] = useState("all");
@@ -25,7 +26,7 @@ const MyPage = () => {
     (book: BookDataType) => book.status === "read"
   );
 
-  async function updateBookList(title) {
+  async function updateBookList(title: string) {
     const res = await fetch(apiURL);
     const json = await res.json();
 
@@ -35,7 +36,7 @@ const MyPage = () => {
     }
   }
 
-  function onSelectTab(value) {
+  function onSelectTab(value: SetStateAction<string>) {
     setSelectedTab(value);
     setBooksToDisplay(
       value === "all"
@@ -52,13 +53,13 @@ const MyPage = () => {
     { value: "have-read", label: "Have Read", count: booksHaveRead.length },
   ];
 
-  const clearShelf = async () => {
-    // const res = await fetch("http://localhost:5000/books", {
-    const res = await fetch("https://book-share-app.onrender.com/books", {
-      method: "DELETE",
-    });
-    console.log(res);
-  };
+  // const clearShelf = async () => {
+  //   // const res = await fetch("http://localhost:5000/books", {
+  //   const res = await fetch("https://book-share-app.onrender.com/books", {
+  //     method: "DELETE",
+  //   });
+  //   console.log(res);
+  // };
   return (
     <main className="text-slate-200 ">
       <div id="background3"></div>
@@ -74,6 +75,7 @@ const MyPage = () => {
         {error && (
           <div className="text-red-400 text-xl">Failed to fetch data :-/</div>
         )}
+
         <Tabs onSelectTab={onSelectTab} selectedTab={selectedTab} tabs={tabs} />
         <div className="grid gap-10 mx-auto my-5 sm:grid-cols-2 ">
           {booksToDisplay?.length ? (

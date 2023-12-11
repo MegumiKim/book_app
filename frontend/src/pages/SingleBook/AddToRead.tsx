@@ -1,16 +1,20 @@
 import { MyBookType } from "../../types";
-import { UserLoggedInContext } from "../../context/Context";
-import { useContext } from "react";
+// import { UserLoggedInContext } from "../../context/Context";
+// import { useContext } from "react";
 
-interface UserLoggedInContextType {
-  userLoggedIn: boolean;
-  setUserLoggedIn: React.Dispatch<React.SetStateAction<[]>>;
-}
+// interface UserLoggedInContextType {
+//   userLoggedIn: boolean;
+//   setUserLoggedIn: React.Dispatch<React.SetStateAction<[]>>;
+// }
 
-const AddToRead = (props) => {
-  const { userLoggedIn, setUserLoggedIn } = useContext(
-    UserLoggedInContext
-  ) as UserLoggedInContextType;
+const AddToRead = (props: {
+  data: { volumeInfo: any };
+  id: string;
+  updateUserFeedback: (arg0: string) => void;
+}) => {
+  // const { userLoggedIn, setUserLoggedIn } = useContext(
+  //   UserLoggedInContext
+  // ) as UserLoggedInContextType;
 
   const book = props.data?.volumeInfo;
   const id = props.id;

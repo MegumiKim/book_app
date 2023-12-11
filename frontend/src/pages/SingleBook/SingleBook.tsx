@@ -1,4 +1,4 @@
-import { useParams, useNavigate, Link } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useFetch } from "../../hooks/useFetch.tsx";
 import ReviewForm from "./ReviewForm.tsx";
 import MyReview from "./MyReview.tsx";
@@ -11,7 +11,7 @@ const URL = import.meta.env.VITE_REACT_APP_GOOGLE_BOOK_API;
 const SingleBook = () => {
   const { id } = useParams();
 
-  const { data, isLoading, error } = useFetch(`${URL}volumes/${id}`);
+  const { data, loading, error } = useFetch(`${URL}volumes/${id}`);
   const [userFeedback, setUserFeedback] = useState("");
   const [reviewUpdated, setReviewUpdated] = useState(false);
 
@@ -37,7 +37,7 @@ const SingleBook = () => {
         >
           Back
         </button>
-        {isLoading && <p>Loading...</p>}
+        {loading && <p>Loading...</p>}
         {error && <p>Failed to load page...</p>}
         {book && (
           <div

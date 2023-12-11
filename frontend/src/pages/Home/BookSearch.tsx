@@ -10,8 +10,12 @@ type Inputs = {
   latest: boolean;
 };
 
-const BookSearch = ({ handleSearch }) => {
-  const [searchResults, setSearchResults] = useState([]);
+interface BookSearchProps {
+  handleSearch: (result: []) => void;
+}
+
+const BookSearch: React.FC<BookSearchProps> = ({ handleSearch }) => {
+  // const [searchResults, setSearchResults] = useState([]);
   const [showAdvancedSearch, setShowAdvancedSearch] = useState(false);
   const { register, handleSubmit } = useForm<Inputs>();
 

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import RatingStars from "../../components/RatingStars";
 
 const MyReview = ({ id, reviewUpdated }) => {
-  const [data, setData] = useState(null);
+  const [data, setData] = useState({ review: { rating: 0, text: "" } });
 
   useEffect(() => {
     const fetchData = async () => {
