@@ -8,12 +8,10 @@ interface MyPageCardProps {
 }
 
 const MyPageCard: React.FC<MyPageCardProps> = ({ data, onRemove }) => {
-  console.log(data);
-
   if (!data) {
     return <p>error</p>;
   }
-  const URL = "http://localhost:5000/" + "books/" + data._id;
+  const URL = "https://book-share-app.onrender.com/" + "books/" + data._id;
 
   const rawDate = data.updatedAt;
   const dateObject = new Date(rawDate);

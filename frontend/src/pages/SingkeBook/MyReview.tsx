@@ -1,14 +1,13 @@
 import { useEffect, useState } from "react";
 import RatingStars from "../../components/RatingStars";
-import { useFetch } from "../../hooks/useFetch";
 
 const MyReview = ({ id, reviewUpdated }) => {
   const [data, setData] = useState(null);
-  console.log(data);
 
   useEffect(() => {
     const fetchData = async () => {
-      const URL = `http://localhost:5000/books/${id}`;
+      // const URL = `http://localhost:5000/books/${id}`;
+      const URL = `https://book-share-app.onrender.com/books/${id}`;
       const result = await fetch(URL);
       const jsonData = await result.json();
       setData(jsonData);

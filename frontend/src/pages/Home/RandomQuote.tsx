@@ -3,7 +3,6 @@ import { useFetch } from "../../hooks/useFetch";
 const RandomQuote = () => {
   const URL = "https://api.quotable.io/random?maxLength=40";
   const { data } = useFetch(URL);
-  console.log(data);
 
   return (
     <div className="m-auto mt-20 p-4 text-slate-200">

@@ -21,8 +21,8 @@ const ReviewForm = (props) => {
     reset,
   } = useForm();
 
-  const apiURL = "http://localhost:5000/books/" + props.data.id;
-  // "https://book-share-app.onrender.com/books/"
+  // const apiURL = "http://localhost:5000/books/" + props.data.id;
+  const apiURL = "https://book-share-app.onrender.com/books/" + props.data.id;
 
   const onSubmitHandler = async (data: { review: string }) => {
     const body = {

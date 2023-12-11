@@ -6,7 +6,7 @@ interface BookCardProps {
   id: string;
 }
 const BookCard: React.FC<BookCardProps> = ({ data, id }) => {
-  console.log(data);
+  // console.log(data);
 
   return (
     <Link

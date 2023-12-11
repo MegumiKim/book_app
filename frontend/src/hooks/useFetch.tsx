@@ -13,7 +13,7 @@ export function useFetch(url: string, options = {}) {
 
         const res = await fetch(url, options);
         const json = await res.json();
-        console.log(res);
+        // console.log(res);
 
         if (res.ok) {
           setData(json);

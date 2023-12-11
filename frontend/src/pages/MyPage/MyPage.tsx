@@ -5,8 +5,8 @@ import { MyBookType, BookDataType } from "../../types";
 import Tabs from "./Tabs";
 
 const MyPage = () => {
-  const apiURL = "http://localhost:5000/books";
-  // "https://book-share-app.onrender.com/books"
+  // const apiURL = "http://localhost:5000/books";
+  const apiURL = "https://book-share-app.onrender.com/books";
   const { data, loading, error } = useFetch(apiURL);
   const myBooks = data?.data || [];
   const [booksToDisplay, setBooksToDisplay] = useState([]);
@@ -53,7 +53,8 @@ const MyPage = () => {
   ];
 
   const clearShelf = async () => {
-    const res = await fetch("http://localhost:5000/books", {
+    // const res = await fetch("http://localhost:5000/books", {
+    const res = await fetch("https://book-share-app.onrender.com/books", {
       method: "DELETE",
     });
     console.log(res);
@@ -65,9 +66,9 @@ const MyPage = () => {
         <div className="sm:flex gap-5 align-middle my-5">
           <h1 className="text-3xl ">My Book Shelf</h1>
           <p className="text-red-400">{userFeedback}</p>
-          <button className="btn btn-primary" onClick={clearShelf}>
+          {/* <button className="btn btn-primary" onClick={clearShelf}>
             Clear Bookshelf
-          </button>
+          </button> */}
         </div>
         {loading && <div>Loading...</div>}
         {error && (
