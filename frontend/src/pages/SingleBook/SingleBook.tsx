@@ -5,25 +5,32 @@ import MyReview from "./MyReview.tsx";
 import { useState } from "react";
 import AddToRead from "./AddToRead.tsx";
 import RatingStars from "../../components/RatingStars.tsx";
+import { GoogleBookDataType } from "../../types.ts";
 
 const URL = import.meta.env.VITE_REACT_APP_GOOGLE_BOOK_API;
+
+type DataType = {
+  data: { volumeInfo: GoogleBookDataType };
+  loading: boolean;
+  error: boolean;
+};
 
 const SingleBook = () => {
   const { id } = useParams();
 
-  const { data, loading, error } = useFetch(`${URL}volumes/${id}`);
-  const [userFeedback, setUserFeedback] = useState("");
+  const { data, loading, error } = useFetch<DataType>(`${URL}volumes/${id}`);
+  const [userFeedback, setUserFeedback] = useState<string>("");
   const [reviewUpdated, setReviewUpdated] = useState(false);
 
-  // const [showModal, setShowModal] = useState(false);
   const book = data?.volumeInfo;
+
   const navigate = useNavigate();
 
-  const updateUserFeedback = (feedback) => {
+  const updateUserFeedback = (feedback: string) => {
     setUserFeedback(feedback);
   };
 
-  const handleReviewPosted = () => {
+  const handleReviewPosted: () => void = () => {
     // Update the state to trigger a re-render
     setReviewUpdated((prev) => !prev);
   };
@@ -79,7 +86,11 @@ const SingleBook = () => {
                       <button
                         className="btn btn-primary"
                         onClick={() => {
-                          document.getElementById("my_modal_2").showModal();
+                          (
+                            document.getElementById(
+                              "my_modal_2"
+                            ) as HTMLDialogElement
+                          ).showModal();
                         }}
                       >
                         Write a review

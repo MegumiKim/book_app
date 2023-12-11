@@ -4,10 +4,11 @@ import { useForm } from "react-hook-form";
 import RatingForm from "./RatingForm";
 import { MyBookType } from "../../types";
 
-const ReviewForm = (props: {
-  data: { volumeInfo: any; id: string };
-  onReviewPosted: () => void;
-}) => {
+const ReviewForm = (props: any) => {
+  // const ReviewForm = (props: {
+  //   data: { volumeInfo: GoogleBookDataType; id: string };
+  //   onReviewPosted: () => void;
+  // }) => {
   const book = props.data.volumeInfo;
 
   const [rating, setRating] = useState(0);

@@ -2,7 +2,7 @@
 import { useContext } from "react";
 import BookSearch from "./BookSearch";
 import BookCard from "./BookCard";
-import { SearchResultContext } from "../../context/Context";
+import { SearchResultContext } from "../../context/BookContext";
 import { GoogleBookDataType } from "../../types";
 import RandomQuote from "./RandomQuote";
 

@@ -7,11 +7,12 @@ import { MyBookType } from "../../types";
 //   setUserLoggedIn: React.Dispatch<React.SetStateAction<[]>>;
 // }
 
-const AddToRead = (props: {
-  data: { volumeInfo: any };
-  id: string;
-  updateUserFeedback: (arg0: string) => void;
-}) => {
+const AddToRead = (props: any) => {
+  // const AddToRead = (props: {
+  //   data: { volumeInfo: GoogleBookDataType };
+  //   id: string;
+  //   updateUserFeedback: (arg0: string) => void;
+  // }) => {
   // const { userLoggedIn, setUserLoggedIn } = useContext(
   //   UserLoggedInContext
   // ) as UserLoggedInContextType;

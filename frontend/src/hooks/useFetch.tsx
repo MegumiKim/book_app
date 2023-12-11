@@ -19,7 +19,7 @@ export function useFetch<T>(url: string, options = {}): FetchResult<T> {
 
         const res = await fetch(url, options);
         const json = await res.json();
-        // console.log(res);
+        console.log(json);
 
         if (res.ok) {
           setData(json);

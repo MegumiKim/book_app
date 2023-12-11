@@ -40,4 +40,5 @@ export type GoogleBookDataType = {
   categories?: string[];
   averageRatings?: number;
   subtitle?: string;
+  publisher?: string;
 };
