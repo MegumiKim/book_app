@@ -1,4 +1,0 @@
-[build]
-  command = "npm run clean && npm run build"
-  publish = "frontend/dist"  
-
