@@ -1,19 +1,20 @@
 import { Link } from "react-router-dom";
 import { GoogleBookDataType } from "../../types";
+import { useState } from "react";
 
 interface BookCardProps {
   data: GoogleBookDataType;
   id: string;
 }
 const BookCard: React.FC<BookCardProps> = ({ data, id }) => {
-  // console.log(data);
+  const [isHovered, setIsHovered] = useState(false);
 
   return (
     <Link
       to={`details/${id}`}
-      className="card card-side w-full shadow-md px-4 text-left text-slate-200 bg-opacity-20 bg-slate-700 hover:bg-opacity-60 "
+      className="card card-side w-full shadow-md text-left text-slate-200 bg-opacity-20 bg-slate-700 hover:bg-opacity-60 relative"
     >
-      <figure className="w-40">
+      <figure className="w-20  sm:w-40">
         <img
           src={
             data.imageLinks?.thumbnail
@@ -25,7 +26,20 @@ const BookCard: React.FC<BookCardProps> = ({ data, id }) => {
       </figure>
       <div className="flex flex-col p-4 justify-between flex-1 ">
         <div>
-          <h2 className="card-title line-clamp-3">{data.title}</h2>
+          <h2
+            className="card-title line-clamp-3"
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+          >
+            {data.title}
+          </h2>
+
+          {isHovered ? (
+            <h2 className="absolute left-[100px] bg-slate-700 rounded p-4">
+              {data.title}
+            </h2>
+          ) : null}
+
           {data.authors?.length && <p>{data.authors[0]}</p>}
         </div>
 

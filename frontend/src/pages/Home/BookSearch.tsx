@@ -15,7 +15,6 @@ interface BookSearchProps {
 }
 
 const BookSearch: React.FC<BookSearchProps> = ({ handleSearch }) => {
-  // const [searchResults, setSearchResults] = useState([]);
   const [showAdvancedSearch, setShowAdvancedSearch] = useState(false);
   const { register, handleSubmit } = useForm<Inputs>();
 
@@ -61,7 +60,11 @@ const BookSearch: React.FC<BookSearchProps> = ({ handleSearch }) => {
   function handleToggle() {
     setShowAdvancedSearch(!showAdvancedSearch);
   }
-
+  const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      handleSubmit(onSubmit)();
+    }
+  };
   return (
     <section className="my-10 items-center flex flex-col mx-5 text-slate-200 ">
       <form
@@ -69,6 +72,7 @@ const BookSearch: React.FC<BookSearchProps> = ({ handleSearch }) => {
         className="flex flex-col gap-3 bg-slate-800 p-8 pt-10 bg-opacity-80 rounded-lg w-full sm:w-[550px]"
       >
         <input
+          onKeyPress={handleKeyPress}
           type="text"
           placeholder="search..."
           className="input input-bordered input-secondary w-full bg-transparent focus:bg-opacity-90 focus:bg-slate-700 text-slate-200"
@@ -82,7 +86,9 @@ const BookSearch: React.FC<BookSearchProps> = ({ handleSearch }) => {
         />
         <div className="form-control">
           <label className="cursor-pointer flex self-end">
-            <span className="label-text">Show Advanced Search</span>
+            <span className=" text-slate-200 label-text">
+              Show Advanced Search
+            </span>
             <input
               type="checkbox"
               className="toggle toggle-secondary ms-3"
@@ -90,12 +96,7 @@ const BookSearch: React.FC<BookSearchProps> = ({ handleSearch }) => {
             />
           </label>
         </div>
-        <div
-          className={showAdvancedSearch ? " flex flex-col gap-3" : "hidden"}
-          // className={`"flex-col gap-3 ${
-          //   showAdvancedSearch ? "flex" : "hidden"
-          // }"`}
-        >
+        <div className={showAdvancedSearch ? " flex flex-col gap-3" : "hidden"}>
           <div className="flex flex-col gap-2 ">
             <div className="flex flex-col gap-3">
               <label htmlFor="">Author</label>

@@ -35,7 +35,7 @@ const Home = () => {
         <div className="mx-auto">
           {searchResult?.length ? (
             <div className="flex flex-col">
-              <div className="grid gap-5 mx-auto my-5 sm:grid-cols-2 lg:grid-cols-2 max-w-6xl">
+              <div className="grid gap-5 mx-auto sm:grid-cols-2 lg:grid-cols-3 max-w-6xl px-4">
                 {searchResult.map(
                   (item: { volumeInfo: GoogleBookDataType; id: string }) => (
                     <BookCard
