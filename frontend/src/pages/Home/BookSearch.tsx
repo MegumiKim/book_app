@@ -69,7 +69,7 @@ const BookSearch: React.FC<BookSearchProps> = ({ handleSearch }) => {
     <section className="my-10 items-center flex flex-col mx-5 text-slate-200 ">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col gap-3 bg-slate-800 p-8 pt-10 bg-opacity-80 rounded-lg w-full sm:w-[550px]"
+        className="flex flex-col gap-3 bg-slate-800 p-4 sm:p-6 bg-opacity-80 rounded-lg w-full sm:w-[550px]"
       >
         <input
           onKeyPress={handleKeyPress}

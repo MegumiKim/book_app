@@ -9,8 +9,8 @@ const RandomQuote = () => {
   if (data) {
     return (
       <div className="m-auto sm:mt-10 p-4 text-slate-200">
-        <h2 className="text-center text-2xl sm:text-5xl sm:my-4 m-auto ">
-          {data.content}
+        <h2 className="text-center text-2xl sm:text-5xl sm:my-4 m-auto font-serif">
+          {`"${data.content}"`}
         </h2>
         <p className="text-center">by {data.author || ""}</p>
       </div>
