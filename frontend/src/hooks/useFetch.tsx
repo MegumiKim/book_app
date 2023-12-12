@@ -1,15 +1,18 @@
 import { useEffect, useState } from "react";
 
 interface FetchResult<T> {
-  data: T | unknown;
+  data: T;
   loading: boolean;
   error: boolean;
 }
 
-export function useFetch<T>(url: string, options = {}): FetchResult<T> {
-  const [data, setData] = useState<T | unknown>();
+export function useFetch<T>(
+  url: string,
+  options = {}
+): FetchResult<T | undefined> {
+  const [data, setData] = useState<T | undefined>();
   const [error, setError] = useState<boolean>(false);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     async function getData() {
@@ -19,7 +22,7 @@ export function useFetch<T>(url: string, options = {}): FetchResult<T> {
 
         const res = await fetch(url, options);
         const json = await res.json();
-        console.log(json);
+        // console.log(json);
 
         if (res.ok) {
           setData(json);

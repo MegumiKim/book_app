@@ -9,18 +9,20 @@ import { GoogleBookDataType } from "../../types.ts";
 
 const URL = import.meta.env.VITE_REACT_APP_GOOGLE_BOOK_API;
 
-type DataType = {
-  data: { volumeInfo: GoogleBookDataType };
-  loading: boolean;
-  error: boolean;
-};
+interface GoogleBookData {
+  volumeInfo: GoogleBookDataType;
+}
 
 const SingleBook = () => {
   const { id } = useParams();
 
-  const { data, loading, error } = useFetch<DataType>(`${URL}volumes/${id}`);
+  const { data, loading, error } = useFetch<GoogleBookData>(
+    `${URL}volumes/${id}`
+  );
   const [userFeedback, setUserFeedback] = useState<string>("");
   const [reviewUpdated, setReviewUpdated] = useState(false);
+
+  // console.log(data);
 
   const book = data?.volumeInfo;
 

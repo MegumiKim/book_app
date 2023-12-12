@@ -4,10 +4,16 @@ import { SetStateAction, useEffect, useState } from "react";
 import { BookDataType } from "../../types";
 import Tabs from "./Tabs";
 
+interface DataType {
+  total: number;
+  data: [];
+}
 const MyPage = () => {
   // const apiURL = "http://localhost:5000/books";
   const apiURL = "https://book-share-app.onrender.com/books";
-  const { data, loading, error } = useFetch(apiURL);
+  const { data, loading, error } = useFetch<DataType>(apiURL);
+  console.log(data);
+
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const myBooks = data?.data || [];
   const [booksToDisplay, setBooksToDisplay] = useState([]);

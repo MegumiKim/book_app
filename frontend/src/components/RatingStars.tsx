@@ -1,5 +1,5 @@
 const RatingStars = ({ rating }: { rating: number }) => {
-  // console.log(rating);
+  console.log(rating);
 
   return (
     <div className="rating rating-sm">
@@ -10,7 +10,7 @@ const RatingStars = ({ rating }: { rating: number }) => {
           value={index}
           name="rating-2"
           className="mask mask-star-2 bg-orange-400"
-          defaultChecked={rating >= index}
+          checked={rating >= index}
           disabled
         />
       ))}

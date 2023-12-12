@@ -1,14 +1,20 @@
 // ReviewForm.js
 import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import RatingForm from "./RatingForm";
-import { MyBookType } from "../../types";
+import { GoogleBookDataType, MyBookType } from "../../types";
 
-const ReviewForm = (props: any) => {
-  // const ReviewForm = (props: {
-  //   data: { volumeInfo: GoogleBookDataType; id: string };
-  //   onReviewPosted: () => void;
-  // }) => {
+interface GoogleBookData {
+  volumeInfo: GoogleBookDataType;
+  id?: "string";
+}
+
+const ReviewForm = (props: {
+  data: GoogleBookData;
+  onReviewPosted: () => void;
+}) => {
+  console.log(props.data);
+
   const book = props.data.volumeInfo;
 
   const [rating, setRating] = useState(0);
@@ -27,17 +33,17 @@ const ReviewForm = (props: any) => {
   // const apiURL = "http://localhost:5000/books/" + props.data.id;
   const apiURL = "https://book-share-app.onrender.com/books/" + props.data.id;
 
-  const onSubmitHandler = async (data: MyBookType) => {
+  const onSubmitHandler: SubmitHandler<MyBookType> = async (data) => {
     const body = {
-      title: book.title,
-      author: book.authors,
+      title: book?.title,
+      author: book?.authors,
       review: {
-        rating: rating,
-        text: data.reviews,
+        rating,
+        text: data.review,
       },
-      image: book.imageLinks?.thumbnail ? book.imageLinks.thumbnail : "",
+      image: book?.imageLinks?.thumbnail || "",
       status: "read",
-      id: props.data.id,
+      id: book?.id || "",
     };
 
     const options = {
@@ -48,6 +54,7 @@ const ReviewForm = (props: any) => {
       },
       body: JSON.stringify(body),
     };
+    console.log(body);
 
     try {
       const result = await fetch(apiURL, options);
@@ -80,7 +87,9 @@ const ReviewForm = (props: any) => {
         </button>
       </form>
       <form
-        onSubmit={handleSubmit(onSubmitHandler)}
+        onSubmit={(e) =>
+          handleSubmit((data, e) => onSubmitHandler(data as MyBookType, e))(e)
+        }
         className="mx-auto max-w-xl"
         id="review-form"
       >
@@ -93,7 +102,6 @@ const ReviewForm = (props: any) => {
           </label>
           <textarea
             id="review"
-            name="review"
             {...register("review", { required: "Review text is required" })}
             className="w-full border rounded-md p-2 h-40"
             placeholder="Summary / Key take-away / Quotes etc..."
@@ -116,58 +124,3 @@ const ReviewForm = (props: any) => {
 };
 
 export default ReviewForm;
-
-{
-  /* <label htmlFor="rating" className="block text-sm font-bold mb-2">
-            Rating (1-5)
-          </label> */
-}
-{
-  /* <input
-            type="number"
-            id="rating"
-            name="rating"
-            min={1}
-            max={5}
-            {...register("rating", {
-              required: "Rating is required",
-              min: { value: 1, message: "Rating must be at least 1" },
-              max: { value: 5, message: "Rating must be at most 5" },
-            })}
-            className="w-full border rounded-md p-2"
-          /> */
-}
-{
-  /* <div className="mb-4">
-          <label htmlFor="name" className="block text-sm font-bold mb-2">
-            Your Name
-          </label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            {...register("name", { required: "Name is required" })}
-            className="w-full border rounded-md p-2"
-          />
-          {errors.name && (
-            <p className="text-red-500 text-xs mt-1">{errors.name.message}</p>
-          )}
-        </div> */
-}
-{
-  /* <div className="mb-4">
-          <label htmlFor="subject" className="block text-sm font-bold mb-2">
-            Subject
-          </label>
-          <input
-            type="text"
-            id="subject"
-            name="subject"
-            {...register("subject")}
-            className="w-full border rounded-md p-2"
-          />
-          {errors.name && (
-            <p className="text-red-500 text-xs mt-1">{errors.name.message}</p>
-          )}
-        </div> */
-}

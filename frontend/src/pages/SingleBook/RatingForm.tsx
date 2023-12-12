@@ -13,7 +13,7 @@ const RatingForm = ({
           type="radio"
           value={index}
           name="rating-2"
-          className="mask mask-star-2 "
+          className="mask mask-star-2 bg-green-300"
           onChange={handleChange}
           defaultChecked={false}
         />

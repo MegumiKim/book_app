@@ -1,7 +1,13 @@
 import { useEffect, useState } from "react";
 import RatingStars from "../../components/RatingStars";
 
-const MyReview = ({ id, reviewUpdated }) => {
+const MyReview = ({
+  id,
+  reviewUpdated,
+}: {
+  id: string | undefined;
+  reviewUpdated: boolean;
+}) => {
   const [data, setData] = useState({ review: { rating: 0, text: "" } });
 
   useEffect(() => {
@@ -10,11 +16,14 @@ const MyReview = ({ id, reviewUpdated }) => {
       const URL = `https://book-share-app.onrender.com/books/${id}`;
       const result = await fetch(URL);
       const jsonData = await result.json();
+
       setData(jsonData);
     };
 
     fetchData();
   }, [id, reviewUpdated]);
+
+  console.log(data);
 
   if (!data) {
     return <></>;
@@ -26,7 +35,7 @@ const MyReview = ({ id, reviewUpdated }) => {
           <h1>My Review</h1>
           {data.review && (
             <div>
-              <RatingStars rating={data.review?.rating} />
+              <RatingStars rating={data.review.rating} />
               {/* <div>Name: {rev.name}</div>
                 <div>Subject: {rev.subject}</div> */}
               {<div>{data.review.text}</div>}

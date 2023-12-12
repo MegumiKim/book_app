@@ -3,8 +3,10 @@ export interface MyBookType {
   image: string | undefined;
   title: string | undefined;
   status: string;
-  author: [] | undefined;
-  reviews: [] | undefined;
+  author: string[] | undefined;
+  review?: [] | undefined;
+  reviews?: [] | undefined;
+  volumeInfo?: GoogleBookDataType;
 }
 
 export enum ReadingStatus {
@@ -33,12 +35,14 @@ export interface BookDataType {
 }
 
 export type GoogleBookDataType = {
+  id: string;
   title: string;
   authors: string[];
   description: string;
   imageLinks: { thumbnail: string };
   categories?: string[];
-  averageRatings?: number;
+  averageRating?: number;
   subtitle?: string;
   publisher?: string;
+  publishedDate?: string;
 };

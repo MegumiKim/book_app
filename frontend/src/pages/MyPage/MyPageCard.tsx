@@ -4,7 +4,7 @@ import RatingStars from "../../components/RatingStars";
 
 interface MyPageCardProps {
   data: BookDataType;
-  onRemove: (title) => void;
+  onRemove: (title: string) => void;
 }
 
 const MyPageCard: React.FC<MyPageCardProps> = ({ data, onRemove }) => {

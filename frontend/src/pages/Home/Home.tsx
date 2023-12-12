@@ -20,9 +20,9 @@ const Home = () => {
     setSearchResult(result);
   };
 
-  const handleLoadMore = () => {
-    console.log("load more");
-  };
+  // const handleLoadMore = () => {
+  //   console.log("load more");
+  // };
   return (
     <main className="">
       <div id="background"></div>
@@ -46,12 +46,12 @@ const Home = () => {
                   )
                 )}
               </div>
-              <button
+              {/* <button
                 className="btn btn-outline mx-auto my-10 text-slate-200"
                 onClickCapture={handleLoadMore}
               >
                 Load More
-              </button>
+              </button> */}
             </div>
           ) : (
             ""
