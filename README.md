@@ -1,8 +1,8 @@
-# BookJournal
+# [BookJournal]('https://bookjournal.megumi.no/)
 
 <img src="./frontend/public/bookjournal.jpg" alt="project image" width="400" />
 
-BookJournal is a full-stack personal project built with the MERN stack. The project is aimed at providing a platform for book enthusiasts to search, save, and write reviews for their favorite books.
+BookJournal is a full-stack personal project built with MERN stack. The project is aimed at providing a platform for book enthusiasts to search, save, and write reviews for their favorite books.
 Currently the bookshelf is shared by all users but the future plan includes expanding the project to support multiple users with authentication and review sharing functionality.
 
 ## Tech Stack
