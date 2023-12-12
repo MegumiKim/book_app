@@ -12,7 +12,7 @@ const MyPage = () => {
   // const apiURL = "http://localhost:5000/books";
   const apiURL = "https://book-share-app.onrender.com/books";
   const { data, loading, error } = useFetch<DataType>(apiURL);
-  console.log(data);
+  // console.log(data);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const myBooks = data?.data || [];
@@ -77,7 +77,7 @@ const MyPage = () => {
             Clear Bookshelf
           </button> */}
         </div>
-        {loading && <div>Loading...</div>}
+        {loading && <div>Takes a moment to load data</div>}
         {error && (
           <div className="text-red-400 text-xl">Failed to fetch data :-/</div>
         )}

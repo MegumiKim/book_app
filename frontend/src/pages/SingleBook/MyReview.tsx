@@ -23,7 +23,7 @@ const MyReview = ({
     fetchData();
   }, [id, reviewUpdated]);
 
-  console.log(data);
+  // console.log(data);
 
   if (!data) {
     return <></>;

@@ -1,6 +1,4 @@
 const RatingStars = ({ rating }: { rating: number }) => {
-  console.log(rating);
-
   return (
     <div className="rating rating-sm">
       {[1, 2, 3, 4, 5].map((index) => (

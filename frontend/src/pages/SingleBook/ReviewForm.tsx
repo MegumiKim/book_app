@@ -54,15 +54,14 @@ const ReviewForm = (props: {
       },
       body: JSON.stringify(body),
     };
-    console.log(body);
 
     try {
       const result = await fetch(apiURL, options);
-      const json = await result.json();
+      // const json = await result.json();
 
       if (result.ok) {
         // Handle the json response, if needed
-        console.log(json);
+        // console.log(json);
         props.onReviewPosted();
       } else {
         throw new Error("failed to post review");
