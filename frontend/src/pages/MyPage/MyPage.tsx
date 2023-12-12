@@ -77,14 +77,16 @@ const MyPage = () => {
             Clear Bookshelf
           </button> */}
         </div>
-        {loading && <div>Takes a moment to load data</div>}
+        {loading && (
+          <span className="loading loading-spinner text-secondary"></span>
+        )}
         {error && (
           <div className="text-red-400 text-xl">Failed to fetch data :-/</div>
         )}
 
         <Tabs onSelectTab={onSelectTab} selectedTab={selectedTab} tabs={tabs} />
         <div className="grid gap-10 mx-auto my-5 sm:grid-cols-2 ">
-          {booksToDisplay?.length ? (
+          {booksToDisplay?.length &&
             booksToDisplay.map((book: BookDataType) => (
               // <p>hi</p>
               <MyPageCard
@@ -92,10 +94,8 @@ const MyPage = () => {
                 data={book}
                 onRemove={(book) => updateBookList(book)}
               />
-            ))
-          ) : (
-            <p>No books available</p>
-          )}
+            ))}
+          {!booksToDisplay?.length && !loading && <p>No Book in the shelf</p>}
         </div>
       </div>
     </main>
