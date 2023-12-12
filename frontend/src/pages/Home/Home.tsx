@@ -28,7 +28,6 @@ const Home = () => {
       <div id="background"></div>
 
       <RandomQuote />
-
       <BookSearch handleSearch={(result: []) => handleSearch(result)} />
 
       {searchResult && (
