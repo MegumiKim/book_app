@@ -77,8 +77,11 @@ const MyPage = () => {
             Clear Bookshelf
           </button> */}
         </div>
+
+        <Tabs onSelectTab={onSelectTab} selectedTab={selectedTab} tabs={tabs} />
+
         {loading && (
-          <div className="w-full justify-center flex flex-col gap-4">
+          <div className="w-full justify-center flex flex-col gap-4 mb-10">
             <p className="m-auto">
               Patience please...loading data in a moment.
             </p>
@@ -89,16 +92,16 @@ const MyPage = () => {
           <div className="text-red-400 text-xl">Failed to fetch data :-/</div>
         )}
 
-        <Tabs onSelectTab={onSelectTab} selectedTab={selectedTab} tabs={tabs} />
         <div className="grid gap-10 mx-auto my-5 sm:grid-cols-2 ">
-          {booksToDisplay?.length &&
-            booksToDisplay.map((book: BookDataType) => (
-              <MyPageCard
-                key={book._id}
-                data={book}
-                onRemove={(book) => updateBookList(book)}
-              />
-            ))}
+          {booksToDisplay?.length
+            ? booksToDisplay.map((book: BookDataType) => (
+                <MyPageCard
+                  key={book._id}
+                  data={book}
+                  onRemove={(book) => updateBookList(book)}
+                />
+              ))
+            : ""}
           {!booksToDisplay?.length && !loading && <p>No Book in the shelf</p>}
         </div>
       </div>

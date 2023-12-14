@@ -61,7 +61,7 @@ const MyPageCard: React.FC<MyPageCardProps> = ({ data, onRemove }) => {
               data.status === "read" ? "text-pink-600" : "text-green-400"
             }
           >
-            {data.status}
+            {data.status.toUpperCase()}
           </p>
           {data.status === "read" ? (
             <div>
@@ -70,7 +70,7 @@ const MyPageCard: React.FC<MyPageCardProps> = ({ data, onRemove }) => {
           ) : (
             ""
           )}
-          <p>Added on {dateString}</p>
+          <p>Added: {dateString}</p>
           <div className="w-full flex justify-end absolute bottom-0 right-4">
             <div
               className="card-actions justify-end bg-slate-400 rounded-full p-2 w-8 my-4 hover:bg-slate-500"
