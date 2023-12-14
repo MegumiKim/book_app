@@ -78,7 +78,12 @@ const MyPage = () => {
           </button> */}
         </div>
         {loading && (
-          <span className="loading loading-spinner text-secondary"></span>
+          <div className="w-full justify-center flex flex-col gap-4">
+            <p className="m-auto">
+              Patience please...loading data in a moment.
+            </p>
+            <span className="m-auto loading loading-spinner text-secondary"></span>
+          </div>
         )}
         {error && (
           <div className="text-red-400 text-xl">Failed to fetch data :-/</div>
@@ -88,7 +93,6 @@ const MyPage = () => {
         <div className="grid gap-10 mx-auto my-5 sm:grid-cols-2 ">
           {booksToDisplay?.length &&
             booksToDisplay.map((book: BookDataType) => (
-              // <p>hi</p>
               <MyPageCard
                 key={book._id}
                 data={book}

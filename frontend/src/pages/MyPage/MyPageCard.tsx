@@ -76,7 +76,7 @@ const MyPageCard: React.FC<MyPageCardProps> = ({ data, onRemove }) => {
               className="card-actions justify-end bg-slate-400 rounded-full p-2 w-8 my-4 hover:bg-slate-500"
               onClick={removeBook}
             >
-              <img src="../../../public/icons/delete.svg" alt="" className="" />
+              <img src="/icons/delete.svg" alt="" className="" />
             </div>
           </div>
         </div>
