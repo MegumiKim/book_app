@@ -12,8 +12,8 @@ const MyReview = ({
 
   useEffect(() => {
     const fetchData = async () => {
-      // const URL = `http://localhost:5000/books/${id}`;
-      const URL = `https://book-share-app.onrender.com/books/${id}`;
+      const URL = `http://localhost:4000/api/v1/books/${id}`;
+      // const URL = `https://book-share-app.onrender.com/books/${id}`;
       const result = await fetch(URL);
       const jsonData = await result.json();
 

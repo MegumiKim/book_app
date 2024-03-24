@@ -3,6 +3,7 @@ import NavBar from "./components/NavBar";
 import Home from "./pages/Home/Home";
 import SingleBook from "./pages/SingleBook/SingleBook";
 import MyPage from "./pages/MyPage/MyPage";
+import MyShelf from "./pages/MyShelf/MyShelf";
 
 const App = () => {
   return (
@@ -15,6 +16,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/user" element={<MyPage />} />
+          <Route path="/myshelf/:id" element={<MyShelf />} />
           <Route path="/details/:id" element={<SingleBook />} />
         </Routes>
       </div>

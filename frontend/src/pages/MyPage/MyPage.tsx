@@ -82,9 +82,7 @@ const MyPage = () => {
 
         {loading && (
           <div className="w-full justify-center flex flex-col gap-4 mb-10">
-            <p className="m-auto">
-              Patience please...loading data in a moment.
-            </p>
+            <p className="m-auto">Loading...</p>
             <span className="m-auto loading loading-spinner text-secondary"></span>
           </div>
         )}

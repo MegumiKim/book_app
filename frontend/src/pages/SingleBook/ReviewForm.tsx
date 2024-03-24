@@ -4,6 +4,8 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import RatingForm from "./RatingForm";
 import { GoogleBookDataType, MyBookType } from "../../types";
 
+import { handleSubmitReview } from "./handleSubmitReview";
+
 interface GoogleBookData {
   volumeInfo: GoogleBookDataType;
   id?: "string";
@@ -13,7 +15,7 @@ const ReviewForm = (props: {
   data: GoogleBookData;
   onReviewPosted: () => void;
 }) => {
-  console.log(props.data);
+  // console.log(props.data);
 
   const book = props.data.volumeInfo;
 
@@ -25,7 +27,7 @@ const ReviewForm = (props: {
 
   const {
     register,
-    handleSubmit,
+    // handleSubmit,
     formState: { errors },
     reset,
   } = useForm();
@@ -86,9 +88,10 @@ const ReviewForm = (props: {
         </button>
       </form>
       <form
-        onSubmit={(e) =>
-          handleSubmit((data, e) => onSubmitHandler(data as MyBookType, e))(e)
-        }
+        // onSubmit={(e) =>
+        //   handleSubmit((data, e) => onSubmitHandler(data as MyBookType, e))(e)
+        // }
+        onSubmit={(e) => handleSubmitReview(props.data, e)}
         className="mx-auto max-w-xl"
         id="review-form"
       >
