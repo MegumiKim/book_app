@@ -1,10 +1,15 @@
 // ReviewForm.js
 import { useState } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
+// import { SubmitHandler, useForm } from "react-hook-form";
 import RatingForm from "./RatingForm";
 import { GoogleBookDataType, MyBookType } from "../../types";
-
-import { handleSubmitReview } from "./handleSubmitReview";
+import { useContext } from "react";
+import { UserContext } from "../../context/BookContext.tsx";
+import { handleSubmitReview } from "./handleSubmitReview.tsx";
+import { BASE_URL } from "../../utils/constant.ts";
+import { postAPI } from "../../APICalls/postAPI.ts";
+import { createBook } from "../../APICalls/createBook.ts";
+import { checkIfBookExists } from "../../APICalls/checkIfBookExists.ts";
 
 interface GoogleBookData {
   volumeInfo: GoogleBookDataType;
@@ -15,71 +20,39 @@ const ReviewForm = (props: {
   data: GoogleBookData;
   onReviewPosted: () => void;
 }) => {
-  // console.log(props.data);
-
   const book = props.data.volumeInfo;
-
+  const book_id = props.data.id;
+  const { user } = useContext(UserContext);
   const [rating, setRating] = useState(0);
+  const [reviewText, setReviewText] = useState("");
+
+  const reviewURL = BASE_URL + `reviews/user/${user.user_id}`;
 
   const handleRatingChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setRating(Number(event.target.value));
   };
 
-  const {
-    register,
-    // handleSubmit,
-    formState: { errors },
-    reset,
-  } = useForm();
-
-  // const apiURL = "http://localhost:5000/books/" + props.data.id;
-  const apiURL = "https://book-share-app.onrender.com/books/" + props.data.id;
-
-  const onSubmitHandler: SubmitHandler<MyBookType> = async (data) => {
-    const body = {
-      title: book?.title,
-      author: book?.authors,
-      review: {
-        rating,
-        text: data.review,
-      },
-      image: book?.imageLinks?.thumbnail || "",
-      status: "read",
-      id: book?.id || "",
-    };
-
-    const options = {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        // authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(body),
-    };
-
-    try {
-      const result = await fetch(apiURL, options);
-      // const json = await result.json();
-
-      if (result.ok) {
-        // Handle the json response, if needed
-        // console.log(json);
-        props.onReviewPosted();
-      } else {
-        throw new Error("failed to post review");
-      }
-    } catch (error) {
-      console.log(error);
-    } finally {
-      document.getElementById("closeBtn")?.click();
-      reset();
-    }
+  const review = {
+    google_book_id: book_id,
+    status: "have read",
+    review: reviewText,
+    rating: rating,
+    read_date: "2023-01-15",
   };
+  const submitReviewForm = async (review, e) => {
+    e.preventDefault();
+    const bookExists = await checkIfBookExists(book_id);
 
+    if (bookExists) {
+      postAPI(reviewURL, review);
+    }
+    await createBook(book, book_id);
+    postAPI(reviewURL, review);
+    // console.log(review);
+  };
   return (
     <main className="container ">
       <form method="dialog">
-        {/* if there is a button in form, it will close the modal */}
         <button
           id="closeBtn"
           className="btn btn-sm btn-circle btn-ghost absolute right-4 top-2"
@@ -88,10 +61,12 @@ const ReviewForm = (props: {
         </button>
       </form>
       <form
+        onSubmit={(e) => submitReviewForm(review, e)}
         // onSubmit={(e) =>
-        //   handleSubmit((data, e) => onSubmitHandler(data as MyBookType, e))(e)
+        //   handleSubmit((data, e) =>
+        //     handleSubmitReview(data, book, book_id, rating, e)
+        //   )(e)
         // }
-        onSubmit={(e) => handleSubmitReview(props.data, e)}
         className="mx-auto max-w-xl"
         id="review-form"
       >
@@ -104,13 +79,15 @@ const ReviewForm = (props: {
           </label>
           <textarea
             id="review"
-            {...register("review", { required: "Review text is required" })}
+            // {...register("review", { required: "Review text is required" })}
             className="w-full border rounded-md p-2 h-40"
             placeholder="Summary / Key take-away / Quotes etc..."
+            value={reviewText}
+            onChange={(e) => setReviewText(e.target.value)}
           ></textarea>
-          {errors.review && (
+          {/* {errors.review && (
             <p className="text-red-500 text-xs mt-1">An Error occurred</p>
-          )}
+          )} */}
         </div>
         <div className="mb-4">
           <button

@@ -2,6 +2,9 @@ const express = require("express");
 const db = require("../db/index.js");
 const router = express.Router();
 
+const fs = require("fs");
+const path = require("path");
+
 //Get all reviews
 router.get("/", async (req, res) => {
   try {
@@ -25,7 +28,7 @@ router.get("/", async (req, res) => {
 router.get("/:id", async (req, res) => {
   try {
     const results = await db.query(
-      "select * from user_book_relationships WHERE book_id = $1;",
+      "select * from user_book_relationships WHERE google_book_id = $1;",
       [req.params.id]
     );
 
@@ -41,11 +44,11 @@ router.get("/:id", async (req, res) => {
 
 //Get all books for a specific user
 router.get("/user/:id", async (req, res) => {
+  const sqlFilePath = path.join(__dirname, "..", "sql", "booksByUser.sql");
+  const sqlQuery = fs.readFileSync(sqlFilePath, { encoding: "utf-8" });
+
   try {
-    const results = await db.query(
-      "select * from user_book_relationships WHERE user_id = $1;",
-      [req.params.id]
-    );
+    const results = await db.query(sqlQuery, [req.params.id]);
 
     res.status(200).json({
       status: "success",
@@ -58,19 +61,19 @@ router.get("/user/:id", async (req, res) => {
 });
 
 // Add a book in user's shelf
-router.post("/:id", async (req, res) => {
+router.post("/user/:id", async (req, res) => {
+  const sqlFilePath = path.join(__dirname, "..", "sql", "insertToUBR.sql");
+  const sqlQuery = fs.readFileSync(sqlFilePath, { encoding: "utf-8" });
+
   try {
-    const results = await db.query(
-      "INSERT INTO user_book_relationships(user_id, book_id, status, review, rating, read_date) VALUES ($1, $2, $3, $4, $5, $6) returning *;",
-      [
-        req.body.user_id,
-        req.params.id,
-        req.body.status,
-        req.body.review,
-        req.body.rating,
-        req.body.read_date,
-      ]
-    );
+    const results = await db.query(sqlQuery, [
+      req.params.id,
+      req.body.google_book_id,
+      req.body.status,
+      req.body.review,
+      req.body.rating,
+      req.body.read_date,
+    ]);
 
     res.status(201).json({
       status: "success",
@@ -78,6 +81,13 @@ router.post("/:id", async (req, res) => {
     });
   } catch (error) {
     console.log(error);
+    res.status(500).json({
+      status: "error",
+      message: "An error occurred while fetching data",
+      error: error.detail,
+      errorCode: error.code,
+      req: req.body,
+    });
   }
 });
 

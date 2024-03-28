@@ -15,10 +15,12 @@ router.get("/", async (req, res) => {
       results: results.rows.length,
       data: results.rows,
     });
-
-    console.log(results.rows);
   } catch (error) {
     console.log(error);
+    res.status(500).json({
+      status: "error",
+      message: "An error occurred while fetching data.",
+    });
   }
 });
 
@@ -26,7 +28,7 @@ router.get("/", async (req, res) => {
 router.get("/:id", async (req, res) => {
   try {
     const results = await db.query(
-      "SELECT * FROM books WHERE book_id = $1",
+      "SELECT * FROM books WHERE google_book_id = $1",
       // "select * from books left join (select books_id, count(*), TRUNC(AVG(rating),1) as average_rating from reviews group by books_id) reviews on books.id = reviews.books_id WHERE id = $1",
       [req.params.id]
     );
@@ -56,9 +58,14 @@ router.get("/:id", async (req, res) => {
 router.post("/", async (req, res) => {
   try {
     const results = await db.query(
-      "INSERT INTO books(google_book_id, title, author, isbn) values ($1, $2, $3, $4) returning *;",
-      // "INSERT INTO books (name, location, price_range) VALUES ($1, $2, $3) returning *;",
-      [req.body.google_book_id, req.body.title, req.body.author, req.body.isbn]
+      "INSERT INTO books(google_book_id, title, author, genre, imageurl) values ($1, $2, $3, $4, $5) returning *;",
+      [
+        req.body.google_book_id,
+        req.body.title,
+        req.body.author,
+        req.body.genre,
+        req.body.imageurl,
+      ]
     );
 
     res.status(201).json({

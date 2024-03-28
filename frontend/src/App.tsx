@@ -4,6 +4,8 @@ import Home from "./pages/Home/Home";
 import SingleBook from "./pages/SingleBook/SingleBook";
 import MyPage from "./pages/MyPage/MyPage";
 import MyShelf from "./pages/MyShelf/MyShelf";
+import Login from "./pages/LogIn/Login";
+import SignUp from "./pages/SignUp/signup";
 
 const App = () => {
   return (
@@ -14,9 +16,11 @@ const App = () => {
       >
         <NavBar />
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/" element={<Login />} />
+          <Route path="/home" element={<Home />} />
           <Route path="/user" element={<MyPage />} />
-          <Route path="/myshelf/:id" element={<MyShelf />} />
+          <Route path="/user/:id" element={<MyShelf />} />
           <Route path="/details/:id" element={<SingleBook />} />
         </Routes>
       </div>

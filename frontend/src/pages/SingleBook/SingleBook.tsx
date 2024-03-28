@@ -6,6 +6,7 @@ import { useState } from "react";
 import AddToRead from "./AddToRead.tsx";
 import RatingStars from "../../components/RatingStars.tsx";
 import { GoogleBookDataType } from "../../types.ts";
+import { AddToReadBtn } from "./AddToReadBtn.tsx";
 
 const URL = import.meta.env.VITE_REACT_APP_GOOGLE_BOOK_API;
 
@@ -97,11 +98,12 @@ const SingleBook = () => {
                       >
                         Write a review
                       </button>
-                      <AddToRead
+                      <AddToReadBtn book={book} id={id} />
+                      {/* <AddToRead
                         data={data}
                         id={id}
                         updateUserFeedback={updateUserFeedback}
-                      />
+                      /> */}
                     </div>
                     <p className="text-green-400">{userFeedback}</p>
                   </div>
@@ -119,7 +121,7 @@ const SingleBook = () => {
                   className="leading-7"
                   dangerouslySetInnerHTML={{ __html: book.description }}
                 ></div>
-                <MyReview id={id} reviewUpdated={reviewUpdated} />
+                {/* <MyReview id={id} reviewUpdated={reviewUpdated} /> */}
               </div>
             </div>
 

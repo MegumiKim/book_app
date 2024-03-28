@@ -11,7 +11,8 @@ const BookCard: React.FC<BookCardProps> = ({ data, id }) => {
 
   return (
     <Link
-      to={`details/${id}`}
+      key={id}
+      to={`/details/${id}`}
       className="card card-side w-full shadow-md text-left text-slate-200 bg-opacity-20 bg-slate-700 hover:bg-opacity-60 relative"
     >
       <figure className="w-20  sm:w-40">

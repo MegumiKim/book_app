@@ -35,7 +35,43 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-//Create an user
+router.post("/login", async (req, res) => {
+  try {
+    const { username, password } = req.body;
+
+    // Query to check if a user with the given username and password exists
+    const query =
+      "SELECT user_id, name FROM users WHERE name = $1 AND password = $2;";
+    const results = await db.query(query, [username, password]);
+
+    // If the query finds a user, it means the login credentials are correct
+    if (results.rows.length > 0) {
+      const user = results.rows[0];
+      res.status(200).json({
+        status: "success",
+        data: {
+          user_id: user.user_id,
+          name: user.name,
+        },
+      });
+    } else {
+      // If no user is found, it means the credentials are incorrect
+      // You can choose to send a more specific error code here, such as 401 for unauthorized
+      res.status(401).json({
+        status: "fail",
+        message: "Invalid username or password",
+      });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      status: "error",
+      message: "An error occurred during the login process",
+    });
+  }
+});
+
+//Create an user / Sign up
 router.post("/", async (req, res) => {
   try {
     const results = await db.query(
@@ -43,13 +79,21 @@ router.post("/", async (req, res) => {
       // "INSERT INTO books (name, location, price_range) VALUES ($1, $2, $3) returning *;",
       [req.body.name, req.body.password]
     );
-
+    const user = results.rows[0];
     res.status(201).json({
       status: "success",
-      data: results.rows[0],
+      data: {
+        user_id: user.user_id,
+        name: user.name,
+      },
     });
   } catch (error) {
-    console.log(error);
+    res.status(409).json({
+      status: "fail",
+      error: error.detail,
+      errorCode: error.code,
+      message: "Username already exists",
+    });
   }
 });
 

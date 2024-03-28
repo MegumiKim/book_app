@@ -1,34 +1,62 @@
 // import MyPageCard from "./MyPageCard";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useFetch } from "../../hooks/useFetch";
 // import { SetStateAction, useEffect, useState } from "react";
 // import { BookDataType } from "../../types";
 import ReadBooks from "./ReadBooks";
 import { useParams } from "react-router-dom";
+import { UserContext } from "../../context/BookContext";
+import { BASE_URL } from "../../utils/constant";
+import BookCard from "./BookCard";
 
 // import Tabs from "./Tabs";
 interface UserType {
   name: string;
-  id: number;
+  user_id: number;
 }
-const BASE_URL = import.meta.env.VITE_REACT_APP_BASE_URL;
+
+// const BASE_URL = import.meta.env.VITE_REACT_APP_BASE_URL;
 
 const MyShelf = () => {
   const { id } = useParams();
-  const userURL = BASE_URL + "users/" + id;
-  const { data, loading, error } = useFetch(userURL);
-  const currentUser = data?.data || {};
+  const { user, setUser } = useContext(UserContext);
 
-  const [user, setUser] = useState({});
+  const bookShelfURL = BASE_URL + "reviews/user/" + id;
+
+  const { data, loading, error } = useFetch(bookShelfURL);
+  const [bookShelf, setBookShelf] = useState([]);
+
   useEffect(() => {
-    setUser(currentUser);
+    setBookShelf(data?.data);
+    console.log(bookShelf);
   }, [data]);
 
   return (
     <main>
-      <h1>book shelf</h1>
-      <h1>Welcome Back {user.name}</h1>
-      <ReadBooks />
+      <h2>Welcome Back {user.name}!</h2>
+      <h1>Book shelf ({bookShelf?.length}) </h1>
+
+      {loading && (
+        <div className="w-full justify-center flex flex-col gap-4 mb-10">
+          <p className="m-auto">Loading...</p>
+          <span className="m-auto loading loading-spinner text-secondary"></span>
+        </div>
+      )}
+      {error && (
+        <div className="text-red-400 text-xl">Failed to fetch data :-/</div>
+      )}
+
+      <div className="grid grid-cols-2 gap-3">
+        {bookShelf?.length
+          ? bookShelf.map((book) => (
+              <BookCard
+                id={book.google_book_id}
+                book={book}
+                key={book.google_book_id}
+              />
+            ))
+          : "No book is added in your bookshelf"}
+      </div>
     </main>
   );
 };

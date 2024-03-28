@@ -28,12 +28,19 @@ CREATE TYPE book_status AS ENUM ('have read', 'reading', 'to read');
 
 CREATE TABLE user_book_relationships (
     user_id INT NOT NULL,
-    google_book_id VARCHAR(255) UNIQUE NOT NULL,
-    status book_status NOT NULL, 
+    google_book_id VARCHAR(255) NOT NULL,
+    status book_status, 
     review TEXT,
     rating INTEGER CHECK (rating >= 1 AND rating <= 5),
     read_date DATE,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, 
     PRIMARY KEY (user_id, google_book_id),
     FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
     FOREIGN KEY (google_book_id) REFERENCES books(google_book_id) ON DELETE CASCADE
 );
+
+ALTER TABLE books
+ADD COLUMN genre VARCHAR(255) NOT NULL DEFAULT 'Unknown';
+
+ALTER TABLE books
+RENAME COLUMN imageurl TO imageUrl;

@@ -1,1 +1,0 @@
-select * from users inner join user_book_relationships on users.user_id = user_book_relationships.user_id where users.user_id = 2
