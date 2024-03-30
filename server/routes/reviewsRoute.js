@@ -1,7 +1,7 @@
 const express = require("express");
 const db = require("../db/index.js");
 const router = express.Router();
-
+const { checkIfBookExists, addBookToTable } = require("./books.js");
 const fs = require("fs");
 const path = require("path");
 
@@ -64,11 +64,20 @@ router.get("/user/:id", async (req, res) => {
 router.post("/user/:id", async (req, res) => {
   const sqlFilePath = path.join(__dirname, "..", "sql", "insertToUBR.sql");
   const sqlQuery = fs.readFileSync(sqlFilePath, { encoding: "utf-8" });
+  const book_id = req.body.google_book_id;
 
   try {
+    // Check if the book exists in the 'books' table
+    const bookExists = await checkIfBookExists(book_id);
+
+    // If not, add the book to the 'books' table
+    if (!bookExists) {
+      await addBookToTable(req.body);
+    }
+
     const results = await db.query(sqlQuery, [
       req.params.id,
-      req.body.google_book_id,
+      book_id,
       req.body.status,
       req.body.review,
       req.body.rating,

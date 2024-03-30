@@ -3,6 +3,8 @@ SELECT
     b.title,
     ubr.status,
     ubr.read_date,
+    ubr.review,
+    ubr.rating,
     b.imageurl,
     b.genre
 FROM books b

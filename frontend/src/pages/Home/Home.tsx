@@ -2,7 +2,7 @@
 import { useContext } from "react";
 import BookSearch from "./BookSearch";
 import BookCard from "./BookCard";
-import { SearchResultContext } from "../../context/BookContext";
+import { SearchResultContext } from "../../context/SearchResultContext";
 import { GoogleBookDataType } from "../../types";
 import RandomQuote from "./RandomQuote";
 
@@ -14,7 +14,7 @@ interface SearchResultContextType {
 const Home = () => {
   const { searchResult, setSearchResult } = useContext(
     SearchResultContext
-  ) as SearchResultContextType;
+  ) as unknown as SearchResultContextType;
 
   const handleSearch = (result: []) => {
     setSearchResult(result);

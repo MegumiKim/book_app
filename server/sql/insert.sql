@@ -1,7 +1,5 @@
-INSERT INTO books (google_book_id, title, author, isbn) VALUES
-('1A2B3C4D', 'The Great Gatsby', 'F. Scott Fitzgerald', '1234567890123'),
-('2B3C4D5E', '1984', 'George Orwell', '2345678901234'),
-('3C4D5E6F', 'To Kill a Mockingbird', 'Harper Lee', '3456789012345');
+INSERT INTO books (google_book_id, title, author, imageUrl, genre) VALUES
+
 
 INSERT INTO users (name, password) VALUES
 ('UserOne', 'password1'),

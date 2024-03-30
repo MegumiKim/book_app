@@ -1,10 +1,10 @@
 const RatingForm = ({
+  selectedRating,
   handleChange,
 }: {
+  selectedRating: number;
   handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }) => {
-  // console.log(rating);
-
   return (
     <div className="rating rating-sm">
       {[1, 2, 3, 4, 5].map((index) => (
@@ -13,7 +13,9 @@ const RatingForm = ({
           type="radio"
           value={index}
           name="rating-2"
-          className="mask mask-star-2 bg-green-300"
+          className={`mask mask-star-2 ${
+            selectedRating >= index ? "bg-green-300" : ""
+          }`}
           onChange={handleChange}
           defaultChecked={false}
         />

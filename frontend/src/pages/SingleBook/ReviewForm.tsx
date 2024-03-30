@@ -1,15 +1,10 @@
-// ReviewForm.js
 import { useState } from "react";
-// import { SubmitHandler, useForm } from "react-hook-form";
 import RatingForm from "./RatingForm";
-import { GoogleBookDataType, MyBookType } from "../../types";
+import { GoogleBookDataType } from "../../types";
 import { useContext } from "react";
-import { UserContext } from "../../context/BookContext.tsx";
-import { handleSubmitReview } from "./handleSubmitReview.tsx";
+import { UserContext } from "../../context/UserContext.tsx";
 import { BASE_URL } from "../../utils/constant.ts";
 import { postAPI } from "../../APICalls/postAPI.ts";
-import { createBook } from "../../APICalls/createBook.ts";
-import { checkIfBookExists } from "../../APICalls/checkIfBookExists.ts";
 
 interface GoogleBookData {
   volumeInfo: GoogleBookDataType;
@@ -23,33 +18,33 @@ const ReviewForm = (props: {
   const book = props.data.volumeInfo;
   const book_id = props.data.id;
   const { user } = useContext(UserContext);
-  const [rating, setRating] = useState(0);
+  const [selectedRating, setSelectedRating] = useState<number | null>(null);
+  const [reviewDate, setReviewDate] = useState("");
   const [reviewText, setReviewText] = useState("");
 
   const reviewURL = BASE_URL + `reviews/user/${user.user_id}`;
 
   const handleRatingChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setRating(Number(event.target.value));
+    setSelectedRating(Number(event.target.value));
   };
 
   const review = {
     google_book_id: book_id,
     status: "have read",
     review: reviewText,
-    rating: rating,
-    read_date: "2023-01-15",
+    rating: selectedRating,
+    read_date: reviewDate,
+    title: book.title,
+    author: book.authors?.[0],
+    genre: book.categories?.[0],
+    imageUrl: book.imageLinks?.thumbnail,
   };
-  const submitReviewForm = async (review, e) => {
-    e.preventDefault();
-    const bookExists = await checkIfBookExists(book_id);
 
-    if (bookExists) {
-      postAPI(reviewURL, review);
-    }
-    await createBook(book, book_id);
-    postAPI(reviewURL, review);
-    // console.log(review);
+  const submitReviewForm = async (body, e) => {
+    e.preventDefault();
+    postAPI(reviewURL, body);
   };
+
   return (
     <main className="container ">
       <form method="dialog">
@@ -62,21 +57,24 @@ const ReviewForm = (props: {
       </form>
       <form
         onSubmit={(e) => submitReviewForm(review, e)}
-        // onSubmit={(e) =>
-        //   handleSubmit((data, e) =>
-        //     handleSubmitReview(data, book, book_id, rating, e)
-        //   )(e)
-        // }
         className="mx-auto max-w-xl"
         id="review-form"
       >
         <h3 className="font-bold text-lg mb-4">Write a review</h3>
 
-        <RatingForm handleChange={handleRatingChange} />
+        <RatingForm
+          handleChange={handleRatingChange}
+          selectedRating={selectedRating}
+        />
         <div className="mb-4">
           <label htmlFor="review" className="block text-sm font-bold mb-2">
             Review Text
           </label>
+          <input
+            type="date"
+            value={reviewDate}
+            onChange={(e) => setReviewDate(e.target.value)}
+          />
           <textarea
             id="review"
             // {...register("review", { required: "Review text is required" })}

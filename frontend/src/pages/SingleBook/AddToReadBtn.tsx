@@ -2,12 +2,12 @@ import { createBook } from "../../APICalls/createBook";
 import { checkIfBookExists } from "../../APICalls/checkIfBookExists";
 import { addToRead } from "../../APICalls/addToRead";
 import { useContext } from "react";
-import { UserContext } from "../../context/BookContext";
+import { UserContext } from "../../context/UserContext";
 
 export const AddToReadBtn = (props) => {
   const book = props.book;
   const book_id = props.id;
-  const { user, setUser } = useContext(UserContext);
+  const { user } = useContext(UserContext);
   const user_id = user.user_id;
 
   return (

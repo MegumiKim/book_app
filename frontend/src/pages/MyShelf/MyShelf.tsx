@@ -1,25 +1,18 @@
-// import MyPageCard from "./MyPageCard";
 import { useContext, useEffect, useState } from "react";
 import { useFetch } from "../../hooks/useFetch";
-// import { SetStateAction, useEffect, useState } from "react";
-// import { BookDataType } from "../../types";
-import ReadBooks from "./ReadBooks";
 import { useParams } from "react-router-dom";
-import { UserContext } from "../../context/BookContext";
+import { UserContext } from "../../context/UserContext";
 import { BASE_URL } from "../../utils/constant";
 import BookCard from "./BookCard";
 
-// import Tabs from "./Tabs";
 interface UserType {
   name: string;
   user_id: number;
 }
 
-// const BASE_URL = import.meta.env.VITE_REACT_APP_BASE_URL;
-
 const MyShelf = () => {
   const { id } = useParams();
-  const { user, setUser } = useContext(UserContext);
+  const { user } = useContext(UserContext);
 
   const bookShelfURL = BASE_URL + "reviews/user/" + id;
 
