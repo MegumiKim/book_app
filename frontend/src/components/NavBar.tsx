@@ -19,9 +19,6 @@ const NavBar = () => {
             </Link>
           </li>
           <li>
-            <Link to="/user">Bookshelf</Link>
-          </li>
-          <li>
             <Link to={`/user/${user.user_id}`}>User</Link>
           </li>
         </ul>

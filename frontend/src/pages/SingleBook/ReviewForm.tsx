@@ -57,7 +57,7 @@ const ReviewForm = (props: {
       </form>
       <form
         onSubmit={(e) => submitReviewForm(review, e)}
-        className="mx-auto max-w-xl"
+        className="mx-auto max-w-xl flex flex-col gap-4"
         id="review-form"
       >
         <h3 className="font-bold text-lg mb-4">Write a review</h3>
@@ -66,27 +66,29 @@ const ReviewForm = (props: {
           handleChange={handleRatingChange}
           selectedRating={selectedRating}
         />
-        <div className="mb-4">
-          <label htmlFor="review" className="block text-sm font-bold mb-2">
-            Review Text
+        <div className="">
+          <label htmlFor="date" className="me-9 text-sm font-bold">
+            Date
           </label>
           <input
+            id="date"
             type="date"
             value={reviewDate}
             onChange={(e) => setReviewDate(e.target.value)}
+            required
           />
+        </div>
+        <label htmlFor="review" className="block text-sm font-bold">
+          Review Text
           <textarea
             id="review"
-            // {...register("review", { required: "Review text is required" })}
-            className="w-full border rounded-md p-2 h-40"
+            className="w-full border rounded-md p-2 h-40 mt-4"
             placeholder="Summary / Key take-away / Quotes etc..."
             value={reviewText}
             onChange={(e) => setReviewText(e.target.value)}
           ></textarea>
-          {/* {errors.review && (
-            <p className="text-red-500 text-xs mt-1">An Error occurred</p>
-          )} */}
-        </div>
+        </label>
+
         <div className="mb-4">
           <button
             type="submit"

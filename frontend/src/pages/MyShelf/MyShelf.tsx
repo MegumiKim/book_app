@@ -3,12 +3,7 @@ import { useFetch } from "../../hooks/useFetch";
 import { useParams } from "react-router-dom";
 import { UserContext } from "../../context/UserContext";
 import { BASE_URL } from "../../utils/constant";
-import BookCard from "./BookCard";
-
-interface UserType {
-  name: string;
-  user_id: number;
-}
+import BookCard from "../../components/BookCard";
 
 const MyShelf = () => {
   const { id } = useParams();
@@ -21,13 +16,13 @@ const MyShelf = () => {
 
   useEffect(() => {
     setBookShelf(data?.data);
-    console.log(bookShelf);
   }, [data]);
 
+  // console.log(bookShelf);
   return (
-    <main>
+    <main className="mx-5 max-w-6xl xl:mx-auto">
       <h2>Welcome Back {user.name}!</h2>
-      <h1>Book shelf ({bookShelf?.length}) </h1>
+      <h1 className="text-4xl mb-5">Book shelf ({bookShelf?.length}) </h1>
 
       {loading && (
         <div className="w-full justify-center flex flex-col gap-4 mb-10">
@@ -44,7 +39,10 @@ const MyShelf = () => {
           ? bookShelf.map((book) => (
               <BookCard
                 id={book.google_book_id}
-                book={book}
+                title={book.title}
+                status={book.status}
+                genre={book.genre}
+                thumbnail={book.imageurl}
                 key={book.google_book_id}
               />
             ))

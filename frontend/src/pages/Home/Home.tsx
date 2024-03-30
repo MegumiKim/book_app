@@ -1,7 +1,7 @@
 // import { useEffect, useState } from "react";
 import { useContext } from "react";
 import BookSearch from "./BookSearch";
-import BookCard from "./BookCard";
+import BookCard from "../../components/BookCard";
 import { SearchResultContext } from "../../context/SearchResultContext";
 import { GoogleBookDataType } from "../../types";
 import RandomQuote from "./RandomQuote";
@@ -18,6 +18,7 @@ const Home = () => {
 
   const handleSearch = (result: []) => {
     setSearchResult(result);
+    console.log(result);
   };
 
   // const handleLoadMore = () => {
@@ -39,6 +40,11 @@ const Home = () => {
                   (item: { volumeInfo: GoogleBookDataType; id: string }) => (
                     <BookCard
                       key={item.id}
+                      title={item.volumeInfo.title}
+                      author={item.volumeInfo.authors?.[0]}
+                      genre={item.volumeInfo.categories?.[0]}
+                      thumbnail={item.volumeInfo.imageLinks?.thumbnail}
+                      status={null}
                       data={item.volumeInfo}
                       id={item.id}
                     />
