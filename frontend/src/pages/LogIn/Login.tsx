@@ -22,7 +22,6 @@ function Login() {
       password: password,
     };
     const result = await postAPI(loginURL, body);
-    console.log(result);
     if (result.status === "success") {
       setUser(result.data);
       navigate("/home");

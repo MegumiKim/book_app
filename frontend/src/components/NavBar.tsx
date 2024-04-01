@@ -1,9 +1,20 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { UserContext } from "../context/UserContext";
 
 const NavBar = () => {
-  const { user } = useContext(UserContext);
+  const navigate = useNavigate();
+  const { user, setUser } = useContext(UserContext);
+  const user_id = user.user_id || null;
+
+  function handleLogOut() {
+    setUser({
+      user_id: null,
+      name: "Guest",
+    });
+
+    navigate("/home");
+  }
   return (
     <nav className="navbar bg-transparent max-w-6xl m-auto text-slate-200">
       <div className="flex-1">
@@ -18,9 +29,21 @@ const NavBar = () => {
               Home
             </Link>
           </li>
-          <li>
-            <Link to={`/user/${user.user_id}`}>User</Link>
-          </li>
+
+          {!user_id ? (
+            <li>
+              <Link to={"/"}>Log in</Link>
+            </li>
+          ) : (
+            <>
+              <li>
+                <Link to={`/user/${user_id}`}>User</Link>
+              </li>
+              <li>
+                <button onClick={() => handleLogOut()}>Log Out</button>
+              </li>
+            </>
+          )}
         </ul>
       </div>
     </nav>

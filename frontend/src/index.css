@@ -2,6 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+main {
+  margin: 0px 5%;
+  max-width: 1024px;
+  margin: 0 auto;
+}
+
+h1 {
+  font-size: 2.5em;
+}
+
 #background {
   background-image: url("/camp-7103189_1920.png");
   z-index: -1;
@@ -12,17 +22,6 @@
   background-size: cover;
   background-repeat: no-repeat;
   margin: auto;
-  /* z-index: -1;
-  position: fixed;
-  top: 0;
-  height: 100%;
-  width: 100%;
-  object-fit: cover;
-  background-repeat: no-repeat;
-  background-position-x: center;
-  background-position-y: top;
-  margin: auto; */
-  /* opacity: 50%; */
 }
 
 #background2 {
@@ -47,4 +46,27 @@
   background-size: cover;
   background-repeat: no-repeat;
   margin: auto;
+}
+
+/* modal */
+
+.custom_modal_backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.custom_modal {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  max-width: 500px;
+  width: 100%;
+  color: gray;
 }

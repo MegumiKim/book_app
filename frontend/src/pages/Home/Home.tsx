@@ -25,7 +25,7 @@ const Home = () => {
   //   console.log("load more");
   // };
   return (
-    <main className="">
+    <main className="mx-0">
       <div id="background"></div>
 
       <RandomQuote />

@@ -102,7 +102,7 @@ module.exports = router;
 //Delete
 router.delete("/:id", async (req, res) => {
   try {
-    await db.query("DELETE FROM users WHERE id = $1", [req.params.id]);
+    await db.query("DELETE FROM users WHERE user_id = $1", [req.params.id]);
     res.status(204).json({
       status: "success",
     });
