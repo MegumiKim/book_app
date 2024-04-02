@@ -1,10 +1,10 @@
-import { useParams, useNavigate } from "react-router-dom";
-import { useFetch } from "../../hooks/useFetch.tsx";
-import ReviewForm from "./ReviewForm.tsx";
 import { useState } from "react";
-import RatingStars from "../../components/RatingStars.tsx";
+import { useParams } from "react-router-dom";
+import { useFetch } from "../../hooks/useFetch.tsx";
 import { GoogleBookDataType } from "../../types.ts";
+import RatingStars from "../../components/RatingStars.tsx";
 import { AddToReadBtn } from "./AddToReadBtn.tsx";
+import ReviewForm from "./ReviewForm.tsx";
 import Modal from "../../components/Modal.tsx";
 
 const URL = import.meta.env.VITE_REACT_APP_GOOGLE_BOOK_API;
@@ -20,86 +20,81 @@ const SingleBook = () => {
     `${URL}volumes/${id}`
   );
   const book = data?.volumeInfo;
-  const [setReviewUpdated] = useState(false);
+  // const [setReviewUpdated] = useState(false);
   const [isModalOpen, setModalOpen] = useState(false);
-  const navigate = useNavigate();
-  console.log(data);
 
   const handleReviewPosted: () => void = () => {
+    setModalOpen(false);
     // Update the state to trigger a re-render
-    setReviewUpdated((prev) => !prev);
+    // setReviewUpdated((prev) => !prev);
   };
   return (
-    <main className="">
-      <button
-        className="underline mb-5 hover:bg-slate-500 hover:text-slate-100 px-2 rounded-lg"
-        onClick={() => navigate(-1)}
-      >
-        Back
-      </button>
-      {loading && <p>Loading...</p>}
-      {error && <p>Failed to load page...</p>}
+    <main>
+      {loading && <p className="loading-spinner">Loading...</p>}
+      {error && <h1>Failed to load page :-/</h1>}
       {book && (
-        <div className="container mx-auto max-w-screen-2xl" id="container">
-          <div className="my-10 text-center">
-            <h1 className="text-3xl md:text-6xl font-bold ">{book.title}</h1>
+        <div className="container mx-auto max-w-screen-2xl">
+          {/* Top : Title and subtitle */}
+          <div className="my-10 sm:my-16 text-center">
+            <h1 className="text-4xl sm:text-6xl font-bold max-w-[800px] mx-auto">
+              {book.title}
+            </h1>
             {book.subtitle && (
-              <h2 className="text-xl md:text-2xl font-light mt-2 ">
+              <h2 className="text-xl md:text-2xl font-light mt-5 ">
                 {book.subtitle}
               </h2>
             )}
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+          {/* Bottom: 2 columns part */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
             {/* Left side with image */}
             <div className="col-span-1">
               {/* Categories, Published Date, Publisher, and Average Rating */}
-
-              <div className="flex my-5 gap-5">
-                <img
-                  className="max-w-full h-auto"
-                  alt={`book cover of ${book.title}`}
-                  src={
-                    book.imageLinks?.thumbnail
-                      ? book.imageLinks.thumbnail
-                      : "/night.jpg"
-                  }
-                />
-
+              <div className="flex flex-col sm:flex-row my-5 justify-around gap-5">
                 <div>
+                  <img
+                    className="mx-auto object-cover "
+                    alt={`book cover of ${book.title}`}
+                    src={
+                      book.imageLinks?.thumbnail
+                        ? book.imageLinks.thumbnail
+                        : "/night.jpg"
+                    }
+                  />
+                </div>
+
+                <div className="divide-y-2 divide-gray-500 ">
                   {/* Authors */}
-                  <ul className="flex flex-wrap gap-2 mt-4">
-                    By
+                  <ul className=" py-2 text-bold text-lg gap-2 ">
                     {book.authors?.map((author: string) => (
-                      <li key={author} className="px-4 py-1 text-sm">
+                      <li key={author} className="">
                         {author}
                       </li>
                     ))}
                   </ul>
                   {book.averageRating && (
-                    <p className="mt-4">
+                    <p className="py-2">
                       Average Rating:{" "}
                       <RatingStars rating={book.averageRating} />
                     </p>
                   )}
-                  {book.categories?.length > 0 && (
-                    <p className="mt-2">{book.categories[0]}</p>
+                  {book.categories && (
+                    <p className="align-middle py-2">{book.categories[0]}</p>
                   )}
-                  <div className="mt-2">
+                  <div className="py-2">
                     <p>
                       Published:{" "}
                       {book.publishedDate ? book.publishedDate : "N/A"}
                     </p>
-                    {book.publisher && (
-                      <p className="mt-2">Publisher: {book.publisher}</p>
-                    )}
+                    {book.publisher && <p>Publisher: {book.publisher}</p>}
                   </div>
                 </div>
               </div>
               {/* Actions */}
-              <div className="mt-6 flex gap-4">
+              <div className="mt-6 flex gap-4 justify-center">
                 <button
                   onClick={() => setModalOpen(true)}
-                  className="btn btn-success"
+                  className="btn btn-accent flex-1"
                 >
                   Write a review
                 </button>
@@ -110,7 +105,7 @@ const SingleBook = () => {
             {/* Right side with book details */}
 
             <div
-              className=""
+              className="text-lg max-h-[500px] overflow-scroll"
               dangerouslySetInnerHTML={{ __html: book.description }}
             ></div>
           </div>

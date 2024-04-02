@@ -25,9 +25,8 @@ const Home = () => {
   //   console.log("load more");
   // };
   return (
-    <main className="mx-0">
-      <div id="background"></div>
-
+    <main className="" id="home">
+      <div className="background" id="background"></div>
       <RandomQuote />
       <BookSearch handleSearch={(result: []) => handleSearch(result)} />
 
@@ -35,7 +34,7 @@ const Home = () => {
         <div className="mx-auto">
           {searchResult?.length ? (
             <div className="flex flex-col">
-              <div className="grid gap-5 mx-auto sm:grid-cols-2 lg:grid-cols-3 max-w-6xl px-4">
+              <div className="grid gap-5 mx-auto sm:grid-cols-2 max-w-6xl px-4">
                 {searchResult.map(
                   (item: { volumeInfo: GoogleBookDataType; id: string }) => (
                     <BookCard
@@ -44,6 +43,7 @@ const Home = () => {
                       author={item.volumeInfo.authors?.[0]}
                       genre={item.volumeInfo.categories?.[0]}
                       thumbnail={item.volumeInfo.imageLinks?.thumbnail}
+                      avr_rating={item.volumeInfo.averageRating}
                       status={null}
                       data={item.volumeInfo}
                       id={item.id}

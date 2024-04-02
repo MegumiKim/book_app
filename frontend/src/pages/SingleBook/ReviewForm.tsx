@@ -21,7 +21,7 @@ const ReviewForm = (props: {
   const [selectedRating, setSelectedRating] = useState<number | null>(null);
   const [reviewDate, setReviewDate] = useState("");
   const [reviewText, setReviewText] = useState("");
-
+  const onReviewPosted = props.onReviewPosted;
   const reviewURL = BASE_URL + `reviews/user/${user.user_id}`;
 
   const handleRatingChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -43,6 +43,8 @@ const ReviewForm = (props: {
   const submitReviewForm = async (body, e) => {
     e.preventDefault();
     postAPI(reviewURL, body);
+
+    onReviewPosted();
   };
 
   return (
@@ -50,7 +52,7 @@ const ReviewForm = (props: {
       onSubmit={(e) => submitReviewForm(review, e)}
       className="mx-auto max-w-xl flex flex-col gap-4"
     >
-      <h3 className="font-bold text-lg mb-4">Write a review</h3>
+      <h3 className="font-bold text-2xl mb-4">Write a review</h3>
 
       <RatingForm
         handleChange={handleRatingChange}
@@ -72,7 +74,7 @@ const ReviewForm = (props: {
         Review Text
         <textarea
           id="review"
-          className="w-full border rounded-md p-2 h-40 mt-4"
+          className="w-full border rounded-md p-2 h-40 sm:h-80 mt-4"
           placeholder="Summary / Key take-away / Quotes etc..."
           value={reviewText}
           onChange={(e) => setReviewText(e.target.value)}

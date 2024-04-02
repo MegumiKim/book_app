@@ -1,13 +1,25 @@
-const Modal = ({ isOpen, onClose, children }) => {
+import { ReactNode } from "react";
+
+// Define a type for your component's props
+type ModalProps = {
+  isOpen: boolean;
+  onClose: () => void; // assuming onClose doesn't need to receive any argument
+  children: ReactNode; // ReactNode allows any type of react children
+};
+
+const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
   if (!isOpen) return null;
 
   return (
     <div className="custom_modal_backdrop">
       <div className="custom_modal">
-        {children}
-        <button onClick={onClose} className="">
+        <button
+          onClick={onClose}
+          className="modal_close_btn btn btn-square btn-outline"
+        >
           Close
         </button>
+        {children}
       </div>
     </div>
   );

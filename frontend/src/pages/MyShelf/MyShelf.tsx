@@ -26,7 +26,15 @@ const MyShelf = () => {
 
   return (
     <main className="">
-      <h2>Welcome Back {user.name}!</h2>
+      <div className="sm:flex justify-between">
+        <button
+          className="btn mb-5 hover:bg-slate-500 hover:text-slate-100 btn-outline btn-xs"
+          onClick={() => navigate(-1)}
+        >
+          Back
+        </button>
+        <h2 className="text-lg btn bg-slate-700">Welcome Back {user.name}!</h2>
+      </div>
       <h1 className="mb-5">Book shelf ({bookShelf?.length}) </h1>
 
       {loading && (
@@ -56,11 +64,16 @@ const MyShelf = () => {
           : "No book is added in your bookshelf"}
       </div>
 
-      <button onClick={() => setModalOpen(true)}>Delete Account</button>
+      <button
+        onClick={() => setModalOpen(true)}
+        className="btn btn-link text-lg w-full text-center my-10"
+      >
+        Delete Account
+      </button>
 
       <Modal isOpen={isModalOpen} onClose={() => setModalOpen(false)}>
         <h2>Are you sure you want to delete account?</h2>
-        <div className="flex gap-5 my-5">
+        <div className="flex gap-5 my-5 ">
           <button
             onClick={() => setModalOpen(false)}
             className="btn btn-warning"

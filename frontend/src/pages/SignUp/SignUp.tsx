@@ -30,49 +30,68 @@ function SignUp() {
     }
   };
 
-  return (
-    <form
-      className="max-w-sm mx-auto my-10 text-white"
-      onSubmit={(e) => handleSubmit(e)}
-    >
-      {error && <p>{error}</p>}
+  const handleGuestLogin = () => {
+    const guestAccount = {
+      name: "Guest",
+      user_id: 1,
+    };
+    setUser(guestAccount);
+    navigate("/home");
+  };
 
-      <div className="mb-6">
-        <label htmlFor="username" className="block mb-2 text-sm font-medium ">
-          Username
-        </label>
-        <input
-          type="text"
-          id="username"
-          required
-          placeholder="ExampleUser"
-          className=" border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-      </div>
-      <div className="mb-6">
-        <label htmlFor="password" className="block mb-2 text-sm font-medium ">
-          Password
-        </label>
-        <input
-          type="password"
-          id="password"
-          required
-          placeholder="••••••••"
-          className="border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-      </div>
-      <button
-        type="submit"
-        className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"
+  return (
+    <main>
+      <div className="background" id="background2"></div>
+      <form
+        className="max-w-md my-10 text-white mx-5"
+        onSubmit={(e) => handleSubmit(e)}
       >
-        Sign up
-      </button>
-      <Link to="/">Log in</Link>
-    </form>
+        <h1 className="my-5">Simple Sign Up</h1>
+        {error && <p>{error}</p>}
+        <div className="mb-6">
+          <label htmlFor="username" className="block mb-2 text-sm font-medium ">
+            Username
+          </label>
+          <input
+            type="text"
+            id="username"
+            required
+            placeholder="ExampleUser"
+            className=" border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+        </div>
+        <div className="mb-6">
+          <label htmlFor="password" className="block mb-2 text-sm font-medium ">
+            Password
+          </label>
+          <input
+            type="password"
+            id="password"
+            required
+            placeholder="••••••••"
+            className="border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </div>
+        <div className="flex flex-col sm:flex-row gap-5">
+          <button
+            type="submit"
+            className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"
+          >
+            Sign up
+          </button>
+          <button className="btn-outline btn flex-1" onClick={handleGuestLogin}>
+            Log in a demo account
+          </button>
+        </div>
+        <Link to="/" className=" w-full flex justify-center my-6 gap-4 ">
+          Have an account? <span className="underline "> Log in</span>
+        </Link>
+      </form>
+    </main>
   );
 }
 

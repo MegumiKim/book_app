@@ -2,18 +2,38 @@
 @tailwind components;
 @tailwind utilities;
 
-main {
-  margin: 0px 5%;
-  max-width: 1024px;
-  margin: 0 auto;
+:root {
+  --bg-color-dark: rgb(29, 35, 42);
 }
 
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+main {
+  margin: 0px auto 5% auto;
+  padding: 0 2%;
+  width: 100%;
+  max-width: 72rem;
+  z-index: 10;
+  /* position: relative; */
+  /* background-color: transparent; */
+  overflow-y: auto;
+}
+
+img {
+  max-width: 100%;
+}
+
+nav {
+  z-index: 20;
+}
 h1 {
   font-size: 2.5em;
 }
 
-#background {
-  background-image: url("/camp-7103189_1920.png");
+.background {
   z-index: -1;
   position: fixed;
   top: 0;
@@ -21,52 +41,58 @@ h1 {
   width: 100%;
   background-size: cover;
   background-repeat: no-repeat;
-  margin: auto;
+  top: 0;
+  left: 0; /* Ensure it starts from the very left of the viewport */
+  right: 0; /* Stretch to cover the entire width of the viewport */
+  bottom: 0; /* Stretch to cover the entire height of the viewport */
+}
+#background {
+  background-image: url("/camp-7103189_1920.png");
 }
 
 #background2 {
   background-image: url("/shooting-star-2024127_1920.png");
-  z-index: -1;
-  position: fixed;
-  top: 0;
-  height: 100%;
-  width: 100%;
-  background-size: cover;
-  background-repeat: no-repeat;
-  margin: auto;
+  background-color: rgba(29, 35, 42, 0.7);
 }
 
 #background3 {
   background-image: url("/forest-5375005.jpg");
-  z-index: -1;
-  position: fixed;
-  top: 0;
-  height: 100%;
-  width: 100%;
-  background-size: cover;
-  background-repeat: no-repeat;
-  margin: auto;
 }
 
 /* modal */
-
 .custom_modal_backdrop {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.8);
+  background-color: rgba(29, 35, 42, 0.8);
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .custom_modal {
-  background-color: #fff;
+  background-color: var(--bg-color-dark);
   padding: 20px;
   border-radius: 5px;
-  max-width: 500px;
+  max-width: 800px;
   width: 100%;
-  color: gray;
+  position: relative;
+  /* color: gray; */
 }
+
+.modal_close_btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+textarea {
+  font-weight: normal;
+}
+
+/* @media (min-width: 72rem) {
+  main {
+    padding: 0;
+  }
+} */

@@ -1,12 +1,13 @@
 import { Link } from "react-router-dom";
-
+import RatingStars from "./RatingStars";
 interface BookCardProps {
   title: string;
   thumbnail: string | null;
-  genre: string | null;
+  genre: string | null | undefined;
   status: string | null;
   author: string | null;
   id: string;
+  avr_rating: number | null | undefined;
   created_at: string;
 }
 const BookCard: React.FC<BookCardProps> = ({
@@ -16,6 +17,7 @@ const BookCard: React.FC<BookCardProps> = ({
   status,
   author,
   id,
+  avr_rating,
   created_at,
 }) => {
   return (
@@ -34,6 +36,11 @@ const BookCard: React.FC<BookCardProps> = ({
         <div>
           <h2 className="card-title line-clamp-3">{title}</h2>
           {author && <p className="">{author}</p>}
+          {avr_rating && (
+            <p className="py-2">
+              <RatingStars rating={avr_rating} />
+            </p>
+          )}
         </div>
         <div>
           <div className="text-end mb-3">

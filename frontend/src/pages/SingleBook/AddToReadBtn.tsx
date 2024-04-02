@@ -12,6 +12,7 @@ export const AddToReadBtn = (props) => {
 
   return (
     <button
+      className="btn btn-info flex-1"
       onClick={(e) => {
         handleAddToRead(book, book_id, user_id);
       }}
