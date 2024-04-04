@@ -45,8 +45,9 @@ const Home = () => {
                       thumbnail={item.volumeInfo.imageLinks?.thumbnail}
                       avr_rating={item.volumeInfo.averageRating}
                       status={null}
-                      data={item.volumeInfo}
                       id={item.id}
+                      created_at={null}
+                      saleInfo={item.saleInfo}
                     />
                   )
                 )}

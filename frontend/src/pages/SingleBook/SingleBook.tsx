@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useFetch } from "../../hooks/useFetch.tsx";
 import { GoogleBookDataType } from "../../types.ts";
 import RatingStars from "../../components/RatingStars.tsx";
@@ -11,6 +11,11 @@ const URL = import.meta.env.VITE_REACT_APP_GOOGLE_BOOK_API;
 
 interface GoogleBookData {
   volumeInfo: GoogleBookDataType;
+  accessInfo: {
+    pdf: {
+      downloadLink: string;
+    };
+  };
 }
 
 const SingleBook = () => {
@@ -20,6 +25,8 @@ const SingleBook = () => {
     `${URL}volumes/${id}`
   );
   const book = data?.volumeInfo;
+  const pdf = data?.accessInfo?.pdf?.downloadLink;
+  const saleInfo = data?.saleInfo;
   // const [setReviewUpdated] = useState(false);
   const [isModalOpen, setModalOpen] = useState(false);
 
@@ -28,12 +35,15 @@ const SingleBook = () => {
     // Update the state to trigger a re-render
     // setReviewUpdated((prev) => !prev);
   };
+
+  console.log(pdf);
+
   return (
     <main>
       {loading && <p className="loading-spinner">Loading...</p>}
       {error && <h1>Failed to load page :-/</h1>}
       {book && (
-        <div className="container mx-auto max-w-screen-2xl">
+        <div className="container mx-auto max-w-[600px] lg:max-w-screen-2xl">
           {/* Top : Title and subtitle */}
           <div className="my-10 sm:my-16 text-center">
             <h1 className="text-4xl sm:text-6xl font-bold max-w-[800px] mx-auto">
@@ -46,14 +56,14 @@ const SingleBook = () => {
             )}
           </div>
           {/* Bottom: 2 columns part */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
             {/* Left side with image */}
             <div className="col-span-1">
               {/* Categories, Published Date, Publisher, and Average Rating */}
               <div className="flex flex-col sm:flex-row my-5 justify-around gap-5">
-                <div>
+                <div className="flex">
                   <img
-                    className="mx-auto object-cover "
+                    className="m-auto object-cover w-[180px]"
                     alt={`book cover of ${book.title}`}
                     src={
                       book.imageLinks?.thumbnail
@@ -91,14 +101,25 @@ const SingleBook = () => {
                 </div>
               </div>
               {/* Actions */}
-              <div className="mt-6 flex gap-4 justify-center">
+              <div className="mt-6 flex flex-col gap-4 justify-center flex-wrap max-w-xs">
                 <button
                   onClick={() => setModalOpen(true)}
                   className="btn btn-accent flex-1"
                 >
-                  Write a review
+                  Review This Book
                 </button>
                 <AddToReadBtn book={book} id={id} />
+                {saleInfo.saleability == "FREE" && (
+                  <div className="">
+                    <a
+                      href={saleInfo.buyLink}
+                      className="btn btn-primary w-full"
+                    >
+                      READ FREE
+                    </a>
+                    <p>Jump to Google play. Required Google sign-in</p>
+                  </div>
+                )}
               </div>
             </div>
 

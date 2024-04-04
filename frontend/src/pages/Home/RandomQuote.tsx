@@ -1,23 +1,22 @@
-import { useFetch } from "../../hooks/useFetch";
-
-type DataType = { content: string; author: string };
+import { useEffect, useState } from "react";
+import { famousQuotes } from "../../utils/famousQuotes";
 
 const RandomQuote = () => {
-  const URL = "https://api.quotable.io/random?maxLength=40";
-  const { data } = useFetch<DataType>(URL);
+  const [quote, setQuote] = useState({ quote: "", by: "" });
 
-  if (data) {
-    return (
-      <div className="m-auto sm:mt-10 p-4 text-slate-200">
-        <h2 className="text-center text-2xl sm:text-5xl sm:my-4 m-auto font-serif">
-          {`"${data.content}"`}
-        </h2>
-        <p className="text-center">by {data.author || ""}</p>
-      </div>
-    );
-  } else {
-    return;
-  }
+  useEffect(() => {
+    const randomIndex = Math.floor(Math.random() * famousQuotes.length);
+    setQuote(famousQuotes[randomIndex]);
+  }, []);
+
+  return (
+    <section className="m-auto sm:mt-10 p-4 text-slate-200 max-w-[800px]">
+      <h2 className="text-center text-2xl sm:text-5xl sm:my-4 m-auto font-serif">
+        {quote.quote}
+      </h2>
+      <p className="text-center">{quote.by}</p>
+    </section>
+  );
 };
 
 export default RandomQuote;

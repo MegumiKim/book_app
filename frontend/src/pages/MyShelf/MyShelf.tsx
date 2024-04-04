@@ -33,7 +33,7 @@ const MyShelf = () => {
         >
           Back
         </button>
-        <h2 className="text-lg btn bg-slate-700">Welcome Back {user.name}!</h2>
+        <h2 className="text-lg">Welcome Back {user.name}!</h2>
       </div>
       <h1 className="mb-5">Book shelf ({bookShelf?.length}) </h1>
 

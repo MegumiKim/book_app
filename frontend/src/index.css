@@ -73,12 +73,13 @@ h1 {
 }
 
 .custom_modal {
-  background-color: var(--bg-color-dark);
+  background-color: rgb(78, 78, 78);
   padding: 20px;
   border-radius: 5px;
-  max-width: 800px;
+  max-width: 500px;
   width: 100%;
   position: relative;
+  color: white;
   /* color: gray; */
 }
 

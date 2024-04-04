@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useHref } from "react-router-dom";
 import RatingStars from "./RatingStars";
 interface BookCardProps {
   title: string;
@@ -8,7 +8,8 @@ interface BookCardProps {
   author: string | null;
   id: string;
   avr_rating: number | null | undefined;
-  created_at: string;
+  created_at: string | null;
+  saleInfo: { saleability: string; buyLink: string };
 }
 const BookCard: React.FC<BookCardProps> = ({
   title,
@@ -19,7 +20,10 @@ const BookCard: React.FC<BookCardProps> = ({
   id,
   avr_rating,
   created_at,
+  saleInfo,
 }) => {
+  console.log(saleInfo);
+
   return (
     <Link
       key={id}
@@ -54,6 +58,9 @@ const BookCard: React.FC<BookCardProps> = ({
               </p>
             )}
           </div>
+          {saleInfo?.saleability == "FREE" && (
+            <p className="btn btn-xs btn-primary">FREE</p>
+          )}
           {/* {created_at ? <p>{created_at}</p> : ""} */}
           {genre && (
             <p className="pt-2 border-t border-slate-500  flex flex-col gap-5">

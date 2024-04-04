@@ -37,7 +37,7 @@ const NavBar = () => {
           ) : (
             <>
               <li>
-                <Link to={`/user/${user_id}`}>User</Link>
+                <Link to={`/user/${user_id}`}>Bookshelf</Link>
               </li>
               <li>
                 <button onClick={() => handleLogOut()}>Log Out</button>
