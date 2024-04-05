@@ -97,3 +97,84 @@ textarea {
     padding: 0;
   }
 } */
+/* Book Card */
+.book-card {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.2);
+  text-align: left;
+  color: #e2e8f0;
+  background-color: rgba(31, 41, 55, 0.2);
+  transition: background-color 0.3s ease;
+}
+
+.book-card:hover {
+  background-color: rgba(31, 41, 55, 0.6);
+}
+
+.figure {
+  width: 150px;
+  margin: 0;
+  flex-shrink: 0;
+}
+
+.figure img {
+  width: 100%;
+  height: auto;
+}
+
+.content {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex: 1;
+}
+
+.card-title {
+  margin-top: 0;
+  margin-bottom: 8px;
+  font-size: 1.25rem;
+  font-weight: bold;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.author {
+  margin: 0;
+}
+
+.status-read {
+  color: #ef4444; /* Tailwind's red-500 */
+}
+
+.status-not-read {
+  color: #22c55e; /* Tailwind's green-500 */
+}
+
+.genre {
+  padding-top: 8px;
+  border-top: 1px solid #475569; /* Tailwind's slate-500 */
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 8px;
+}
+
+.btn-free {
+  padding: 4px 8px;
+  background-color: #3b82f6; /* Tailwind's blue-500 */
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 0.875rem; /* Tailwind's text-xs */
+  line-height: 1.25rem;
+}
+
+.text-end {
+  text-align: right;
+  margin-bottom: 12px;
+}

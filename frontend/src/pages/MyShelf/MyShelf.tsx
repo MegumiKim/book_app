@@ -64,13 +64,14 @@ const MyShelf = () => {
           : "No book is added in your bookshelf"}
       </div>
 
-      <button
-        onClick={() => setModalOpen(true)}
-        className="btn btn-link text-lg w-full text-center my-10"
-      >
-        Delete Account
-      </button>
-
+      {id !== "1" && (
+        <button
+          onClick={() => setModalOpen(true)}
+          className="btn btn-link text-lg w-full text-center my-10"
+        >
+          Delete Account
+        </button>
+      )}
       <Modal isOpen={isModalOpen} onClose={() => setModalOpen(false)}>
         <h2>Are you sure you want to delete account?</h2>
         <div className="flex gap-5 my-5 ">

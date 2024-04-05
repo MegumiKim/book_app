@@ -1,72 +1,60 @@
-import { Link, useHref } from "react-router-dom";
+import { Link } from "react-router-dom";
 import RatingStars from "./RatingStars";
+
 interface BookCardProps {
+  id: string;
   title: string;
   thumbnail: string | null;
-  genre: string | null | undefined;
-  status: string | null;
-  author: string | null;
-  id: string;
-  avr_rating: number | null | undefined;
-  created_at: string | null;
-  saleInfo: { saleability: string; buyLink: string };
+  created_at: string;
+  genre?: string | null | undefined;
+  status?: string | null;
+  author?: string | null;
+  avr_rating?: number;
+  saleInfo?: { saleability: string; buyLink: string };
 }
 const BookCard: React.FC<BookCardProps> = ({
+  id,
   title,
   thumbnail,
+  created_at,
   genre,
   status,
   author,
-  id,
   avr_rating,
-  created_at,
   saleInfo,
 }) => {
-  console.log(saleInfo);
-
   return (
-    <Link
-      key={id}
-      to={`/details/${id}`}
-      className="card card-side w-full shadow-md text-left text-slate-200 bg-opacity-20 bg-slate-700 hover:bg-opacity-60"
-    >
-      <figure className="w-20 sm:w-40">
+    <Link to={`/details/${id}`} className="book-card" key={id}>
+      <figure className="figure">
         <img
-          src={thumbnail ? thumbnail : "/night.jpg"}
-          alt={`book cover of ${title}`}
+          src={thumbnail || "/night.jpg"}
+          alt={`Cover of the book titled ${title}`}
         />
       </figure>
-      <div className="flex flex-col p-4 justify-between flex-1 ">
+      <div className="content">
         <div>
-          <h2 className="card-title line-clamp-3">{title}</h2>
-          {author && <p className="">{author}</p>}
+          <h2 className="card-title">{title}</h2>
+          {author && <p className="author">{author}</p>}
           {avr_rating && (
-            <p className="py-2">
+            <div>
               <RatingStars rating={avr_rating} />
-            </p>
+            </div>
           )}
         </div>
         <div>
-          <div className="text-end mb-3">
-            {status && (
-              <p
-                className={
-                  status === "have read" ? "text-red-500" : "text-green-500"
-                }
-              >
-                {status}
-              </p>
-            )}
-          </div>
-          {saleInfo?.saleability == "FREE" && (
-            <p className="btn btn-xs btn-primary">FREE</p>
-          )}
-          {/* {created_at ? <p>{created_at}</p> : ""} */}
-          {genre && (
-            <p className="pt-2 border-t border-slate-500  flex flex-col gap-5">
-              {genre}
+          {status && (
+            <p
+              className={
+                status === "have read" ? "status-read" : "status-not-read"
+              }
+            >
+              {status}
             </p>
           )}
+          {saleInfo?.saleability === "FREE" && (
+            <button className="btn-free">FREE</button>
+          )}
+          {genre && <p className="genre">{genre}</p>}
         </div>
       </div>
     </Link>

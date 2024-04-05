@@ -79,12 +79,6 @@ export const famousQuotes = [
   },
 
   {
-    quote:
-      "It is a truth universally acknowledged, that a single man in possession of a good fortune, must be in want of a wife.",
-    by: "Jane Austen",
-  },
-
-  {
     quote: "Beware; for I am fearless, and therefore powerful.",
     by: "Mary Shelley",
   },

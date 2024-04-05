@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { FormEvent, useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { UserContext } from "../../context/UserContext";
 import { useNavigate } from "react-router-dom";
@@ -8,12 +8,14 @@ import { postAPI } from "../../APICalls/postAPI";
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const btnClass =
+    username.length > 3 && password.length > 3 ? "btn-primary" : "btn-disabled";
+  const [error, setError] = useState(false);
   const { setUser } = useContext(UserContext);
 
   const navigate = useNavigate();
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const loginURL = BASE_URL + "users/login";
 
@@ -22,11 +24,13 @@ function Login() {
       password: password,
     };
     const result = await postAPI(loginURL, body);
+
     if (result.status === "success") {
       setUser(result.data);
       navigate("/home");
     } else {
-      setError("Invalid username or password");
+      setError(true);
+      setPassword("");
     }
   };
 
@@ -47,7 +51,9 @@ function Login() {
         onSubmit={(e) => handleSubmit(e)}
       >
         <h1 className="my-5">Log In</h1>
-        {error && <p>{error}</p>}
+        <p className={error ? "text-red-400" : "opacity-0"}>
+          Invalid username or password
+        </p>
         <div className="mb-6">
           <label htmlFor="username" className="block mb-2 text-sm font-medium ">
             Username
@@ -71,13 +77,13 @@ function Login() {
             id="password"
             required
             placeholder="••••••••"
-            className="border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+            className="border border-gray-300 text-sm rounded-lg block w-full p-2.5"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
         <div className="flex flex-col sm:flex-row gap-5">
-          <button type="submit" className=" btn-secondary btn flex-1">
+          <button type="submit" className={`btn flex-1 ${btnClass}`}>
             Login
           </button>
           <button className="btn-outline btn flex-1" onClick={handleGuestLogin}>

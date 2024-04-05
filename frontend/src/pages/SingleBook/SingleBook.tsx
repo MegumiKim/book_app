@@ -25,7 +25,6 @@ const SingleBook = () => {
     `${URL}volumes/${id}`
   );
   const book = data?.volumeInfo;
-  const pdf = data?.accessInfo?.pdf?.downloadLink;
   const saleInfo = data?.saleInfo;
   // const [setReviewUpdated] = useState(false);
   const [isModalOpen, setModalOpen] = useState(false);
@@ -35,8 +34,6 @@ const SingleBook = () => {
     // Update the state to trigger a re-render
     // setReviewUpdated((prev) => !prev);
   };
-
-  console.log(pdf);
 
   return (
     <main>

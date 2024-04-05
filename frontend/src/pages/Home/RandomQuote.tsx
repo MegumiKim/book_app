@@ -11,7 +11,7 @@ const RandomQuote = () => {
 
   return (
     <section className="m-auto sm:mt-10 p-4 text-slate-200 max-w-[800px]">
-      <h2 className="text-center text-2xl sm:text-5xl sm:my-4 m-auto font-serif">
+      <h2 className="text-center text-2xl sm:text-3xl lg:text-5xl sm:my-4 m-auto font-serif ">
         {quote.quote}
       </h2>
       <p className="text-center">{quote.by}</p>

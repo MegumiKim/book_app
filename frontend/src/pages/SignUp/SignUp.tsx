@@ -8,7 +8,7 @@ import { postAPI } from "../../APICalls/postAPI";
 function SignUp() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [error, setError] = useState(false);
   const { setUser } = useContext(UserContext);
 
   const navigate = useNavigate();
@@ -26,7 +26,7 @@ function SignUp() {
       setUser(response.data);
       navigate("/home");
     } else {
-      setError("Failed to sign up. If you are already an user, please log in");
+      setError(true);
     }
   };
 
@@ -47,8 +47,13 @@ function SignUp() {
         onSubmit={(e) => handleSubmit(e)}
       >
         <h1 className="my-5">Simple Sign Up</h1>
-        {error && <p>{error}</p>}
-        <div className="mb-6">
+        <p className={error ? "text-red-400" : "opacity-0"}>
+          Failed to sign up. If you are already an user,{" "}
+          <Link to="/" className="underline">
+            please log in
+          </Link>
+        </p>
+        <div className="mb-6 mt-2">
           <label htmlFor="username" className="block mb-2 text-sm font-medium ">
             Username
           </label>
@@ -79,12 +84,12 @@ function SignUp() {
         <div className="flex flex-col sm:flex-row gap-5">
           <button
             type="submit"
-            className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"
+            className="text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"
           >
             Sign up
           </button>
           <button className="btn-outline btn flex-1" onClick={handleGuestLogin}>
-            Log in a demo account
+            Visit with a demo account
           </button>
         </div>
         <Link to="/" className=" w-full flex justify-center my-6 gap-4 ">
