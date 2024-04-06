@@ -34,7 +34,8 @@ const BookSearch: React.FC<BookSearchProps> = ({ handleSearch }) => {
     const latestQuery = data.latest ? "&orderBy=newest" : "";
 
     const URL =
-      `https://www.googleapis.com/books/v1/volumes?q=` +
+      import.meta.env.VITE_REACT_APP_GOOGLE_BOOK_API +
+      "volumes?q=" +
       titleQuery +
       authorQuery +
       categoryQuery +
@@ -45,7 +46,7 @@ const BookSearch: React.FC<BookSearchProps> = ({ handleSearch }) => {
     try {
       const result = await fetch(URL);
       const json = await result.json();
-      console.log(URL, result);
+      // console.log(URL, result);
 
       if (json) {
         // setSearchResults(json.items);

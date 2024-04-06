@@ -24,25 +24,24 @@ const NavBar = () => {
       </div>
       <div className="flex-none">
         <ul className="menu menu-horizontal px-1 sm:text-xl">
-          <li>
-            <Link to="/home" className="hidden sm:block">
-              Home
-            </Link>
-          </li>
-
           {!user_id ? (
-            <li>
-              <Link to={"/"}>Log in</Link>
-            </li>
+            <div className="flex">
+              <li>
+                <Link to={"/"}>Log in</Link>
+              </li>
+              <li>
+                <Link to={"/signup"}>Sign up</Link>
+              </li>
+            </div>
           ) : (
-            <>
+            <div className="flex flex-col sm:flex-row">
               <li>
                 <Link to={`/user/${user_id}`}>Bookshelf</Link>
               </li>
               <li>
                 <button onClick={() => handleLogOut()}>Log Out</button>
               </li>
-            </>
+            </div>
           )}
         </ul>
       </div>

@@ -45,7 +45,7 @@ function Login() {
 
   return (
     <main>
-      <div className="background" id="background2"></div>
+      <div className="background" id="background3"></div>
       <form
         className="max-w-md my-10 text-white mx-5"
         onSubmit={(e) => handleSubmit(e)}

@@ -26,11 +26,10 @@ router.get("/", async (req, res) => {
 //
 //Get all reviews for a specific book
 router.get("/:id", async (req, res) => {
+  const sqlFilePath = path.join(__dirname, "..", "sql", "bookReviews.sql");
+  const sqlQuery = fs.readFileSync(sqlFilePath, { encoding: "utf-8" });
   try {
-    const results = await db.query(
-      "select * from user_book_relationships WHERE google_book_id = $1;",
-      [req.params.id]
-    );
+    const results = await db.query(sqlQuery, [req.params.id]);
 
     res.status(200).json({
       status: "success",
@@ -81,7 +80,6 @@ router.post("/user/:id", async (req, res) => {
       req.body.status,
       req.body.review,
       req.body.rating,
-      req.body.read_date,
     ]);
 
     res.status(201).json({

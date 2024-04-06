@@ -2,7 +2,6 @@ SELECT
     b.google_book_id,
     b.title,
     ubr.status,
-    ubr.read_date,
     ubr.review,
     ubr.rating,
     ubr.created_at,

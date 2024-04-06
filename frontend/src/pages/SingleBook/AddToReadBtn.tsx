@@ -26,7 +26,7 @@ export const AddToReadBtn = (props) => {
 
   return (
     <button
-      className="btn btn-info flex-1"
+      className="btn btn-outline block w-full"
       onClick={(e) => {
         addToRead(e);
       }}

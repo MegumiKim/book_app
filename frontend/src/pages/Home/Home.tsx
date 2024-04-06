@@ -18,7 +18,7 @@ const Home = () => {
 
   const handleSearch = (result: []) => {
     setSearchResult(result);
-    console.log(result);
+    // console.log(result);
   };
 
   // const handleLoadMore = () => {

@@ -19,7 +19,6 @@ const ReviewForm = (props: {
   const book_id = props.data.id;
   const { user } = useContext(UserContext);
   const [selectedRating, setSelectedRating] = useState<number | null>(null);
-  const [reviewDate, setReviewDate] = useState("");
   const [reviewText, setReviewText] = useState("");
   const onReviewPosted = props.onReviewPosted;
   const reviewURL = BASE_URL + `reviews/user/${user.user_id}`;
@@ -33,7 +32,6 @@ const ReviewForm = (props: {
     status: "have read",
     review: reviewText,
     rating: selectedRating,
-    read_date: reviewDate,
     title: book.title,
     author: book.authors?.[0],
     genre: book.categories?.[0],
@@ -58,18 +56,6 @@ const ReviewForm = (props: {
         handleChange={handleRatingChange}
         selectedRating={selectedRating}
       />
-      <div className="">
-        <label htmlFor="date" className="me-9 text-sm font-bold">
-          Date
-        </label>
-        <input
-          id="date"
-          type="date"
-          value={reviewDate}
-          onChange={(e) => setReviewDate(e.target.value)}
-          required
-        />
-      </div>
       <label htmlFor="review" className="block text-sm font-bold">
         Review Text
         <textarea
