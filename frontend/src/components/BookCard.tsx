@@ -41,18 +41,21 @@ const BookCard: React.FC<BookCardProps> = ({
             </div>
           )}
         </div>
+
         <div>
           {status && (
-            <p
-              className={
-                status === "have read" ? "status-read" : "status-not-read"
-              }
-            >
-              {status}
-            </p>
+            <div className="flex justify-between">
+              <p
+                className={
+                  status === "have read" ? "status read" : "status to-read"
+                }
+              >
+                {status}
+              </p>
+            </div>
           )}
           {saleInfo?.saleability === "FREE" && (
-            <button className="btn-free">FREE</button>
+            <button className="status free">FREE</button>
           )}
           {genre && <p className="genre">{genre}</p>}
         </div>

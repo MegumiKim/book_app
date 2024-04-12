@@ -1,5 +1,5 @@
 // import { useEffect, useState } from "react";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import BookSearch from "./BookSearch";
 import BookCard from "../../components/BookCard";
 import { SearchResultContext } from "../../context/SearchResultContext";
@@ -16,6 +16,15 @@ const Home = () => {
     SearchResultContext
   ) as unknown as SearchResultContextType;
 
+  const [showRandomQuote, setShowRandomQuote] = useState(true);
+
+  useEffect(() => {
+    if (searchResult?.length > 0) {
+      // Start the animation then hide the component
+      setShowRandomQuote(false);
+    }
+  }, [searchResult]);
+
   const handleSearch = (result: []) => {
     setSearchResult(result);
     // console.log(result);
@@ -27,7 +36,7 @@ const Home = () => {
   return (
     <main className="" id="home">
       <div className="background" id="background"></div>
-      <RandomQuote />
+      {showRandomQuote && <RandomQuote />}
       <BookSearch handleSearch={(result: []) => handleSearch(result)} />
 
       {searchResult && (

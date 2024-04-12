@@ -20,6 +20,14 @@ app.use("/api/v1/books", booksRoute);
 app.use("/api/v1/users", usersRoute);
 app.use("/api/v1/reviews", reviewsRoute);
 
+app.use((error, req, res, next) => {
+  console.error(error);
+  res.status(error.status || 500).json({
+    status: "error",
+    message: error.message || "Internal Server Error",
+  });
+});
+
 app.listen(4000, () => {
   console.log(`server is listening on port ${port}`);
 });

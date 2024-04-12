@@ -2,10 +2,11 @@ import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useFetch } from "../../hooks/useFetch.tsx";
 import RatingStars from "../../components/RatingStars.tsx";
-import { AddToReadBtn } from "./AddToReadBtn.tsx";
+
 import ReviewForm from "./ReviewForm.tsx";
 import Modal from "../../components/Modal.tsx";
 import UserReviews from "./UserReviews.tsx";
+import { ButtonGroup } from "./BtnGroup.tsx";
 
 const SingleBook = () => {
   const { id } = useParams();
@@ -16,10 +17,8 @@ const SingleBook = () => {
   // Fetch book data
   const { data, loading, error } = useFetch(bookURL);
 
-  // console.log(data);
-
   const book = data?.volumeInfo;
-  const saleInfo = data?.saleInfo;
+  // console.log(data);
 
   // const [setReviewUpdated] = useState(false);
   const [isModalOpen, setModalOpen] = useState(false);
@@ -35,7 +34,7 @@ const SingleBook = () => {
       {book && (
         <div className="">
           {/* Top : Book overview */}
-          <section className="grid grid-flow-col grid-cols-6 gap-10 mt-10">
+          <section className="md:grid grid-flow-col grid-cols-6 gap-10 mt-10 space-y-5">
             <div className="col-span-2">
               <img
                 className="m-auto object-cover w-[180px]"
@@ -47,15 +46,17 @@ const SingleBook = () => {
                 }
               />
             </div>
-            <div className="flex flex-col gap-5 col-span-4">
-              <h1 className="text-4xl sm:text-5xl font-bold">{book.title}</h1>
+            <div className="flex flex-col gap-5 col-span-4 text-center md:text-start">
+              <h1 className="text-2xl sm:text-4xl lg:text-5xl font-bold ">
+                {book.title}
+              </h1>
               {book.subtitle && (
                 <h2 className="text-xl md:text-2xl font-light mt-3 ">
                   {book.subtitle}
                 </h2>
               )}
               {/* Meta data */}
-              <div className="flex flex-col gap-2">
+              <div className="flex flex-col gap-2 mx-auto md:mx-0 text-center md:text-start">
                 {/* Authors */}
                 <ul className="author-list flex gap-2 text-orange-300 text-lg">
                   {book.authors?.map((author: string) => (
@@ -77,31 +78,12 @@ const SingleBook = () => {
             </div>
           </section>
 
-          <div className="grid grid-flow-col grid-cols-6 gap-10 mt-10">
-            {/* Actions */}
-            <section className="gap-4 col-span-2 space-y-5">
-              <button
-                onClick={() => setModalOpen(true)}
-                className="btn btn-accent block w-full"
-              >
-                Review This Book
-              </button>
-              <AddToReadBtn book={book} id={id} />
-              {saleInfo.saleability == "FREE" && (
-                <div className="">
-                  <a
-                    href={saleInfo.buyLink}
-                    className="btn btn-outline w-full align-middle flex"
-                  >
-                    READ FREE*
-                  </a>
-                  <p>*Jump to Google play. Required Google sign-in</p>
-                </div>
-              )}
-            </section>
+          <div className="md:grid grid-flow-col grid-cols-6 gap-10 my-10 ">
+            {/* CTA btn group for user interactions */}
+            <ButtonGroup bookData={data} onOpen={() => setModalOpen(true)} />
             {/* Right side with book description */}
             <div
-              className="text-lg max-h-[500px] overflow-scroll col-span-4 w-full"
+              className="text-lg max-h-[500px] overflow-scroll col-span-4 w-full mt-5 md:mt-0"
               dangerouslySetInnerHTML={{ __html: book.description }}
             ></div>
           </div>

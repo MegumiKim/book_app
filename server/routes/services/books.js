@@ -1,4 +1,4 @@
-const db = require("../db/index.js");
+const db = require("../../db/index.js");
 
 /**
  * Checks if a book with the given Google Book ID exists in the database.
@@ -22,6 +22,7 @@ async function checkIfBookExists(google_book_id) {
 }
 
 async function addBookToTable(body) {
+  console.log("this is body", body);
   try {
     const query =
       "INSERT INTO books (google_book_id, title, author, imageurl, genre) VALUES ($1, $2, $3, $4, $5) returning *;";
@@ -32,7 +33,8 @@ async function addBookToTable(body) {
       body.imageUrl,
       body.genre,
     ];
-    await db.query(query, values);
+    const result = await db.query(query, values);
+    // console.log("result", result);
   } catch (error) {
     console.error("Failed to create book", error);
     // Optionally, re-throw the error or handle it as per your application's error handling policy

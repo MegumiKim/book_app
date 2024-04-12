@@ -1,34 +1,37 @@
 const express = require("express");
 const db = require("../db/index.js");
 const router = express.Router();
-const { checkIfBookExists, addBookToTable } = require("./books.js");
+const asyncHandler = require("./services/asyncHandler.js");
+const { checkIfBookExists, addBookToTable } = require("./services/books.js");
 const fs = require("fs");
 const path = require("path");
 
 //Get all reviews
-router.get("/", async (req, res) => {
-  try {
-    const results = await db.query(
-      "select * from user_book_relationships;"
-      // "select * from books left join (select books_id, count(*), TRUNC(AVG(rating),1) as average_rating from reviews group by books_id) reviews on books.id = reviews.books_id;"
-    );
+router.get(
+  "/",
+  asyncHandler(async (res) => {
+    const results = await db.query("select * from user_book_relationships;");
 
     res.status(200).json({
       status: "success",
       results: results.rows.length,
       data: results.rows,
     });
-  } catch (error) {
-    console.log(error);
-  }
-});
+  })
+);
 
 //
 //Get all reviews for a specific book
-router.get("/:id", async (req, res) => {
-  const sqlFilePath = path.join(__dirname, "..", "sql", "bookReviews.sql");
-  const sqlQuery = fs.readFileSync(sqlFilePath, { encoding: "utf-8" });
-  try {
+router.get(
+  "/:id",
+  asyncHandler(async (req, res) => {
+    const sqlFilePath = path.join(
+      __dirname,
+      "..",
+      "SQLs/userBookRelations",
+      "bookReviews.sql"
+    );
+    const sqlQuery = fs.readFileSync(sqlFilePath, { encoding: "utf-8" });
     const results = await db.query(sqlQuery, [req.params.id]);
 
     res.status(200).json({
@@ -36,17 +39,45 @@ router.get("/:id", async (req, res) => {
       results: results.rows.length,
       data: results.rows,
     });
-  } catch (error) {
-    console.log(error);
-  }
-});
+  })
+);
+
+//
+//Get reading status of the user for a specific book
+router.post(
+  "/book/:id",
+  asyncHandler(async (req, res) => {
+    const user_id = req.body.user_id;
+    const book_id = req.params.id;
+
+    // try {
+    const results = await db.query(
+      "SELECT ubr.status FROM user_book_relationships ubr WHERE ubr.google_book_id = $1 AND ubr.user_id = $2;",
+      [book_id, user_id]
+    );
+
+    if (results.rows.length > 0) {
+      res.status(200).json({
+        data: results.rows[0],
+      });
+    } else {
+      res.status(200).json({ data: { status: "not added" } });
+    }
+  })
+);
 
 //Get all books for a specific user
-router.get("/user/:id", async (req, res) => {
-  const sqlFilePath = path.join(__dirname, "..", "sql", "booksByUser.sql");
-  const sqlQuery = fs.readFileSync(sqlFilePath, { encoding: "utf-8" });
+router.get(
+  "/user/:id",
+  asyncHandler(async (req, res) => {
+    const sqlFilePath = path.join(
+      __dirname,
+      "..",
+      "SQLs/userBookRelations",
+      "booksByUser.sql"
+    );
+    const sqlQuery = fs.readFileSync(sqlFilePath, { encoding: "utf-8" });
 
-  try {
     const results = await db.query(sqlQuery, [req.params.id]);
 
     res.status(200).json({
@@ -54,21 +85,23 @@ router.get("/user/:id", async (req, res) => {
       results: results.rows.length,
       data: results.rows,
     });
-  } catch (error) {
-    console.log(error);
-  }
-});
+  })
+);
 
 // Add a book in user's shelf
 router.post("/user/:id", async (req, res) => {
-  const sqlFilePath = path.join(__dirname, "..", "sql", "insertToUBR.sql");
+  const sqlFilePath = path.join(
+    __dirname,
+    "..",
+    "SQLs/userBookRelations",
+    "insertToUBR.sql"
+  );
   const sqlQuery = fs.readFileSync(sqlFilePath, { encoding: "utf-8" });
   const book_id = req.body.google_book_id;
 
   try {
     // Check if the book exists in the 'books' table
     const bookExists = await checkIfBookExists(book_id);
-
     // If not, add the book to the 'books' table
     if (!bookExists) {
       await addBookToTable(req.body);
@@ -99,8 +132,9 @@ router.post("/user/:id", async (req, res) => {
 });
 
 //Update reading status in a user's shelf
-router.put("/user/:id", async (req, res) => {
-  try {
+router.put(
+  "/user/:id",
+  asyncHandler(async (req, res) => {
     const results = await db.query(
       `UPDATE user_book_relationships 
       SET status = $1 
@@ -114,9 +148,33 @@ router.put("/user/:id", async (req, res) => {
       status: "success",
       data: results.rows[0],
     });
-  } catch (error) {
-    console.log(error);
-  }
-});
+  })
+);
+
+//Remove a book from an users bookshelf
+router.delete(
+  "/user/:userId/book/:bookId",
+  asyncHandler(async (req, res) => {
+    const { userId, bookId } = req.params;
+
+    const result = await db.query(
+      "DELETE FROM user_book_relationships WHERE user_id = $1 AND google_book_id = $2",
+      [userId, bookId]
+    );
+
+    console.log(result.rowCount);
+
+    if (result.rowCount === 0) {
+      // No rows were deleted, which means the book was not found in the user's shelf
+      return res.status(404).json({
+        status: "error",
+        message: "Book not found on user's shelf",
+      });
+    }
+    res.status(204).json({
+      status: "success",
+    });
+  })
+);
 
 module.exports = router;

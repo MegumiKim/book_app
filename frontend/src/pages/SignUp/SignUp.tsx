@@ -8,6 +8,7 @@ import { postAPI } from "../../APICalls/postAPI";
 function SignUp() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const disabled = username.length > 3 && password.length > 3 ? false : true;
   const [error, setError] = useState(false);
   const { setUser } = useContext(UserContext);
 
@@ -46,20 +47,20 @@ function SignUp() {
         className="max-w-md my-10 text-white mx-5"
         onSubmit={(e) => handleSubmit(e)}
       >
-        <h1 className="my-5">Simple Sign Up</h1>
-        <p className={error ? "text-red-400" : "opacity-0"}>
-          Failed to sign up. If you are already an user,{" "}
-          <Link to="/" className="underline">
-            please log in
+        <div className="my-5">
+          <h1>Sign up</h1>
+          <Link to="/" className=" my-6 gap-4 ">
+            Have already an account? <span className="underline">Log in</span>
           </Link>
-        </p>
+        </div>
         <div className="mb-6 mt-2">
-          <label htmlFor="username" className="block mb-2 text-sm font-medium ">
+          <label htmlFor="username" className="block mb-2">
             Username
           </label>
           <input
             type="text"
             id="username"
+            min={4}
             required
             placeholder="ExampleUser"
             className=" border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
@@ -68,12 +69,13 @@ function SignUp() {
           />
         </div>
         <div className="mb-6">
-          <label htmlFor="password" className="block mb-2 text-sm font-medium ">
+          <label htmlFor="password" className="block mb-2">
             Password
           </label>
           <input
             type="password"
             id="password"
+            min={4}
             required
             placeholder="••••••••"
             className="border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
@@ -84,17 +86,23 @@ function SignUp() {
         <div className="flex flex-col sm:flex-row gap-5">
           <button
             type="submit"
-            className="text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"
+            className="btn btn-warning flex-1"
+            disabled={disabled}
           >
-            Sign up
+            Login
           </button>
           <button className="btn-outline btn flex-1" onClick={handleGuestLogin}>
             Visit with a demo account
           </button>
         </div>
-        <Link to="/" className=" w-full flex justify-center my-6 gap-4 ">
-          Have an account? <span className="underline "> Log in</span>
-        </Link>
+
+        <p className={error ? "text-red-400 text-lg mt-5" : "opacity-0"}>
+          Failed to sign up. User name exists.
+          <Link to="/" className=" block">
+            If you are already an user, please{" "}
+            <span className="underline">log in</span>
+          </Link>
+        </p>
       </form>
     </main>
   );

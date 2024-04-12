@@ -34,15 +34,22 @@ export interface BookDataType {
   _id: string;
 }
 
-export type GoogleBookDataType = {
+export type VolumeInfoType = {
   id: string;
   title: string;
   authors: string[];
-  description: string;
-  imageLinks: { thumbnail: string };
+  description?: string;
+  imageLinks?: { thumbnail: string };
   categories?: string[];
   averageRating?: number;
   subtitle?: string;
   publisher?: string;
   publishedDate?: string;
 };
+
+// New Types
+export interface GoogleBookDataType {
+  VolumeInfo: VolumeInfoType;
+  avr_rating?: number;
+  saleInfo?: { saleability: string; buyLink: string };
+}

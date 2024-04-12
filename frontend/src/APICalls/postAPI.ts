@@ -4,8 +4,6 @@ export const postAPI = async (URL, body) => {
     // "Authorization": `Bearer ${token}`,
   };
 
-  console.log(body);
-
   try {
     const response = await fetch(URL, {
       method: "POST",
@@ -15,7 +13,7 @@ export const postAPI = async (URL, body) => {
     const json = await response.json();
 
     if (response.ok) {
-      console.log();
+      console.log(json);
 
       return json;
     } else {

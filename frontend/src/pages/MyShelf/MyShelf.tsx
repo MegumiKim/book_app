@@ -11,10 +11,11 @@ const MyShelf = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { user, setUser } = useContext(UserContext);
+  const [isModalOpen, setModalOpen] = useState(false);
   const [bookShelf, setBookShelf] = useState([]);
   const bookShelfURL = BASE_URL + "reviews/user/" + id;
   const { data, loading, error } = useFetch(bookShelfURL);
-  const [isModalOpen, setModalOpen] = useState(false);
+  // const {myBooks, setMyBooks} = useContext(MYS)
 
   useEffect(() => {
     setBookShelf(data?.data);

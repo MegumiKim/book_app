@@ -4,6 +4,9 @@
 
 :root {
   --bg-color-dark: rgb(29, 35, 42);
+  --btn-blue: #3b82f6;
+  --btn-red: rgb(194, 66, 87);
+  --btn-green: rgb(56, 161, 56);
 }
 
 html,
@@ -118,13 +121,14 @@ textarea {
 
 .figure {
   width: 150px;
-  margin: 0;
+  margin: auto;
   flex-shrink: 0;
 }
 
 .figure img {
   width: 100%;
   height: auto;
+  margin: auto;
 }
 
 .content {
@@ -150,12 +154,27 @@ textarea {
   margin: 0;
 }
 
-.status-read {
-  color: #ef4444; /* Tailwind's red-500 */
+/* Status */
+.status {
+  /* Tailwind's blue-500 */
+  padding: 4px 8px;
+  color: white;
+  font-size: 0.8em; /* Tailwind's text-xs */
+  line-height: 1em;
+  width: min-content;
+  text-wrap: nowrap;
+  text-transform: capitalize; /* Tailwind's red-500 */
 }
 
-.status-not-read {
-  color: #22c55e; /* Tailwind's green-500 */
+.read {
+  background-color: var(--btn-red);
+}
+
+.to-read {
+  background-color: var(--btn-green); /* Tailwind's blue-500 */
+}
+.free {
+  background-color: var(--btn-blue); /* Tailwind's blue-500 */
 }
 
 .genre {
@@ -167,16 +186,6 @@ textarea {
   margin-top: 8px;
 }
 
-.btn-free {
-  padding: 4px 8px;
-  background-color: #3b82f6; /* Tailwind's blue-500 */
-  color: white;
-  border: none;
-  cursor: pointer;
-  font-size: 0.875rem; /* Tailwind's text-xs */
-  line-height: 1.25rem;
-}
-
 .text-end {
   text-align: right;
   margin-bottom: 12px;
@@ -184,4 +193,15 @@ textarea {
 
 .author-list li:not(:last-child)::after {
   content: ",";
+}
+
+button:disabled {
+  cursor: default;
+  opacity: 0.8 !important;
+  background: gray !important;
+  color: rgb(187, 186, 186) !important;
+}
+
+button:disabled:hover {
+  background: gray;
 }
