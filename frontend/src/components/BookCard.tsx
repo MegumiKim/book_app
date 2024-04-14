@@ -24,7 +24,7 @@ const BookCard: React.FC<BookCardProps> = ({
   saleInfo,
 }) => {
   return (
-    <Link to={`/details/${id}`} className="book-card" key={id}>
+    <Link to={`/details/${id}`} className="book-card" key={created_at}>
       <figure className="figure">
         <img
           src={thumbnail || "/placeholder.png"}

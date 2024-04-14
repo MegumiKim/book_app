@@ -7,18 +7,26 @@ import ReviewForm from "./ReviewForm.tsx";
 import Modal from "../../components/Modal.tsx";
 import UserReviews from "./UserReviews.tsx";
 import { ButtonGroup } from "./BtnGroup.tsx";
+import { VolumeInfoType } from "../../types.ts";
 
+interface ApiResponse {
+  data: {
+    volumeInfo: VolumeInfoType;
+  };
+  loading: boolean;
+  error: boolean;
+}
 const SingleBook = () => {
   const { id } = useParams();
   const bookURL = `${
     import.meta.env.VITE_REACT_APP_GOOGLE_BOOK_API
-  }volumes/${id}`;
+  }volumes/${id}?projection=lite`;
 
   // Fetch book data
-  const { data, loading, error } = useFetch(bookURL);
+  const { data, loading, error } = useFetch<ApiResponse>(bookURL);
 
-  const book = data?.volumeInfo;
-  // console.log(data);
+  const book: VolumeInfoType | undefined = data?.volumeInfo;
+  console.log(data);
 
   // const [setReviewUpdated] = useState(false);
   const [isModalOpen, setModalOpen] = useState(false);

@@ -7,7 +7,7 @@ import { GoogleBookDataType } from "../../types";
 import RandomQuote from "./RandomQuote";
 
 interface SearchResultContextType {
-  searchResult: [];
+  searchResult: { id: string }[];
   setSearchResult: React.Dispatch<React.SetStateAction<[]>>;
 }
 
@@ -25,8 +25,23 @@ const Home = () => {
     }
   }, [searchResult]);
 
-  const handleSearch = (result: []) => {
-    setSearchResult(result);
+  const handleSearch = (results: { id: string }[]) => {
+    if (results.length > 0) {
+      const uniqueIds = new Set<string>();
+      const filteredResults = results.filter((result) => {
+        if (!uniqueIds.has(result.id)) {
+          uniqueIds.add(result.id);
+          return true; // keep this result, it's unique so far
+        }
+        return false; // skip this result, it's a duplicate
+      });
+      // console.log(filteredResults);
+
+      setSearchResult(filteredResults);
+    } else {
+      setSearchResult([]);
+    }
+
     // console.log(result);
   };
 
@@ -41,7 +56,7 @@ const Home = () => {
 
       {searchResult && (
         <div className="mx-auto">
-          {searchResult?.length ? (
+          {searchResult?.length > 0 ? (
             <div className="flex flex-col">
               <div className="grid gap-5 mx-auto sm:grid-cols-2 max-w-6xl px-4">
                 {searchResult.map(
