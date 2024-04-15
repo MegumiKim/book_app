@@ -5,6 +5,7 @@ import BookCard from "../../components/BookCard";
 import { SearchResultContext } from "../../context/SearchResultContext";
 import { GoogleBookDataType } from "../../types";
 import RandomQuote from "./RandomQuote";
+import Feed from "./Feed";
 
 interface SearchResultContextType {
   searchResult: { id: string }[];
@@ -51,6 +52,8 @@ const Home = () => {
   return (
     <main className="" id="home">
       <div className="background" id="background"></div>
+      <Feed></Feed>
+
       {showRandomQuote && <RandomQuote />}
       <BookSearch handleSearch={(result: []) => handleSearch(result)} />
 
@@ -70,7 +73,7 @@ const Home = () => {
                       avr_rating={item.volumeInfo.averageRating}
                       status={null}
                       id={item.id}
-                      created_at={null}
+                      publishedDate={item.volumeInfo.publishedDate}
                       saleInfo={item.saleInfo}
                     />
                   )

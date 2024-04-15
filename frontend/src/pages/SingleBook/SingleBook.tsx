@@ -20,7 +20,7 @@ const SingleBook = () => {
   const { id } = useParams();
   const bookURL = `${
     import.meta.env.VITE_REACT_APP_GOOGLE_BOOK_API
-  }volumes/${id}?projection=lite`;
+  }volumes/${id}`;
 
   // Fetch book data
   const { data, loading, error } = useFetch<ApiResponse>(bookURL);

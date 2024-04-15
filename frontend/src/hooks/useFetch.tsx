@@ -22,7 +22,6 @@ export function useFetch<T>(
 
         const res = await fetch(url, options);
         const json = await res.json();
-        // console.log(json);
 
         if (res.ok) {
           setData(json);

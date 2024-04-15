@@ -20,30 +20,36 @@ const NavBar = () => {
   return user_id === null ? (
     <nav className="navbar bg-transparent max-w-6xl m-auto text-slate-200 justify-end">
       <ul className="flex gap-5">
-        <li>
+        <li role="button" tabIndex={0}>
           <Link to={"/"}>Log in</Link>
         </li>
-        <li>
+
+        <li role="button" tabIndex={0}>
           <Link to={"/signup"}>Sign up</Link>
         </li>
       </ul>
     </nav>
   ) : (
     <nav className="navbar bg-transparent max-w-6xl m-auto text-slate-200 justify-between">
-      <Link to="/home" className="btn btn-ghost text-xl sm:text-3xl">
-        BookJournal
-      </Link>
+      <button>
+        <Link
+          to="/home"
+          role="button"
+          tabIndex={0}
+          className="btn btn-ghost text-xl sm:text-3xl focus:outline        "
+        >
+          BookJournal
+        </Link>
+      </button>
 
       <div className="flex-none">
         <ul className="menu menu-horizontal px-1 sm:text-xl">
-          <div className="flex flex-col sm:flex-row">
-            <li>
-              <Link to={`/user/${user_id}`}>Bookshelf</Link>
-            </li>
-            <li>
-              <button onClick={() => handleLogOut()}>Log Out</button>
-            </li>
-          </div>
+          <li role="button" tabIndex={0}>
+            <Link to={`/user/${user_id}`}>Bookshelf</Link>
+          </li>
+          <li>
+            <button onClick={() => handleLogOut()}>Log Out</button>
+          </li>
         </ul>
       </div>
     </nav>

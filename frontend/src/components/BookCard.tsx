@@ -5,11 +5,12 @@ interface BookCardProps {
   id: string;
   title: string;
   thumbnail: string | null;
-  created_at: string;
+  created_at?: string;
   genre?: string | null | undefined;
   status?: string | null;
   author?: string | null;
   avr_rating?: number;
+  publishedDate?: string | null;
   saleInfo?: { saleability: string; buyLink: string };
 }
 const BookCard: React.FC<BookCardProps> = ({
@@ -21,6 +22,7 @@ const BookCard: React.FC<BookCardProps> = ({
   status,
   author,
   avr_rating,
+  publishedDate,
   saleInfo,
 }) => {
   return (
@@ -40,6 +42,7 @@ const BookCard: React.FC<BookCardProps> = ({
               <RatingStars rating={avr_rating} />
             </div>
           )}
+          {<p>{publishedDate?.slice(0, 4)}</p>}
         </div>
 
         <div>

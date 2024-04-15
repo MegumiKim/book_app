@@ -20,6 +20,28 @@ router.get(
   })
 );
 
+//Get the latest user action
+router.get(
+  "/latest-item",
+
+  asyncHandler(async (req, res) => {
+    const sqlFilePath = path.join(
+      __dirname,
+      "..",
+      "SQLs/userBookRelations",
+      "latestUserUpdate.sql"
+    );
+    const sqlQuery = fs.readFileSync(sqlFilePath, { encoding: "utf-8" });
+    const results = await db.query(sqlQuery);
+
+    res.status(200).json({
+      status: "success",
+      results: results.rows.length,
+      data: results.rows,
+    });
+  })
+);
+
 //
 //Get all reviews for a specific book
 router.get(

@@ -35,6 +35,7 @@ const BookSearch: React.FC<BookSearchProps> = ({ handleSearch }) => {
       categoryQuery +
       freeQuery +
       latestQuery;
+    // "&projection=lite";
 
     try {
       const result = await fetch(URL);
@@ -47,6 +48,8 @@ const BookSearch: React.FC<BookSearchProps> = ({ handleSearch }) => {
           handleSearch([]);
           return;
         }
+        console.log(json.items);
+
         handleSearch(json.items);
       } else {
         throw new Error();
