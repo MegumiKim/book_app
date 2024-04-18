@@ -48,7 +48,6 @@ const BookSearch: React.FC<BookSearchProps> = ({ handleSearch }) => {
           handleSearch([]);
           return;
         }
-        console.log(json.items);
 
         handleSearch(json.items);
       } else {

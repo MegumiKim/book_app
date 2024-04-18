@@ -105,14 +105,14 @@ textarea {
 } */
 /* Book Card */
 .book-card {
-  display: flex;
-  flex-direction: row;
   width: 100%;
-  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.2);
+
   text-align: left;
   color: #e2e8f0;
-  background-color: rgba(59, 60, 62, 0.5);
+  background-color: rgba(240, 242, 247, 0.5);
   transition: background-color 0.3s ease;
+  display: flex;
+  flex-direction: column;
 }
 
 .book-card:hover {
@@ -120,29 +120,49 @@ textarea {
 }
 
 .figure {
-  width: 150px;
   margin: auto;
-  flex-shrink: 0;
+  box-shadow: 22px 12px 12px 1px rgba(0, 0, 0, 0.1);
+  flex: 2;
+  position: relative;
+  height: min-content;
 }
 
-.figure img {
+img {
   width: 100%;
-  height: auto;
-  margin: auto;
+  height: 100%;
 }
 
+figure::after {
+  content: "";
+  width: 7px;
+  height: calc(100%);
+  background: rgb(229, 227, 227);
+  border-left: rgb(172, 170, 170) solid 0.5px;
+  border-right: #475569 solid 0.5px;
+  position: absolute;
+  right: -7px;
+  top: -0%;
+  border-radius: 0px 50px 50px 0px;
+  z-index: 1;
+}
+
+.bookshelf {
+  display: flex;
+  flex-wrap: wrap;
+}
 .content {
   padding: 16px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   flex: 1;
+  border-radius: 0 20px 0 0;
 }
 
 .card-title {
   margin-top: 0;
   margin-bottom: 8px;
-  font-size: 1.25rem;
+  font-size: 1rem;
   font-weight: bold;
   display: -webkit-box;
   -webkit-line-clamp: 2;

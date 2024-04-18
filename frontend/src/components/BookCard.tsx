@@ -31,6 +31,7 @@ const BookCard: React.FC<BookCardProps> = ({
         <img
           src={thumbnail || "/placeholder.png"}
           alt={`Cover of the ${title}`}
+          className="thumb"
         />
       </figure>
       <div className="content">

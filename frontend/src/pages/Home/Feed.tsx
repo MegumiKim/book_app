@@ -10,16 +10,13 @@ function Feed() {
   const { data, loading, error } = useFetch(URL);
   useEffect(() => {
     setLatest(data?.data[0]);
-    console.log(latest);
   }, [data]);
 
   return (
-    <section>
-      Feed
+    <section className="max-w-full lg:max-w-lg border p-8">
       {latest && (
-        <div>
-          <h3>
-            <span>{latest.created_at}</span>
+        <div className="m-auto">
+          <h3 className="text-xl mb-5 text-white">
             {latest.name} has recently added a book in bookshelf
           </h3>
           <BookCard

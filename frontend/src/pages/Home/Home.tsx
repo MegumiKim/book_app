@@ -8,7 +8,7 @@ import RandomQuote from "./RandomQuote";
 import Feed from "./Feed";
 
 interface SearchResultContextType {
-  searchResult: { id: string }[];
+  searchResult: GoogleBookDataType[];
   setSearchResult: React.Dispatch<React.SetStateAction<[]>>;
 }
 
@@ -52,32 +52,31 @@ const Home = () => {
   return (
     <main className="" id="home">
       <div className="background" id="background"></div>
-      <Feed></Feed>
-
-      {showRandomQuote && <RandomQuote />}
+      <div className="flex flex-col gap-5 align-middle md:flex-row md:mt-10">
+        {showRandomQuote && <RandomQuote />}
+        <Feed />
+      </div>
       <BookSearch handleSearch={(result: []) => handleSearch(result)} />
 
       {searchResult && (
         <div className="mx-auto">
           {searchResult?.length > 0 ? (
             <div className="flex flex-col">
-              <div className="grid gap-5 mx-auto sm:grid-cols-2 max-w-6xl px-4">
-                {searchResult.map(
-                  (item: { volumeInfo: GoogleBookDataType; id: string }) => (
-                    <BookCard
-                      key={item.id}
-                      title={item.volumeInfo.title}
-                      author={item.volumeInfo.authors?.[0]}
-                      genre={item.volumeInfo.categories?.[0]}
-                      thumbnail={item.volumeInfo.imageLinks?.thumbnail}
-                      avr_rating={item.volumeInfo.averageRating}
-                      status={null}
-                      id={item.id}
-                      publishedDate={item.volumeInfo.publishedDate}
-                      saleInfo={item.saleInfo}
-                    />
-                  )
-                )}
+              <div className="bookshelf">
+                {searchResult.map((item) => (
+                  <BookCard
+                    key={item.id}
+                    title={item.volumeInfo.title}
+                    author={item.volumeInfo.authors?.[0]}
+                    genre={item.volumeInfo.categories?.[0]}
+                    thumbnail={item.volumeInfo.imageLinks?.thumbnail}
+                    avr_rating={item.volumeInfo.averageRating}
+                    status={null}
+                    id={item.id}
+                    publishedDate={item.volumeInfo.publishedDate}
+                    saleInfo={item.saleInfo}
+                  />
+                ))}
               </div>
               {/* <button
                 className="btn btn-outline mx-auto my-10 text-slate-200"

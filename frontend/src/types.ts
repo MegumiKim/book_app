@@ -49,7 +49,7 @@ export type VolumeInfoType = {
 
 // New Types
 export interface GoogleBookDataType {
-  VolumeInfo: VolumeInfoType;
+  volumeInfo: VolumeInfoType;
   avr_rating?: number;
   saleInfo?: { saleability: string; buyLink: string };
 }
