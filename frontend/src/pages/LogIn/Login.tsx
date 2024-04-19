@@ -53,10 +53,10 @@ function Login() {
   };
 
   return (
-    <main>
-      <div className="background" id="background3"></div>
+    <main className="md:flex gap-10 justify-center lg:max-w-[1200px]">
+      {/* <div className="background" id="background3"></div> */}
       <form
-        className="max-w-md my-10 text-white mx-5"
+        className="max-w-md my-10 text-white mx-5 flex-1"
         onSubmit={(e) => handleSubmit(e)}
       >
         <div className="my-5">
@@ -115,6 +115,13 @@ function Login() {
           Invalid username or password
         </p>
       </form>
+      <div className="py-10 flex-1 md:max-w-[400px] m-auto">
+        <img
+          src="./man.jpg"
+          alt="a man looking down a giant book"
+          className="rounded-3xl"
+        />
+      </div>
     </main>
   );
 }

@@ -26,7 +26,7 @@ const SingleBook = () => {
   const { data, loading, error } = useFetch<ApiResponse>(bookURL);
 
   const book: VolumeInfoType | undefined = data?.volumeInfo;
-  console.log(data);
+  // console.log(data);
 
   // const [setReviewUpdated] = useState(false);
   const [isModalOpen, setModalOpen] = useState(false);
@@ -43,9 +43,9 @@ const SingleBook = () => {
         <div className="">
           {/* Top : Book overview */}
           <section className="md:grid grid-flow-col grid-cols-6 gap-10 mt-10 space-y-5">
-            <div className="col-span-2">
+            <figure className="col-span-2 w-[180px] m-auto">
               <img
-                className="m-auto object-cover w-[180px]"
+                className="object-cover "
                 alt={`book cover of ${book.title}`}
                 src={
                   book.imageLinks?.thumbnail
@@ -53,9 +53,10 @@ const SingleBook = () => {
                     : "/night.jpg"
                 }
               />
-            </div>
+            </figure>
+
             <div className="flex flex-col gap-5 col-span-4 text-center md:text-start">
-              <h1 className="text-2xl sm:text-4xl lg:text-5xl font-bold ">
+              <h1 className="text-2xl sm:text-4xl lg:text-5xl font-bold line-clamp-3 ">
                 {book.title}
               </h1>
               {book.subtitle && (

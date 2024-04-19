@@ -17,14 +17,14 @@ const Home = () => {
     SearchResultContext
   ) as unknown as SearchResultContextType;
 
-  const [showRandomQuote, setShowRandomQuote] = useState(true);
+  // const [showRandomQuote, setShowRandomQuote] = useState(true);
 
-  useEffect(() => {
-    if (searchResult?.length > 0) {
-      // Start the animation then hide the component
-      setShowRandomQuote(false);
-    }
-  }, [searchResult]);
+  // useEffect(() => {
+  //   if (searchResult?.length > 0) {
+  //     // Start the animation then hide the component
+  //     setShowRandomQuote(false);
+  //   }
+  // }, [searchResult]);
 
   const handleSearch = (results: { id: string }[]) => {
     if (results.length > 0) {
@@ -52,11 +52,11 @@ const Home = () => {
   return (
     <main className="" id="home">
       <div className="background" id="background"></div>
-      <div className="flex flex-col gap-5 align-middle md:flex-row md:mt-10">
-        {showRandomQuote && <RandomQuote />}
+      <RandomQuote />
+      <div className="flex flex-col align-middle md:flex-row md:my-20">
+        <BookSearch handleSearch={(result: []) => handleSearch(result)} />
         <Feed />
       </div>
-      <BookSearch handleSearch={(result: []) => handleSearch(result)} />
 
       {searchResult && (
         <div className="mx-auto">

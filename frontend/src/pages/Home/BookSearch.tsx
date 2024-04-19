@@ -63,10 +63,10 @@ const BookSearch: React.FC<BookSearchProps> = ({ handleSearch }) => {
     if (e.key === "Enter" || e.type === "click") {
       e.preventDefault();
       setTitle("");
-      setAuthor("");
-      setSelectedCategory({ value: "", label: "" });
-      setFree(false);
-      setLatest(false);
+      // setAuthor("");
+      // setSelectedCategory({ value: "", label: "" });
+      // setFree(false);
+      // setLatest(false);
       setError("");
     }
     return;
@@ -97,22 +97,25 @@ const BookSearch: React.FC<BookSearchProps> = ({ handleSearch }) => {
       >
         <div className="flex justify-between">
           <p className="text-red-400 font-bold">{error}</p>{" "}
+        </div>
+        <div className="relative">
+          <input
+            type="text"
+            placeholder="search..."
+            className="input input-bordered input-secondary w-full bg-transparent focus:bg-opacity-90 focus:bg-slate-700 text-slate-200"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+          />
           <button
             type="button"
-            className="btn btn-xs"
+            aria-label="clear"
+            className="btn btn-xs absolute right-3 top-3"
             onClick={(e) => handleClear(e)}
             onKeyDown={(e) => handleClear(e)}
           >
-            clear
+            X
           </button>
         </div>
-        <input
-          type="text"
-          placeholder="search..."
-          className="input input-bordered input-secondary w-full bg-transparent focus:bg-opacity-90 focus:bg-slate-700 text-slate-200"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-        />
         <div className="form-control">
           <label className="cursor-pointer flex self-end">
             <span className=" text-slate-200 label-text">

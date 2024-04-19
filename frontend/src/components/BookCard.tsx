@@ -29,14 +29,23 @@ const BookCard: React.FC<BookCardProps> = ({
     <Link to={`/details/${id}`} className="book-card" key={created_at}>
       <figure className="figure">
         <img
-          src={thumbnail || "/placeholder.png"}
+          src={thumbnail || "/man.jpg"}
           alt={`Cover of the ${title}`}
           className="thumb"
         />
       </figure>
       <div className="content">
         <div>
-          <h2 className="card-title">{title}</h2>
+          {status && (
+            <p
+              className={
+                status === "have read" ? "status read" : "status to-read"
+              }
+            >
+              {status}
+            </p>
+          )}
+          <h2 className="card-title leading-tight">{title}</h2>
           {author && <p className="author">{author}</p>}
           {avr_rating && (
             <div>
@@ -47,17 +56,6 @@ const BookCard: React.FC<BookCardProps> = ({
         </div>
 
         <div>
-          {status && (
-            <div className="flex justify-between">
-              <p
-                className={
-                  status === "have read" ? "status read" : "status to-read"
-                }
-              >
-                {status}
-              </p>
-            </div>
-          )}
           {saleInfo?.saleability === "FREE" && (
             <button className="status free">FREE</button>
           )}

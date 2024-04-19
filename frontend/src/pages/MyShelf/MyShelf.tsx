@@ -26,7 +26,7 @@ const MyShelf = () => {
   };
 
   return (
-    <main className="">
+    <main className="container">
       <div className="sm:flex justify-between">
         <button
           className="btn mb-5 hover:bg-slate-500 hover:text-slate-100 btn-outline btn-xs"
@@ -48,7 +48,7 @@ const MyShelf = () => {
         <div className="text-red-400 text-xl">Failed to fetch data :-/</div>
       )}
 
-      <div className="grid sm:grid-cols-2 gap-3">
+      <div className="bookshelf">
         {bookShelf?.length
           ? bookShelf.map((book) => (
               <BookCard
