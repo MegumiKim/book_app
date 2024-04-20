@@ -8,6 +8,7 @@ import Modal from "../../components/Modal.tsx";
 import UserReviews from "./UserReviews.tsx";
 import { ButtonGroup } from "./BtnGroup.tsx";
 import { VolumeInfoType } from "../../types.ts";
+import Recommendations from "./Recommendations.tsx";
 
 interface ApiResponse {
   data: {
@@ -103,6 +104,9 @@ const SingleBook = () => {
           <Modal isOpen={isModalOpen} onClose={() => setModalOpen(false)}>
             <ReviewForm data={data} onReviewPosted={handleReviewPosted} />
           </Modal>
+          {book.categories && (
+            <Recommendations genre={book.categories[0]} id={id} />
+          )}
         </div>
       )}
     </main>

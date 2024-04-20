@@ -52,11 +52,10 @@ const Home = () => {
   return (
     <main className="" id="home">
       <div className="background" id="background"></div>
-      <RandomQuote />
       <div className="flex flex-col align-middle md:flex-row md:my-20">
-        <BookSearch handleSearch={(result: []) => handleSearch(result)} />
-        <Feed />
+        <RandomQuote />
       </div>
+      <BookSearch handleSearch={(result: []) => handleSearch(result)} />
 
       {searchResult && (
         <div className="mx-auto">

@@ -6,6 +6,7 @@ import { BASE_URL } from "../../utils/constant";
 import BookCard from "../../components/BookCard";
 import { deleteUserAccount } from "../../APICalls/DeleteAccount";
 import Modal from "../../components/Modal";
+import Feed from "../Home/Feed";
 
 const MyShelf = () => {
   const { id } = useParams();
@@ -13,13 +14,24 @@ const MyShelf = () => {
   const { user, setUser } = useContext(UserContext);
   const [isModalOpen, setModalOpen] = useState(false);
   const [bookShelf, setBookShelf] = useState([]);
+  const [toReadShelf, setToReadShelf] = useState([]);
+  const [haveReadShelf, setHaveReadShelf] = useState([]);
+  const [shelfToBeDisplayed, setShelfToBeDisplayed] = useState("toReadShelf");
   const bookShelfURL = BASE_URL + "reviews/user/" + id;
   const { data, loading, error } = useFetch(bookShelfURL);
   // const {myBooks, setMyBooks} = useContext(MYS)
 
   useEffect(() => {
     setBookShelf(data?.data);
+
+    const toReads = data?.data.filter((item) => item.status == "to read");
+    const haveReads = data?.data.filter((item) => item.status == "have read");
+
+    setToReadShelf(toReads);
+    setHaveReadShelf(haveReads);
   }, [data]);
+
+  // console.log(data.data);
 
   const handleDeleteAccount = async () => {
     await deleteUserAccount(user.user_id, setUser, navigate);
@@ -34,7 +46,10 @@ const MyShelf = () => {
         >
           Back
         </button>
+      </div>
+      <div className="flex justify-between">
         <h2 className="text-lg">Welcome Back {user.name}!</h2>
+        <Feed />
       </div>
       <h1 className="mb-5">Book shelf ({bookShelf?.length}) </h1>
 
@@ -48,9 +63,24 @@ const MyShelf = () => {
         <div className="text-red-400 text-xl">Failed to fetch data :-/</div>
       )}
 
+      <div>
+        <button
+          className={`btn`}
+          onClick={() => setShelfToBeDisplayed("toReadShelf")}
+        >
+          To Read
+        </button>
+        <button
+          className="btn"
+          onClick={() => setShelfToBeDisplayed("haveReadShelf")}
+        >
+          Have Read
+        </button>
+      </div>
+      <div>{shelfToBeDisplayed}</div>
       <div className="bookshelf">
-        {bookShelf?.length
-          ? bookShelf.map((book) => (
+        {toReadShelf?.length
+          ? toReadShelf.map((book) => (
               <BookCard
                 id={book.google_book_id}
                 title={book.title}

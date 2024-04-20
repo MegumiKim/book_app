@@ -22,9 +22,8 @@ export const ButtonGroup = ({ bookData, onOpen }) => {
         setReadingStatus(data.status);
       }
     };
-
     fetchData();
-  }, [readingStatus]);
+  }, [readingStatus, book_id]);
 
   const buttonRenderers = {
     "not added": () => (

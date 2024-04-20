@@ -6,7 +6,7 @@ function UserReviews({ book_id }) {
   const reviewsURL = `${BASE_URL}reviews/${book_id}`;
 
   // Fetch reviews data
-  const { data, loading, error } = useFetch(reviewsURL);
+  const { data } = useFetch(reviewsURL);
   const reviewsData = data?.data;
 
   const reviews = reviewsData?.map((review, i) => (
@@ -20,16 +20,12 @@ function UserReviews({ book_id }) {
   ));
 
   return (
-    <section className="border-t-slate-600 border-t-2 mt-10 py-3">
-      {loading && <p className="loading-spinner">Loading...</p>}
-      {error && <h1>Failed to load page :-/</h1>}
-      {data?.results > 0 && (
-        <div>
-          <h2 className="text-lg font-bold my-5">Reviews</h2>
-          <div className="grid sm:grid-cols-2 gap-4">{reviews}</div>
-        </div>
-      )}
-    </section>
+    data?.results > 0 && (
+      <section className="outline outline-slate-400">
+        <h2 className="">Reviews</h2>
+        <div className="grid sm:grid-cols-2 gap-4 mt-5">{reviews}</div>
+      </section>
+    )
   );
 }
 
