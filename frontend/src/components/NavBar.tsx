@@ -18,7 +18,7 @@ const NavBar = () => {
     navigate("/");
   }
   return user_id === null ? (
-    <nav className="navbar bg-transparent max-w-6xl m-auto text-slate-200 justify-end">
+    <nav className="navbar bg-transparent max-w-6xl m-auto text-slate-200 justify-end my-5">
       <ul className="flex gap-5">
         <li role="button" tabIndex={0}>
           <Link to={"/"}>Log in</Link>
@@ -30,7 +30,7 @@ const NavBar = () => {
       </ul>
     </nav>
   ) : (
-    <nav className="navbar bg-transparent max-w-6xl m-auto text-slate-200 justify-between">
+    <nav className="navbar bg-transparent max-w-6xl m-auto text-slate-200 justify-between my-5">
       <button>
         <Link
           to="/home"
@@ -42,8 +42,8 @@ const NavBar = () => {
         </Link>
       </button>
 
-      <div className="flex-none">
-        <ul className="menu menu-horizontal px-1 sm:text-xl">
+      <div className="">
+        <ul className="menu menu-horizontal px-1 sm:text-xl flex-col sm:flex-row">
           <li role="button" tabIndex={0}>
             <Link to={`/user/${user_id}`}>Bookshelf</Link>
           </li>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useFetch } from "../../hooks/useFetch.tsx";
 import RatingStars from "../../components/RatingStars.tsx";
@@ -19,6 +19,7 @@ interface ApiResponse {
 }
 const SingleBook = () => {
   const { id } = useParams();
+
   const bookURL = `${
     import.meta.env.VITE_REACT_APP_GOOGLE_BOOK_API
   }volumes/${id}`;
@@ -29,6 +30,9 @@ const SingleBook = () => {
   const book: VolumeInfoType | undefined = data?.volumeInfo;
   // console.log(data);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [id]);
   // const [setReviewUpdated] = useState(false);
   const [isModalOpen, setModalOpen] = useState(false);
 
@@ -43,7 +47,10 @@ const SingleBook = () => {
       {book && (
         <div className="">
           {/* Top : Book overview */}
-          <section className="md:grid grid-flow-col grid-cols-6 gap-10 mt-10 space-y-5">
+          <section
+            className="md:grid grid-flow-col grid-cols-6 gap-10 mt-10 space-y-5"
+            id="page-top"
+          >
             <figure className="col-span-2 w-[180px] m-auto">
               <img
                 className="object-cover "
@@ -68,7 +75,7 @@ const SingleBook = () => {
               {/* Meta data */}
               <div className="flex flex-col gap-2 mx-auto md:mx-0 text-center md:text-start">
                 {/* Authors */}
-                <ul className="author-list flex gap-2 text-orange-300 text-lg">
+                <ul className="author-list flex gap-2 text-orange-300 text-lg m-auto md:m-0">
                   {book.authors?.map((author: string) => (
                     <li key={author} className="">
                       {author}

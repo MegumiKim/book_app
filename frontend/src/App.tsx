@@ -7,6 +7,7 @@ import MyShelf from "./pages/MyShelf/MyShelf";
 import Login from "./pages/LogIn/Login";
 import PageNotFound from "./pages/PageNotFound/PageNotFound";
 import SignUp from "./pages/SignUp/SignUp";
+import SearchResults from "./pages/SearchResults/SearchResults";
 
 const App = () => {
   return (
@@ -20,6 +21,7 @@ const App = () => {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/" element={<Login />} />
           <Route path="/home" element={<Home />} />
+          <Route path="/search" element={<SearchResults />} />
           <Route path="/user" element={<MyPage />} />
           <Route path="/user/:id" element={<MyShelf />} />
           <Route path="/details/:id" element={<SingleBook />} />

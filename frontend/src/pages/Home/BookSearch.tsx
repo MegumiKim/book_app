@@ -90,59 +90,63 @@ const BookSearch: React.FC<BookSearchProps> = ({ handleSearch }) => {
   }
 
   return (
-    <section className="my-10 items-center flex flex-col mx-5 text-slate-200 ">
+    <section className="items-center flex flex-col text-slate-200 ">
       <form
         onSubmit={(e) => searchBook(e)}
-        className="flex flex-col gap-3 bg-slate-800 p-4 sm:p-6 bg-opacity-80 rounded-lg w-full sm:w-[550px]"
+        className="flex flex-col gap-3 bg-slate-800 p-4 sm:p-6 bg-opacity-80 rounded-lg w-full lg:w-[1000px]"
       >
         <div className="flex justify-between">
           <p className="text-red-400 font-bold">{error}</p>{" "}
         </div>
-        <div className="relative">
-          <input
-            type="text"
-            placeholder="search..."
-            className="input input-bordered input-secondary w-full bg-transparent focus:bg-opacity-90 focus:bg-slate-700 text-slate-200"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-          />
-          <button
-            type="button"
-            aria-label="clear"
-            className="btn btn-xs absolute right-3 top-3"
-            onClick={(e) => handleClear(e)}
-            onKeyDown={(e) => handleClear(e)}
-          >
-            X
-          </button>
-        </div>
-        <div className="form-control">
-          <label className="cursor-pointer flex self-end">
-            <span className=" text-slate-200 label-text">
-              Show Advanced Search
-            </span>
+        <div className="flex flex-col gap-3 sm:flex-row">
+          <div className="relative flex-1">
             <input
-              id="showAdvancedSearch"
-              type="checkbox"
-              className="toggle toggle-secondary ms-3"
-              onChange={() => setShowAdvancedSearch((prevState) => !prevState)}
-              onKeyDown={(e) => handleCheckBox(e, setShowAdvancedSearch)}
+              type="text"
+              placeholder="search..."
+              className="input input-bordered input-secondary w-full bg-transparent focus:bg-opacity-90 focus:bg-slate-700 text-slate-200 "
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
             />
-          </label>
+            <button
+              type="button"
+              aria-label="clear"
+              className="btn btn-xs absolute right-3 top-3"
+              onClick={(e) => handleClear(e)}
+              onKeyDown={(e) => handleClear(e)}
+            >
+              X
+            </button>
+          </div>
+          <div className="form-control">
+            <label className="cursor-pointer flex self-end sm:flex-col">
+              <p className=" text-slate-200 label-text sm:order-2">
+                Show Advanced Search
+              </p>
+              <input
+                id="showAdvancedSearch"
+                type="checkbox"
+                className="toggle toggle-secondary ms-3 sm:ms-0 sm:order-1"
+                onChange={() =>
+                  setShowAdvancedSearch((prevState) => !prevState)
+                }
+                onKeyDown={(e) => handleCheckBox(e, setShowAdvancedSearch)}
+              />
+            </label>
+          </div>
         </div>
         {showAdvancedSearch && (
-          <fieldset className=" flex flex-col gap-3">
-            <div className="flex flex-col gap-3">
+          <fieldset className="flex flex-col md:flex-row gap-3 sm:gap-5 md:mt-5">
+            <div className="flex flex-col  gap-3 flex-1">
               <label htmlFor="author">Author</label>
               <input
                 id="author"
                 type="text"
-                className="input input-bordered input-secondary w-full bg-transparent focus:bg-opacity-90 focus:bg-slate-700 text-slate-200"
+                className="input  w-full bg-white h-[38px] focus:bg-opacity-90 rounded-sm "
                 value={author}
                 onChange={(e) => setAuthor(e.target.value)}
               />
             </div>
-            <div className="flex flex-col gap-2 ">
+            <div className="flex flex-col gap-3 flex-1">
               <label htmlFor="">Category / Subject</label>
               <CreatableSelect
                 className="text-slate-800 leading-tight"
@@ -158,8 +162,8 @@ const BookSearch: React.FC<BookSearchProps> = ({ handleSearch }) => {
                 })}
               />
             </div>
-            <div className="sm:flex gap-10">
-              <div className="flex gap-4">
+            <div className="flex flex-row md:flex-col justify-center gap-2">
+              <div className="flex gap-4 justify-end">
                 <label htmlFor="checkbox">Free ebook</label>
                 <input
                   id="free_ebook"
@@ -170,7 +174,7 @@ const BookSearch: React.FC<BookSearchProps> = ({ handleSearch }) => {
                   onKeyDown={(e) => handleCheckBox(e, setFree)}
                 />
               </div>
-              <div className="flex gap-4">
+              <div className="flex gap-4 justify-end">
                 <label htmlFor="checkbox">Latest</label>
                 <input
                   id="latest"
@@ -184,7 +188,7 @@ const BookSearch: React.FC<BookSearchProps> = ({ handleSearch }) => {
             </div>
             <button
               type="submit"
-              className="btn btn-secondary bg-opacity-75 text-slate-200 mt-8"
+              className="btn btn-secondary bg-opacity-75 text-slate-200 my-auto"
             >
               Search
             </button>

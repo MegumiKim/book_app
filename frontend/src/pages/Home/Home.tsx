@@ -1,11 +1,9 @@
 // import { useEffect, useState } from "react";
 import { useContext, useEffect, useState } from "react";
-import BookSearch from "./BookSearch";
-import BookCard from "../../components/BookCard";
 import { SearchResultContext } from "../../context/SearchResultContext";
 import { GoogleBookDataType } from "../../types";
 import RandomQuote from "./RandomQuote";
-import Feed from "./Feed";
+import { useNavigate } from "react-router-dom";
 
 interface SearchResultContextType {
   searchResult: GoogleBookDataType[];
@@ -13,82 +11,71 @@ interface SearchResultContextType {
 }
 
 const Home = () => {
-  const { searchResult, setSearchResult } = useContext(
+  const { setSearchResult } = useContext(
     SearchResultContext
   ) as unknown as SearchResultContextType;
 
-  // const [showRandomQuote, setShowRandomQuote] = useState(true);
+  const [error, setError] = useState("");
 
-  // useEffect(() => {
-  //   if (searchResult?.length > 0) {
-  //     // Start the animation then hide the component
-  //     setShowRandomQuote(false);
-  //   }
-  // }, [searchResult]);
+  const navigate = useNavigate();
 
-  const handleSearch = (results: { id: string }[]) => {
-    if (results.length > 0) {
-      const uniqueIds = new Set<string>();
-      const filteredResults = results.filter((result) => {
-        if (!uniqueIds.has(result.id)) {
-          uniqueIds.add(result.id);
-          return true; // keep this result, it's unique so far
-        }
-        return false; // skip this result, it's a duplicate
-      });
-      // console.log(filteredResults);
-
-      setSearchResult(filteredResults);
-    } else {
-      setSearchResult([]);
+  function handleKeyPress(e) {
+    setError("");
+    if (e.key === "Enter") {
+      e.preventDefault();
+      searchBook(e.target.value);
     }
+    return;
+  }
 
-    // console.log(result);
-  };
+  async function searchBook(searchTerm: string) {
+    const URL =
+      import.meta.env.VITE_REACT_APP_GOOGLE_BOOK_API +
+      "volumes?q=" +
+      searchTerm;
 
-  // const handleLoadMore = () => {
-  //   console.log("load more");
-  // };
+    try {
+      const result = await fetch(URL);
+      const json = await result.json();
+      // console.log(URL, json);
+      if (!result.ok) {
+        throw new Error();
+      } else {
+        if (json.totalItems === 0) {
+          setError("No book found");
+          return;
+        }
+        setSearchResult(json.items);
+        navigate("/search");
+      }
+    } catch (error) {
+      console.error(error);
+      setError("Failed to Fetch Data");
+    }
+  }
+
+  function clearInput(e) {
+    e.target.value = "";
+  }
+
   return (
     <main className="" id="home">
       <div className="background" id="background"></div>
-      <div className="flex flex-col align-middle md:flex-row md:my-20">
+      <div className="flex flex-col gap-10 align-middle md:my-20 mx-2">
         <RandomQuote />
-      </div>
-      <BookSearch handleSearch={(result: []) => handleSearch(result)} />
 
-      {searchResult && (
-        <div className="mx-auto">
-          {searchResult?.length > 0 ? (
-            <div className="flex flex-col">
-              <div className="bookshelf">
-                {searchResult.map((item) => (
-                  <BookCard
-                    key={item.id}
-                    title={item.volumeInfo.title}
-                    author={item.volumeInfo.authors?.[0]}
-                    genre={item.volumeInfo.categories?.[0]}
-                    thumbnail={item.volumeInfo.imageLinks?.thumbnail}
-                    avr_rating={item.volumeInfo.averageRating}
-                    status={null}
-                    id={item.id}
-                    publishedDate={item.volumeInfo.publishedDate}
-                    saleInfo={item.saleInfo}
-                  />
-                ))}
-              </div>
-              {/* <button
-                className="btn btn-outline mx-auto my-10 text-slate-200"
-                onClickCapture={handleLoadMore}
-              >
-                Load More
-              </button> */}
-            </div>
-          ) : (
-            ""
-          )}
+        <div className="w-full mx-auto sm:max-w-[500px]">
+          <input
+            type="text"
+            placeholder="Book Search"
+            onKeyDown={handleKeyPress}
+            onClick={clearInput}
+            className="input w-full "
+            autoFocus
+          />
+          {error && <p className="text-green-50 text-end m-2">{error}</p>}
         </div>
-      )}
+      </div>
     </main>
   );
 };

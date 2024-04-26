@@ -30,9 +30,9 @@ nav {
   z-index: 20;
 }
 
-section {
+/* section {
   padding: 2em 0;
-}
+} */
 
 h1 {
   font-size: 2.5em;
@@ -57,8 +57,6 @@ h2 {
 #background {
   /* background: rgb(245, 240, 217); */
   background-image: url("/camp-7103189_1920.png");
-  background-blend-mode: darken;
-  opacity: 0.5;
 }
 
 #background2 {
@@ -159,6 +157,9 @@ figure::after {
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 2em;
   margin-top: 1.5em;
+  width: 100%;
+  max-width: 1200px;
+  margin: auto;
 }
 .book-card img {
   max-width: 130px;
@@ -266,8 +267,8 @@ button:disabled:hover {
   background: gray;
 }
 
-@media screen and (min-width: 480px) {
+/* @media screen and (min-width: 480px) {
   main {
     padding: 0;
   }
-}
+} */
