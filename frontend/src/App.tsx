@@ -19,8 +19,8 @@ const App = () => {
         <NavBar />
         <Routes>
           <Route path="/signup" element={<SignUp />} />
-          <Route path="/" element={<Login />} />
-          <Route path="/home" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/" element={<Home />} />
           <Route path="/search" element={<SearchResults />} />
           <Route path="/user" element={<MyPage />} />
           <Route path="/user/:id" element={<MyShelf />} />

@@ -48,7 +48,7 @@ const SingleBook = () => {
         <div className="">
           {/* Top : Book overview */}
           <section
-            className="md:grid grid-flow-col grid-cols-6 gap-10 mt-10 space-y-5"
+            className="md:grid grid-flow-col grid-cols-6 gap-10 space-y-5 md:space-y-0"
             id="page-top"
           >
             <figure className="col-span-2 w-[180px] m-auto">
@@ -83,7 +83,9 @@ const SingleBook = () => {
                   ))}
                 </ul>
                 {book.averageRating && (
-                  <RatingStars rating={book.averageRating} />
+                  <div>
+                    <RatingStars rating={book.averageRating} />
+                  </div>
                 )}
                 {book.categories && <p className="">{book.categories[0]}</p>}
 

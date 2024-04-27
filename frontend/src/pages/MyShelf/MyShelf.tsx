@@ -22,23 +22,33 @@ const MyShelf = () => {
   // const {myBooks, setMyBooks} = useContext(MYS)
 
   useEffect(() => {
-    setBookShelf(data?.data);
-
     const toReads = data?.data.filter((item) => item.status == "to read");
     const haveReads = data?.data.filter((item) => item.status == "have read");
+
+    setBookShelf(toReads);
 
     setToReadShelf(toReads);
     setHaveReadShelf(haveReads);
   }, [data]);
 
-  // console.log(data.data);
+  function toggleBookShelf(e) {
+    console.log(e.target.value);
+
+    if ((e.target.value = "toReads")) {
+      setBookShelf(toReadShelf);
+      setShelfToBeDisplayed("toReadsShelf");
+    } else {
+      setBookShelf(haveReadShelf);
+      setShelfToBeDisplayed("haveReadsShelf");
+    }
+  }
 
   const handleDeleteAccount = async () => {
     await deleteUserAccount(user.user_id, setUser, navigate);
   };
 
   return (
-    <main className="container">
+    <main className="">
       <div className="sm:flex justify-between">
         <button
           className="btn mb-5 hover:bg-slate-500 hover:text-slate-100 btn-outline btn-xs"
@@ -64,23 +74,17 @@ const MyShelf = () => {
       )}
 
       <div>
-        <button
-          className={`btn`}
-          onClick={() => setShelfToBeDisplayed("toReadShelf")}
-        >
+        <button className={`btn`} onClick={toggleBookShelf} value={"toReads"}>
           To Read
         </button>
-        <button
-          className="btn"
-          onClick={() => setShelfToBeDisplayed("haveReadShelf")}
-        >
+        <button className="btn" onClick={toggleBookShelf} value={"haveReads"}>
           Have Read
         </button>
       </div>
       <div>{shelfToBeDisplayed}</div>
       <div className="bookshelf">
-        {toReadShelf?.length
-          ? toReadShelf.map((book) => (
+        {bookShelf?.length
+          ? bookShelf.map((book) => (
               <BookCard
                 id={book.google_book_id}
                 title={book.title}

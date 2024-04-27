@@ -4,7 +4,7 @@ import { useFetch } from "../../hooks/useFetch";
 function Recommendations({ genre, id }) {
   const URL =
     import.meta.env.VITE_REACT_APP_GOOGLE_BOOK_API +
-    `volumes?q=subject:${genre}`;
+    `volumes?q=subject:'${genre}'`;
   const { data, loading, error } = useFetch(URL);
 
   const recommendations = data?.items
@@ -14,8 +14,8 @@ function Recommendations({ genre, id }) {
 
   return (
     recommendations && (
-      <section className=" outline-slate-400">
-        <h2>Related reads</h2>
+      <section className=" outline-slate-400 mt-10">
+        <h2 className="my-5">Other Books in {genre}</h2>
         <div className="bookshelf">
           {recommendations.map((item) => (
             <BookCard

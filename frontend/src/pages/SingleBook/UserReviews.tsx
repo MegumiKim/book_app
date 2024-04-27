@@ -21,7 +21,7 @@ function UserReviews({ book_id }) {
 
   return (
     data?.results > 0 && (
-      <section className="outline outline-slate-400">
+      <section className="outline outline-slate-400 outline-1 rounded-lg p-5">
         <h2 className="">Reviews</h2>
         <div className="grid sm:grid-cols-2 gap-4 mt-5">{reviews}</div>
       </section>

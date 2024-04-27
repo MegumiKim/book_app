@@ -61,7 +61,7 @@ const Home = () => {
   return (
     <main className="" id="home">
       <div className="background" id="background"></div>
-      <div className="flex flex-col gap-10 align-middle md:my-20 mx-2">
+      <div className="flex flex-col gap-10 align-middle my-20">
         <RandomQuote />
 
         <div className="w-full mx-auto sm:max-w-[500px]">

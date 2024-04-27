@@ -14,12 +14,14 @@ body {
   height: 100%;
   margin: 0;
 }
+
 main {
-  margin: 0px auto 5% auto;
+  margin: 0px auto;
   padding: 0 5%;
   width: 100%;
   z-index: 10;
-  overflow-y: auto;
+  overflow-y: visible;
+  max-width: 1200px;
 }
 
 img {
@@ -28,6 +30,42 @@ img {
 
 nav {
   z-index: 20;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 1em 2em;
+  max-width: 1200px;
+  margin: auto;
+  align-items: baseline;
+}
+
+.logo {
+  font-size: 1.5em;
+  font-weight: 600;
+}
+
+nav ul {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+  text-align: end;
+  align-items: flex-end;
+  position: absolute;
+  right: -1em;
+  top: 2em;
+  border-radius: 16px;
+  padding: 1em;
+  width: max-content;
+  background-color: rgb(41, 48, 58, 0.9);
+  font-size: 1.2em;
+}
+
+nav ul *:hover {
+  color: #e63a58;
+}
+nav button {
+  margin: 0;
 }
 
 /* section {
@@ -104,11 +142,6 @@ textarea {
   font-weight: normal;
 }
 
-/* @media (min-width: 72rem) {
-  main {
-    padding: 0;
-  }
-} */
 /* Book Card */
 .book-card {
   gap: 1.5em;
@@ -126,7 +159,7 @@ textarea {
 }
 
 figure {
-  margin: auto;
+  /* margin: auto; */
   box-shadow: 22px 12px 12px 1px rgba(0, 0, 0, 0.1);
   position: relative;
   height: min-content;
@@ -141,7 +174,7 @@ figure::after {
   content: "";
   width: 7px;
   height: calc(100%);
-  background: rgb(229, 227, 227);
+  background: white;
   border-left: rgb(172, 170, 170) solid 0.5px;
   border-right: #475569 solid 0.5px;
   position: absolute;
@@ -267,6 +300,19 @@ button:disabled:hover {
   background: gray;
 }
 
+@media (min-width: 800px) {
+  nav {
+    padding: 2em 5%;
+  }
+  .logo {
+    font-size: 2em;
+  }
+
+  nav a,
+  nav button {
+    font-size: 1.2em;
+  }
+}
 /* @media screen and (min-width: 480px) {
   main {
     padding: 0;

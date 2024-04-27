@@ -90,10 +90,10 @@ const BookSearch: React.FC<BookSearchProps> = ({ handleSearch }) => {
   }
 
   return (
-    <section className="items-center flex flex-col text-slate-200 ">
+    <section className="items-center flex flex-col text-slate-200 overflow-visible ">
       <form
         onSubmit={(e) => searchBook(e)}
-        className="flex flex-col gap-3 bg-slate-800 p-4 sm:p-6 bg-opacity-80 rounded-lg w-full lg:w-[1000px]"
+        className="flex flex-col gap-3 bg-slate-800 p-4 sm:p-6 bg-opacity-80 rounded-lg w-full lg:w-[1000px] overflow-visible"
       >
         <div className="flex justify-between">
           <p className="text-red-400 font-bold">{error}</p>{" "}
@@ -105,6 +105,7 @@ const BookSearch: React.FC<BookSearchProps> = ({ handleSearch }) => {
               placeholder="search..."
               className="input input-bordered input-secondary w-full bg-transparent focus:bg-opacity-90 focus:bg-slate-700 text-slate-200 "
               value={title}
+              autoFocus
               onChange={(e) => setTitle(e.target.value)}
             />
             <button
@@ -135,7 +136,7 @@ const BookSearch: React.FC<BookSearchProps> = ({ handleSearch }) => {
           </div>
         </div>
         {showAdvancedSearch && (
-          <fieldset className="flex flex-col md:flex-row gap-3 sm:gap-5 md:mt-5">
+          <fieldset className="flex flex-col md:flex-row gap-3 sm:gap-5 md:mt-5 overflow-visible">
             <div className="flex flex-col  gap-3 flex-1">
               <label htmlFor="author">Author</label>
               <input
@@ -146,10 +147,10 @@ const BookSearch: React.FC<BookSearchProps> = ({ handleSearch }) => {
                 onChange={(e) => setAuthor(e.target.value)}
               />
             </div>
-            <div className="flex flex-col gap-3 flex-1">
+            <div className="flex flex-col gap-3 flex-1 overflow-visible z-10">
               <label htmlFor="">Category / Subject</label>
               <CreatableSelect
-                className="text-slate-800 leading-tight"
+                className="text-slate-800 leading-tight overflow-visible z-10"
                 isClearable
                 isSearchable
                 onChange={handleCategoryChange}
