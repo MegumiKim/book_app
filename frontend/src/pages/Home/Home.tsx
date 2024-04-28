@@ -4,6 +4,7 @@ import { SearchResultContext } from "../../context/SearchResultContext";
 import { GoogleBookDataType } from "../../types";
 import RandomQuote from "./RandomQuote";
 import { useNavigate } from "react-router-dom";
+import Feed from "./Feed";
 
 interface SearchResultContextType {
   searchResult: GoogleBookDataType[];
@@ -76,6 +77,11 @@ const Home = () => {
           {error && <p className="text-green-50 text-end m-2">{error}</p>}
         </div>
       </div>
+
+      {/* <section>
+        <h2>Community Feed</h2>
+        <Feed />
+      </section> */}
     </main>
   );
 };

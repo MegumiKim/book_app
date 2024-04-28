@@ -8,6 +8,7 @@ import Login from "./pages/LogIn/Login";
 import PageNotFound from "./pages/PageNotFound/PageNotFound";
 import SignUp from "./pages/SignUp/SignUp";
 import SearchResults from "./pages/SearchResults/SearchResults";
+import Footer from "./components/Footer";
 
 const App = () => {
   return (
@@ -27,6 +28,7 @@ const App = () => {
           <Route path="/details/:id" element={<SingleBook />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
+        <Footer />
       </div>
     </Router>
   );

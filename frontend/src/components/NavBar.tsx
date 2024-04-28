@@ -10,30 +10,99 @@ const NavBar = () => {
   const location = useLocation();
   const { user, setUser } = useContext(UserContext);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [focusedIndex, setFocusedIndex] = useState(-1);
   const [isModalOpen, setModalOpen] = useState(false);
   const user_id = user.user_id || null;
   const { setSearchResult } = useContext(SearchResultContext);
+  const [deleteError, setDeleteError] = useState(false);
 
   const handleDeleteAccount = async () => {
-    await deleteUserAccount(user.user_id, setUser, navigate);
+    try {
+      await deleteUserAccount(user.user_id);
+      setUser({});
+      localStorage.removeItem("myBooks");
+      setModalOpen(false);
+      navigate("/signup");
+    } catch (error) {
+      setDeleteError(true);
+    }
   };
 
   useEffect(() => {
     setMenuOpen(false);
   }, [location.pathname]);
 
+  useEffect(() => {
+    if (menuOpen && focusedIndex !== -1) {
+      const items = document.querySelectorAll("ul li a, ul li button");
+      const focusableItem = items[focusedIndex];
+      focusableItem && focusableItem.focus();
+    }
+  }, [menuOpen]);
+
+  useEffect(() => {
+    if (!menuOpen) {
+      setFocusedIndex(-1);
+    }
+  }, [menuOpen]);
+
   function handleLogOut() {
-    setUser({
-      user_id: null,
-      name: "Guest",
-    });
     setSearchResult([]);
-    navigate("/");
+    setUser({});
+    localStorage.removeItem("myBooks");
+    setMenuOpen(false);
+    navigate("/login");
   }
 
   function toggleMenuOpen() {
     setMenuOpen(!menuOpen);
+    setFocusedIndex(0);
   }
+
+  // Menu navigation
+
+  const menuItems = [
+    { name: "Home", path: "/" },
+    { name: "Bookshelf", path: `/user/${user_id}` },
+    { name: "Log Out", action: handleLogOut },
+    {
+      name: "Delete Account",
+      action: setModalOpen,
+      class: "delete-btn",
+    },
+  ];
+
+  // const handleKeyDown = (event) => {
+  //   if (!menuOpen) return;
+
+  //   switch (event.key) {
+  //     case "ArrowDown":
+  //       event.preventDefault(); // Prevent page scrolling
+  //       setFocusedIndex((prevIndex) => (prevIndex + 1) % menuItems.length);
+
+  //       break;
+  //     case "ArrowUp":
+  //       event.preventDefault(); // Prevent page scrolling
+  //       setFocusedIndex(
+  //         (prevIndex) => (prevIndex - 1 + menuItems.length) % menuItems.length
+  //       );
+  //       break;
+  //     case "Enter":
+  //       const item = menuItems[focusedIndex];
+
+  //       if (item.path) {
+  //         navigate(item.path);
+  //       } else if (item.action) {
+  //         item.action();
+  //       }
+  //       setMenuOpen(false);
+  //       break;
+  //     case "Escape":
+  //       event.preventDefault();
+  //       setMenuOpen(false);
+  //       break;
+  //   }
+  // };
 
   return (
     <nav className="">
@@ -47,28 +116,56 @@ const NavBar = () => {
         <Link to={"/login"}>Log in</Link>
       ) : (
         <div className="relative">
-          <button onClick={toggleMenuOpen}>Menu</button>
-          <ul className={menuOpen ? "flex" : "hidden"}>
-            <Link to={`/`}>Home</Link>
-            <Link to={`/user/${user_id}`}>Bookshelf</Link>
-            <button onClick={handleLogOut}>Log Out</button>
-            <button className="border-t-2 pt-3 text-slate-500">
-              Delete Account
-            </button>
+          <button onClick={toggleMenuOpen} className="menu-btn">
+            <img
+              src={`../../public/icons/book_icon_${
+                menuOpen ? "open" : "close"
+              }.svg`}
+              alt={`menu ${menuOpen ? "open" : "close"}`}
+            />
+            <small>Menu</small>
+          </button>
+          <ul
+            className={menuOpen ? "flex" : "hidden"}
+            // onKeyDown={(e) => handleKeyDown(e)}
+          >
+            {menuItems.map((item, index) => (
+              <li key={index}>
+                {item.path ? (
+                  <Link
+                    to={item.path}
+                    tabIndex={focusedIndex === index ? 0 : -1}
+                  >
+                    {item.name}
+                  </Link>
+                ) : (
+                  <button
+                    onClick={item.action}
+                    tabIndex={focusedIndex === index ? 0 : -1}
+                    className={item.class ? item.class : ""}
+                  >
+                    {item.name}
+                  </button>
+                )}
+              </li>
+            ))}
           </ul>
 
           <Modal isOpen={isModalOpen} onClose={() => setModalOpen(false)}>
-            <h2>Are you sure you want to delete account?</h2>
+            <h3>Are you sure you want to delete account?</h3>
             <div className="flex gap-5 my-5 ">
               <button
                 onClick={() => setModalOpen(false)}
-                className="btn btn-warning"
+                className="btn btn-accent"
               >
                 Cancel
               </button>
               <button onClick={handleDeleteAccount} className="btn btn-outline">
                 Yes, I want to delete
               </button>
+              {deleteError && (
+                <p className="text-red-500">Failed to Delete Account</p>
+              )}
             </div>
           </Modal>
         </div>

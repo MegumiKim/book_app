@@ -6,17 +6,18 @@ import { BASE_URL } from "../../utils/constant";
 import BookCard from "../../components/BookCard";
 import { deleteUserAccount } from "../../APICalls/DeleteAccount";
 import Modal from "../../components/Modal";
-import Feed from "../Home/Feed";
 
 const MyShelf = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { user, setUser } = useContext(UserContext);
   const [isModalOpen, setModalOpen] = useState(false);
+
   const [bookShelf, setBookShelf] = useState([]);
   const [toReadShelf, setToReadShelf] = useState([]);
   const [haveReadShelf, setHaveReadShelf] = useState([]);
-  const [shelfToBeDisplayed, setShelfToBeDisplayed] = useState("toReadShelf");
+  const [selectedTab, setSelectedTab] = useState("toRead");
+
   const bookShelfURL = BASE_URL + "reviews/user/" + id;
   const { data, loading, error } = useFetch(bookShelfURL);
   // const {myBooks, setMyBooks} = useContext(MYS)
@@ -26,20 +27,19 @@ const MyShelf = () => {
     const haveReads = data?.data.filter((item) => item.status == "have read");
 
     setBookShelf(toReads);
-
     setToReadShelf(toReads);
     setHaveReadShelf(haveReads);
   }, [data]);
 
   function toggleBookShelf(e) {
-    console.log(e.target.value);
+    const shelf = e.target.dataset.shelf;
 
-    if ((e.target.value = "toReads")) {
+    if (shelf === "toReads") {
       setBookShelf(toReadShelf);
-      setShelfToBeDisplayed("toReadsShelf");
-    } else {
+      setSelectedTab("toRead");
+    } else if (shelf === "haveReads") {
       setBookShelf(haveReadShelf);
-      setShelfToBeDisplayed("haveReadsShelf");
+      setSelectedTab("haveReads");
     }
   }
 
@@ -50,18 +50,18 @@ const MyShelf = () => {
   return (
     <main className="">
       <div className="sm:flex justify-between">
-        <button
+        {/* <button
           className="btn mb-5 hover:bg-slate-500 hover:text-slate-100 btn-outline btn-xs"
           onClick={() => navigate(-1)}
         >
           Back
-        </button>
+        </button> */}
       </div>
       <div className="flex justify-between">
         <h2 className="text-lg">Welcome Back {user.name}!</h2>
-        <Feed />
+        {/* <Feed /> */}
       </div>
-      <h1 className="mb-5">Book shelf ({bookShelf?.length}) </h1>
+      <h1 className="mb-5">Book shelf ({data?.data.length}) </h1>
 
       {loading && (
         <div className="w-full justify-center flex flex-col gap-4 mb-10">
@@ -73,15 +73,27 @@ const MyShelf = () => {
         <div className="text-red-400 text-xl">Failed to fetch data :-/</div>
       )}
 
-      <div>
-        <button className={`btn`} onClick={toggleBookShelf} value={"toReads"}>
-          To Read
+      <div role="tablist" className="tabs tabs-bordered mb-10 ">
+        <button
+          className={`tab hover:bg-slate-700 h-10 ${
+            selectedTab === "toRead" && "tab-active"
+          }`}
+          onClick={toggleBookShelf}
+          data-shelf="toReads"
+        >
+          To Read <span>({toReadShelf?.length})</span>
         </button>
-        <button className="btn" onClick={toggleBookShelf} value={"haveReads"}>
-          Have Read
+        <button
+          className={`tab hover:bg-slate-700 h-10 ${
+            selectedTab === "haveReads" && "tab-active"
+          }`}
+          onClick={toggleBookShelf}
+          data-shelf="haveReads"
+        >
+          Have Read <span>({haveReadShelf?.length})</span>
         </button>
       </div>
-      <div>{shelfToBeDisplayed}</div>
+      {/* <div>{shelfToBeDisplayed}</div> */}
       <div className="bookshelf">
         {bookShelf?.length
           ? bookShelf.map((book) => (
@@ -98,29 +110,6 @@ const MyShelf = () => {
             ))
           : "No book is added in your bookshelf"}
       </div>
-
-      {id !== "1" && (
-        <button
-          onClick={() => setModalOpen(true)}
-          className="btn btn-link text-lg w-full text-center my-10"
-        >
-          Delete Account
-        </button>
-      )}
-      <Modal isOpen={isModalOpen} onClose={() => setModalOpen(false)}>
-        <h2>Are you sure you want to delete account?</h2>
-        <div className="flex gap-5 my-5 ">
-          <button
-            onClick={() => setModalOpen(false)}
-            className="btn btn-warning"
-          >
-            Cancel
-          </button>
-          <button onClick={handleDeleteAccount} className="btn btn-outline">
-            Yes, I want to delete
-          </button>
-        </div>
-      </Modal>
     </main>
   );
 };

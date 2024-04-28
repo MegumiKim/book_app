@@ -33,7 +33,7 @@ function Login() {
         const json = await response.json();
         setMyBooks(json?.data);
 
-        navigate("/home");
+        navigate("/");
       } catch (error) {
         throw new Error(error);
       }
@@ -49,7 +49,7 @@ function Login() {
       user_id: 1,
     };
     setUser(guestAccount);
-    navigate("/home");
+    navigate("/");
   };
 
   return (
@@ -115,13 +115,6 @@ function Login() {
           Invalid username or password
         </p>
       </form>
-      {/* <div className="flex-1 hidden lg:block lg:max-w-[400px] mx-auto ">
-        <img
-          src="./man.jpg"
-          alt="a man looking down a giant book"
-          className="rounded-3xl"
-        />
-      </div> */}
     </main>
   );
 }

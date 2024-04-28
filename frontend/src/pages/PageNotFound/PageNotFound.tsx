@@ -12,7 +12,7 @@ function PageNotFound() {
       </div>
       <div className="">
         <h1>Page Not Found :-/</h1>
-        <Link to="/home" className="btn btn-outline my-5">
+        <Link to="/" className="btn btn-outline my-5">
           Back to Home
         </Link>
       </div>

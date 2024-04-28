@@ -25,7 +25,7 @@ function SignUp() {
     const response = await postAPI(signUpURL, signUpBody);
     if (response.status === "success") {
       setUser(response.data);
-      navigate("/home");
+      navigate("/");
     } else {
       setError(true);
     }
@@ -37,7 +37,7 @@ function SignUp() {
       user_id: 1,
     };
     setUser(guestAccount);
-    navigate("/home");
+    navigate("/");
   };
 
   return (
@@ -49,7 +49,7 @@ function SignUp() {
       >
         <div className="my-5">
           <h1>Sign up</h1>
-          <Link to="/" className=" my-6 gap-4 ">
+          <Link to="/login" className=" my-6 gap-4 ">
             Have already an account? <span className="underline">Log in</span>
           </Link>
         </div>
@@ -77,7 +77,7 @@ function SignUp() {
             id="password"
             min={4}
             required
-            placeholder="••••••••"
+            placeholder="****"
             className="border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
