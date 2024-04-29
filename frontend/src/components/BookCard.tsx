@@ -1,18 +1,7 @@
 import { Link } from "react-router-dom";
 import RatingStars from "./RatingStars";
+import { BookCardProps } from "../types";
 
-interface BookCardProps {
-  id: string;
-  title: string;
-  thumbnail: string | null;
-  created_at?: string;
-  genre?: string | null | undefined;
-  status?: string | null;
-  author?: string | null;
-  avr_rating?: number;
-  publishedDate?: string | null;
-  saleInfo?: { saleability: string; buyLink: string };
-}
 const BookCard: React.FC<BookCardProps> = ({
   id,
   title,

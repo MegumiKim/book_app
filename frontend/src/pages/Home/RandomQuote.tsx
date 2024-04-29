@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { famousQuotes } from "../../utils/famousQuotes";
-
 const RandomQuote = () => {
   const [quote, setQuote] = useState({ quote: "", by: "" });
 

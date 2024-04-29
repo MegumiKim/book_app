@@ -10,7 +10,7 @@ export interface MyBookType {
 }
 
 export enum ReadingStatus {
-  "reading",
+  "not added",
   "to-read",
   "read",
 }
@@ -50,6 +50,28 @@ export type VolumeInfoType = {
 // New Types
 export interface GoogleBookDataType {
   volumeInfo: VolumeInfoType;
+  id: string;
   avr_rating?: number;
+  saleInfo?: { saleability: string; buyLink: string };
+}
+
+export interface MyBookDataType {
+  google_book_id: string;
+  title: string | undefined;
+  author?: string[]; // Checks if authors exist and uses the first author, defaults to "Unknown Author"
+  genre?: string[]; // Checks if categories exist and uses the first category, defaults to "Unknown Genre"
+  imageurl?: string;
+}
+
+export interface BookCardProps {
+  id: string;
+  title: string;
+  thumbnail: string;
+  created_at?: string;
+  genre?: string;
+  status?: string;
+  author?: string;
+  avr_rating?: number;
+  publishedDate?: string | null;
   saleInfo?: { saleability: string; buyLink: string };
 }

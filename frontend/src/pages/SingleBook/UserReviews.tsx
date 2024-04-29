@@ -2,11 +2,26 @@ import RatingStars from "../../components/RatingStars.tsx";
 import { useFetch } from "../../hooks/useFetch.tsx";
 import { BASE_URL } from "../../utils/constant.ts";
 
-function UserReviews({ book_id }) {
+interface reviewDataType {
+  name: string;
+  rating: number;
+  review: string;
+}
+
+interface FetchedDataType {
+  results: number;
+  data: reviewDataType[];
+}
+
+interface UserReviewsProps {
+  book_id: string | undefined;
+}
+
+function UserReviews({ book_id }: UserReviewsProps) {
   const reviewsURL = `${BASE_URL}reviews/${book_id}`;
 
   // Fetch reviews data
-  const { data } = useFetch(reviewsURL);
+  const { data } = useFetch<FetchedDataType>(reviewsURL);
   const reviewsData = data?.data;
 
   const reviews = reviewsData?.map((review, i) => (
@@ -20,7 +35,8 @@ function UserReviews({ book_id }) {
   ));
 
   return (
-    data?.results > 0 && (
+    data?.results &&
+    data.results > 0 && (
       <section className="outline outline-slate-400 outline-1 rounded-lg p-5">
         <h2 className="">Reviews</h2>
         <div className="grid sm:grid-cols-2 gap-4 mt-5">{reviews}</div>

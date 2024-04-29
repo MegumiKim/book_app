@@ -1,6 +1,6 @@
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
-import { UserContext } from "../context/UserContext";
+import { defaultUser, UserContext } from "../context/UserContext";
 import { SearchResultContext } from "../context/SearchResultContext";
 import Modal from "./Modal";
 import { deleteUserAccount } from "../APICalls/DeleteAccount";
@@ -19,7 +19,7 @@ const NavBar = () => {
   const handleDeleteAccount = async () => {
     try {
       await deleteUserAccount(user.user_id);
-      setUser({});
+      setUser(defaultUser);
       localStorage.removeItem("myBooks");
       setModalOpen(false);
       navigate("/signup");
@@ -32,13 +32,14 @@ const NavBar = () => {
     setMenuOpen(false);
   }, [location.pathname]);
 
-  useEffect(() => {
-    if (menuOpen && focusedIndex !== -1) {
-      const items = document.querySelectorAll("ul li a, ul li button");
-      const focusableItem = items[focusedIndex];
-      focusableItem && focusableItem.focus();
-    }
-  }, [menuOpen]);
+  // useEffect(() => {
+  //   if (menuOpen && focusedIndex !== -1) {
+  //     const items = document.querySelectorAll("ul li a, ul li button");
+  //     const focusableItem = items[focusedIndex];
+  //     if(focusableItem){
+  //       focusableItem}
+  //   }
+  // }, [menuOpen]);
 
   useEffect(() => {
     if (!menuOpen) {
@@ -48,7 +49,7 @@ const NavBar = () => {
 
   function handleLogOut() {
     setSearchResult([]);
-    setUser({});
+    setUser(defaultUser);
     localStorage.removeItem("myBooks");
     setMenuOpen(false);
     navigate("/login");
@@ -59,15 +60,13 @@ const NavBar = () => {
     setFocusedIndex(0);
   }
 
-  // Menu navigation
-
   const menuItems = [
     { name: "Home", path: "/" },
     { name: "Bookshelf", path: `/user/${user_id}` },
     { name: "Log Out", action: handleLogOut },
     {
       name: "Delete Account",
-      action: setModalOpen,
+      action: () => setModalOpen(true),
       class: "delete-btn",
     },
   ];
@@ -140,7 +139,7 @@ const NavBar = () => {
                   </Link>
                 ) : (
                   <button
-                    onClick={item.action}
+                    onClick={item.action || (() => {})}
                     tabIndex={focusedIndex === index ? 0 : -1}
                     className={item.class ? item.class : ""}
                   >

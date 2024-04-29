@@ -1,20 +1,15 @@
 import BookCard from "../../components/BookCard";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { SearchResultContext } from "../../context/SearchResultContext";
 import BookSearch from "../Home/BookSearch";
 import { GoogleBookDataType } from "../../types";
 
-interface SearchResultContextType {
-  searchResult: GoogleBookDataType[];
-  setSearchResult: React.Dispatch<React.SetStateAction<[]>>;
-}
-
 function SearchResults() {
-  const { searchResult, setSearchResult } = useContext(
-    SearchResultContext
-  ) as unknown as SearchResultContextType;
+  const { searchResult, setSearchResult } = useContext(SearchResultContext);
 
-  const handleSearch = (results: { id: string }[]) => {
+  const handleSearch = (results: GoogleBookDataType[]) => {
+    console.log(results);
+
     if (results.length > 0) {
       const uniqueIds = new Set<string>();
       const filteredResults = results.filter((result) => {
@@ -44,9 +39,9 @@ function SearchResults() {
                 title={item.volumeInfo.title}
                 author={item.volumeInfo.authors?.[0]}
                 genre={item.volumeInfo.categories?.[0]}
-                thumbnail={item.volumeInfo.imageLinks?.thumbnail}
+                thumbnail={item.volumeInfo.imageLinks?.thumbnail || ""}
                 avr_rating={item.volumeInfo.averageRating}
-                status={null}
+                status={undefined}
                 id={item.id}
                 publishedDate={item.volumeInfo.publishedDate}
                 saleInfo={item.saleInfo}

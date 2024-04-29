@@ -1,38 +1,53 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState, MouseEvent } from "react";
 import { useFetch } from "../../hooks/useFetch";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { UserContext } from "../../context/UserContext";
 import { BASE_URL } from "../../utils/constant";
 import BookCard from "../../components/BookCard";
-import { deleteUserAccount } from "../../APICalls/DeleteAccount";
-import Modal from "../../components/Modal";
+
+interface Book {
+  status: string;
+  google_book_id: string;
+  title: string;
+  author?: string | null;
+  genre?: string;
+  imageurl?: string;
+}
+
+interface FetchResponse {
+  data: Book[];
+}
 
 const MyShelf = () => {
   const { id } = useParams();
-  const navigate = useNavigate();
-  const { user, setUser } = useContext(UserContext);
-  const [isModalOpen, setModalOpen] = useState(false);
+  // const navigate = useNavigate();
+  const { user } = useContext(UserContext);
 
-  const [bookShelf, setBookShelf] = useState([]);
-  const [toReadShelf, setToReadShelf] = useState([]);
-  const [haveReadShelf, setHaveReadShelf] = useState([]);
+  const [bookShelf, setBookShelf] = useState<Book[]>([]);
+  const [toReadShelf, setToReadShelf] = useState<Book[]>([]);
+  const [haveReadShelf, setHaveReadShelf] = useState<Book[]>([]);
   const [selectedTab, setSelectedTab] = useState("toRead");
 
   const bookShelfURL = BASE_URL + "reviews/user/" + id;
-  const { data, loading, error } = useFetch(bookShelfURL);
+  const { data, loading, error } = useFetch<FetchResponse>(bookShelfURL);
   // const {myBooks, setMyBooks} = useContext(MYS)
 
   useEffect(() => {
-    const toReads = data?.data.filter((item) => item.status == "to read");
-    const haveReads = data?.data.filter((item) => item.status == "have read");
+    const toReads = data?.data.filter(
+      (item: { status: string }) => item.status === "to read"
+    );
+    const haveReads = data?.data.filter(
+      (item: { status: string }) => item.status === "have read"
+    );
 
-    setBookShelf(toReads);
-    setToReadShelf(toReads);
-    setHaveReadShelf(haveReads);
+    setBookShelf(toReads || []);
+    setToReadShelf(toReads || []);
+    setHaveReadShelf(haveReads || []);
   }, [data]);
 
-  function toggleBookShelf(e) {
-    const shelf = e.target.dataset.shelf;
+  function toggleBookShelf(e: MouseEvent<HTMLButtonElement>) {
+    const target = e.target as HTMLButtonElement;
+    const shelf = target.dataset.shelf;
 
     if (shelf === "toReads") {
       setBookShelf(toReadShelf);
@@ -43,23 +58,10 @@ const MyShelf = () => {
     }
   }
 
-  const handleDeleteAccount = async () => {
-    await deleteUserAccount(user.user_id, setUser, navigate);
-  };
-
   return (
     <main className="">
-      <div className="sm:flex justify-between">
-        {/* <button
-          className="btn mb-5 hover:bg-slate-500 hover:text-slate-100 btn-outline btn-xs"
-          onClick={() => navigate(-1)}
-        >
-          Back
-        </button> */}
-      </div>
       <div className="flex justify-between">
         <h2 className="text-lg">Welcome Back {user.name}!</h2>
-        {/* <Feed /> */}
       </div>
       <h1 className="mb-5">Book shelf ({data?.data.length}) </h1>
 
@@ -78,7 +80,7 @@ const MyShelf = () => {
           className={`tab hover:bg-slate-700 h-10 ${
             selectedTab === "toRead" && "tab-active"
           }`}
-          onClick={toggleBookShelf}
+          onClick={(e) => toggleBookShelf(e)}
           data-shelf="toReads"
         >
           To Read <span>({toReadShelf?.length})</span>
@@ -99,13 +101,12 @@ const MyShelf = () => {
           ? bookShelf.map((book) => (
               <BookCard
                 id={book.google_book_id}
-                title={book.title}
-                author={book.author}
+                title={book.title || ""}
+                author={book.author || ""}
                 status={book.status}
                 genre={book.genre}
-                thumbnail={book.imageurl}
+                thumbnail={book.imageurl || ""}
                 key={book.google_book_id}
-                created_at={book.created_at}
               />
             ))
           : "No book is added in your bookshelf"}

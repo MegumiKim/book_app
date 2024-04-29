@@ -1,4 +1,10 @@
-import { FormEvent, useState } from "react";
+import {
+  FormEvent,
+  KeyboardEvent,
+  MouseEvent,
+  SetStateAction,
+  useState,
+} from "react";
 import CreatableSelect from "react-select/creatable";
 import { categories } from "../../utils/bookCategories";
 
@@ -6,9 +12,14 @@ interface BookSearchProps {
   handleSearch: (result: []) => void;
 }
 
+interface SelectedCategory {
+  value: string;
+  label: string;
+}
 const BookSearch: React.FC<BookSearchProps> = ({ handleSearch }) => {
   const [showAdvancedSearch, setShowAdvancedSearch] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [selectedCategory, setSelectedCategory] =
+    useState<SelectedCategory | null>(null);
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [free, setFree] = useState(false);
@@ -22,7 +33,7 @@ const BookSearch: React.FC<BookSearchProps> = ({ handleSearch }) => {
     const titleQuery = title ? title.trim() : "";
     const authorQuery = author ? `+inauthor:${author.trim()}` : "";
     const categoryQuery = selectedCategory
-      ? `+subject:${selectedCategory}`
+      ? `+subject:${selectedCategory.value}`
       : "";
     const freeQuery = free ? "&filter=free-ebooks" : "";
     const latestQuery = latest ? "&orderBy=newest" : "";
@@ -59,17 +70,10 @@ const BookSearch: React.FC<BookSearchProps> = ({ handleSearch }) => {
     }
   }
 
-  function handleClear(e) {
-    if (e.key === "Enter" || e.type === "click") {
-      e.preventDefault();
-      setTitle("");
-      // setAuthor("");
-      // setSelectedCategory({ value: "", label: "" });
-      // setFree(false);
-      // setLatest(false);
-      setError("");
-    }
-    return;
+  function handleClear(e: MouseEvent<HTMLButtonElement>) {
+    e.preventDefault();
+    setTitle("");
+    setError("");
   }
 
   const handleCategoryChange = (
@@ -78,14 +82,21 @@ const BookSearch: React.FC<BookSearchProps> = ({ handleSearch }) => {
     if (newValue === null) {
       setSelectedCategory(null);
     } else {
-      setSelectedCategory(newValue.value);
+      setSelectedCategory(newValue);
     }
   };
 
-  function handleCheckBox(e, setState) {
+  function handleCheckBox(
+    e: KeyboardEvent<HTMLInputElement>,
+    setState: (value: SetStateAction<boolean>) => void
+  ) {
     if (e.key !== "Enter") return;
     e.preventDefault();
-    e.target.checked = !e.target.checked;
+
+    // Correct type assertion for e.target
+    const target = e.target as HTMLInputElement;
+    target.checked = !target.checked; // Now this line is valid
+
     setState((prevState) => !prevState);
   }
 
@@ -113,7 +124,6 @@ const BookSearch: React.FC<BookSearchProps> = ({ handleSearch }) => {
               aria-label="clear"
               className="btn btn-xs absolute right-3 top-3"
               onClick={(e) => handleClear(e)}
-              onKeyDown={(e) => handleClear(e)}
             >
               X
             </button>
@@ -153,9 +163,9 @@ const BookSearch: React.FC<BookSearchProps> = ({ handleSearch }) => {
                 className="text-slate-800 leading-tight overflow-visible z-10"
                 isClearable
                 isSearchable
-                onChange={handleCategoryChange}
+                onChange={() => handleCategoryChange}
                 options={categories}
-                value={selectedCategory?.value}
+                value={selectedCategory}
                 placeholder="Select or type..."
                 getNewOptionData={(inputValue, optionLabel) => ({
                   label: optionLabel,

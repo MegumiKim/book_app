@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import RatingForm from "./RatingForm";
 import { GoogleBookDataType } from "../../types";
 import { useContext } from "react";
@@ -6,13 +6,8 @@ import { UserContext } from "../../context/UserContext.tsx";
 import { BASE_URL } from "../../utils/constant.ts";
 import { postAPI } from "../../APICalls/postAPI.ts";
 
-interface GoogleBookData {
-  volumeInfo: GoogleBookDataType;
-  id?: "string";
-}
-
 const ReviewForm = (props: {
-  data: GoogleBookData;
+  data: GoogleBookDataType;
   onReviewPosted: () => void;
 }) => {
   const book = props.data.volumeInfo;
@@ -38,7 +33,24 @@ const ReviewForm = (props: {
     imageUrl: book.imageLinks?.thumbnail,
   };
 
-  const submitReviewForm = async (body, e) => {
+  const submitReviewForm = async (
+    body: {
+      google_book_id: string | undefined;
+      status: string | undefined;
+      review?: string;
+      rating?: number | null;
+      title: string | undefined;
+      author: string | undefined;
+      genre: string | undefined;
+      imageUrl: string | undefined;
+      username?: string | undefined;
+      password?: string | undefined;
+      name?: string | undefined;
+      imageurl?: string | undefined;
+      user_id?: number | null | undefined;
+    },
+    e: FormEvent<HTMLFormElement>
+  ) => {
     e.preventDefault();
     postAPI(reviewURL, body);
 

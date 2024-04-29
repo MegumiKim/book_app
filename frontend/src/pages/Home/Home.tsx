@@ -1,10 +1,10 @@
 // import { useEffect, useState } from "react";
-import { useContext, useEffect, useState } from "react";
+import { KeyboardEvent, useContext, useState } from "react";
 import { SearchResultContext } from "../../context/SearchResultContext";
 import { GoogleBookDataType } from "../../types";
 import RandomQuote from "./RandomQuote";
 import { useNavigate } from "react-router-dom";
-import Feed from "./Feed";
+// import Feed from "./Feed";
 
 interface SearchResultContextType {
   searchResult: GoogleBookDataType[];
@@ -16,15 +16,16 @@ const Home = () => {
     SearchResultContext
   ) as unknown as SearchResultContextType;
 
+  const [inputValue, setInputValue] = useState("");
   const [error, setError] = useState("");
 
   const navigate = useNavigate();
 
-  function handleKeyPress(e) {
+  function handleKeyPress(e: KeyboardEvent<HTMLInputElement>) {
     setError("");
     if (e.key === "Enter") {
       e.preventDefault();
-      searchBook(e.target.value);
+      searchBook(inputValue);
     }
     return;
   }
@@ -55,8 +56,8 @@ const Home = () => {
     }
   }
 
-  function clearInput(e) {
-    e.target.value = "";
+  function clearInput() {
+    setInputValue("");
   }
 
   return (
@@ -69,7 +70,9 @@ const Home = () => {
           <input
             type="text"
             placeholder="Book Search"
+            value={inputValue}
             onKeyDown={handleKeyPress}
+            onChange={(e) => setInputValue(e.target.value)}
             onClick={clearInput}
             className="input w-full "
             autoFocus

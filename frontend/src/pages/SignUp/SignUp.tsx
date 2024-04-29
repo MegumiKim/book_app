@@ -2,7 +2,7 @@ import { FormEvent, useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { UserContext } from "../../context/UserContext";
 import { useNavigate } from "react-router-dom";
-import { BASE_URL } from "../../utils/constant";
+import { BASE_URL } from "../../utils/constant.ts";
 import { postAPI } from "../../APICalls/postAPI";
 
 function SignUp() {

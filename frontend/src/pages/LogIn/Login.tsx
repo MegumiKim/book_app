@@ -35,7 +35,7 @@ function Login() {
 
         navigate("/");
       } catch (error) {
-        throw new Error(error);
+        throw new Error();
       }
     } else {
       setError(true);

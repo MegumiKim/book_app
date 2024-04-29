@@ -1,6 +1,6 @@
-import { useContext } from "react";
+import { MouseEvent, useContext } from "react";
 import { UserContext } from "../../context/UserContext";
-import { BASE_URL } from "../../utils/constant";
+import { BASE_URL } from "../../utils/constant.ts";
 import { postAPI } from "../../APICalls/postAPI";
 import { VolumeInfoType } from "../../types";
 
@@ -26,17 +26,16 @@ export const AddToReadBtn: React.FC<AddToReadBtnProps> = ({
     imageUrl: volumeInfo.imageLinks?.thumbnail,
   };
 
-  async function addToRead(e) {
+  async function addToRead(e: MouseEvent<HTMLButtonElement>) {
     postAPI(URL, body);
-    e.target.innerHTML = "Added to my shelf";
+    const target = e.target as HTMLButtonElement;
+    target.innerHTML = "Added!";
   }
 
   return (
     <button
       className="btn btn-outline block w-full"
-      onClick={(e) => {
-        addToRead(e);
-      }}
+      onClick={(e) => addToRead(e)}
     >
       Add To Read
     </button>

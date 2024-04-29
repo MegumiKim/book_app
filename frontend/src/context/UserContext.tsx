@@ -1,17 +1,17 @@
 import { createContext, useState, useEffect } from "react";
 
-interface User {
+export interface User {
   user_id: number | null;
-  name: string;
+  name: string | null;
 }
 interface UserContextType {
   user: User;
   setUser: React.Dispatch<React.SetStateAction<User>>;
 }
 
-const defaultUser: User = {
+export const defaultUser: User = {
   user_id: null,
-  name: "Guest",
+  name: null,
 };
 
 export const UserContext = createContext<UserContextType>({

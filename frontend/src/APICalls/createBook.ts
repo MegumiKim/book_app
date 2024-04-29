@@ -1,8 +1,9 @@
+import { VolumeInfoType } from "../types";
 import { BASE_URL } from "../utils/constant";
 import { postAPI } from "./postAPI";
 
 // Function to handle book creation
-export const createBook = async (book, book_ID) => {
+export const createBook = async (book: VolumeInfoType, book_ID: string) => {
   const createBookURL = BASE_URL + "books/";
 
   const bookBody = {
@@ -10,7 +11,7 @@ export const createBook = async (book, book_ID) => {
     title: book.title || "Unknown Title", // Default title if missing
     author: (book.authors && book.authors[0]) || "Unknown Author", // Checks if authors exist and uses the first author, defaults to "Unknown Author"
     genre: (book.categories && book.categories[0]) || "Unknown Genre", // Checks if categories exist and uses the first category, defaults to "Unknown Genre"
-    imageurl: (book.imageLinks.thumbnail && book.imageLinks.thumbnail) || "", // Checks if imageLinks exist and uses the thumbnail, defaults to empty string
+    imageurl: book.imageLinks?.thumbnail || "", // Checks if imageLinks exist and uses the thumbnail, defaults to empty string
   };
 
   postAPI(createBookURL, bookBody);

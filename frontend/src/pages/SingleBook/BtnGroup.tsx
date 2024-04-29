@@ -5,14 +5,25 @@ import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../context/UserContext";
 import { Link } from "react-router-dom";
 import { RemoveBtn } from "./RemoveBtn.tsx";
+import { GoogleBookDataType } from "../../types.ts";
 
-export const ButtonGroup = ({ bookData, onOpen }) => {
+interface ButtonGroupProps {
+  bookData: GoogleBookDataType;
+  onOpen: () => void;
+}
+type ReadingStatus = "not added" | "to read" | "have read";
+
+export const ButtonGroup: React.FC<ButtonGroupProps> = ({
+  bookData,
+  onOpen,
+}) => {
   const { id: book_id, saleInfo } = bookData;
   const readingStatusURL = BASE_URL + `reviews/book/${book_id}`;
 
   const { user } = useContext(UserContext);
   const { user_id } = user;
-  const [readingStatus, setReadingStatus] = useState("not added");
+  const [readingStatus, setReadingStatus] =
+    useState<ReadingStatus>("not added");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -25,7 +36,9 @@ export const ButtonGroup = ({ bookData, onOpen }) => {
     fetchData();
   }, [readingStatus, book_id]);
 
-  const buttonRenderers = {
+  // Ensure readingStatus uses the new typet
+
+  const buttonRenderers: { [key in ReadingStatus]: () => JSX.Element } = {
     "not added": () => (
       <>
         <AddToReadBtn volumeInfo={bookData.volumeInfo} id={book_id} />

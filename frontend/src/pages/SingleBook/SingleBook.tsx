@@ -2,21 +2,13 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useFetch } from "../../hooks/useFetch.tsx";
 import RatingStars from "../../components/RatingStars.tsx";
-
 import ReviewForm from "./ReviewForm.tsx";
 import Modal from "../../components/Modal.tsx";
 import UserReviews from "./UserReviews.tsx";
 import { ButtonGroup } from "./BtnGroup.tsx";
-import { VolumeInfoType } from "../../types.ts";
+import { GoogleBookDataType } from "../../types.ts";
 import Recommendations from "./Recommendations.tsx";
 
-interface ApiResponse {
-  data: {
-    volumeInfo: VolumeInfoType;
-  };
-  loading: boolean;
-  error: boolean;
-}
 const SingleBook = () => {
   const { id } = useParams();
 
@@ -25,10 +17,9 @@ const SingleBook = () => {
   }volumes/${id}`;
 
   // Fetch book data
-  const { data, loading, error } = useFetch<ApiResponse>(bookURL);
+  const { data, loading, error } = useFetch<GoogleBookDataType>(bookURL);
 
-  const book: VolumeInfoType | undefined = data?.volumeInfo;
-  // console.log(data);
+  const book = data?.volumeInfo;
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -103,7 +94,7 @@ const SingleBook = () => {
             {/* Right side with book description */}
             <div
               className="text-lg max-h-[500px] overflow-scroll col-span-4 w-full mt-5 md:mt-0"
-              dangerouslySetInnerHTML={{ __html: book.description }}
+              dangerouslySetInnerHTML={{ __html: book.description || "" }}
             ></div>
           </div>
 

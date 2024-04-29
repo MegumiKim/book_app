@@ -1,16 +1,25 @@
 import BookCard from "../../components/BookCard";
 import { useFetch } from "../../hooks/useFetch";
+import { GoogleBookDataType } from "../../types";
 
-function Recommendations({ genre, id }) {
+interface DataType {
+  items: GoogleBookDataType[];
+}
+
+function Recommendations({
+  genre,
+  id,
+}: {
+  genre: string;
+  id: string | undefined;
+}) {
   const URL =
     import.meta.env.VITE_REACT_APP_GOOGLE_BOOK_API +
     `volumes?q=subject:'${genre}'`;
-  const { data, loading, error } = useFetch(URL);
+  const { data } = useFetch<DataType>(URL);
 
-  const recommendations = data?.items
-    .filter((item) => item.id != id)
-    .slice(0, 6);
-  console.log(recommendations);
+  const recommendations =
+    data?.items.filter((item) => item.id != id).slice(0, 6) || [];
 
   return (
     recommendations && (
@@ -23,9 +32,8 @@ function Recommendations({ genre, id }) {
               title={item.volumeInfo.title}
               author={item.volumeInfo.authors?.[0]}
               genre={item.volumeInfo.categories?.[0]}
-              thumbnail={item.volumeInfo.imageLinks?.thumbnail}
+              thumbnail={item.volumeInfo.imageLinks?.thumbnail || ""}
               avr_rating={item.volumeInfo.averageRating}
-              status={null}
               id={item.id}
               publishedDate={item.volumeInfo.publishedDate}
               saleInfo={item.saleInfo}
