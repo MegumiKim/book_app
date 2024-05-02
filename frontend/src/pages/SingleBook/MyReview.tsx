@@ -1,47 +1,47 @@
-import { useEffect, useState } from "react";
-import RatingStars from "../../components/RatingStars";
+// import { useEffect, useState } from "react";
+// import RatingStars from "../../components/RatingStars";
 
-const MyReview = ({
-  id,
-  reviewUpdated,
-}: {
-  id: string | undefined;
-  reviewUpdated: boolean;
-}) => {
-  const [data, setData] = useState({ review: { rating: 0, text: "" } });
+// const MyReview = ({
+//   id,
+//   reviewUpdated,
+// }: {
+//   id: string | undefined;
+//   reviewUpdated: boolean;
+// }) => {
+//   const [data, setData] = useState({ review: { rating: 0, text: "" } });
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const URL = `http://localhost:4000/api/v1/books/${id}`;
-      const result = await fetch(URL);
-      const jsonData = await result.json();
+//   useEffect(() => {
+//     const fetchData = async () => {
+//       const URL = `http://localhost:4000/api/v1/books/${id}`;
+//       const result = await fetch(URL);
+//       const jsonData = await result.json();
 
-      setData(jsonData);
-    };
+//       setData(jsonData);
+//     };
 
-    fetchData();
-  }, [id, reviewUpdated]);
+//     fetchData();
+//   }, [id, reviewUpdated]);
 
-  if (!data) {
-    return <></>;
-  }
-  return (
-    <>
-      {data?.review && (
-        <section className="my-5 outline rounded-sm p-4">
-          <h1>My Review</h1>
-          {data.review && (
-            <div>
-              <RatingStars rating={data.review.rating} />
-              {/* <div>Name: {rev.name}</div>
-                <div>Subject: {rev.subject}</div> */}
-              {<div>{data.review.text}</div>}
-            </div>
-          )}
-        </section>
-      )}
-    </>
-  );
-};
+//   if (!data) {
+//     return <></>;
+//   }
+//   return (
+//     <>
+//       {data?.review && (
+//         <section className="my-5 outline rounded-sm p-4">
+//           <h1>My Review</h1>
+//           {data.review && (
+//             <div>
+//               <RatingStars rating={data.review.rating} />
+//               {/* <div>Name: {rev.name}</div>
+//                 <div>Subject: {rev.subject}</div> */}
+//               {<div>{data.review.text}</div>}
+//             </div>
+//           )}
+//         </section>
+//       )}
+//     </>
+//   );
+// };
 
-export default MyReview;
+// export default MyReview;

@@ -15,7 +15,16 @@ const port = process.env.PORT || 4000;
 // Middleware
 app.use(express.json());
 //Middleware for CORS policy to allow custom origins
-app.use(cors());
+app.use(
+  cors({
+    origin: [
+      "http://books.megumi.no",
+      "https://books.megumi.no",
+      "http://localhost:5173",
+    ],
+    credentials: true,
+  })
+);
 app.use("/api/v1/books", booksRoute);
 app.use("/api/v1/users", usersRoute);
 app.use("/api/v1/reviews", reviewsRoute);

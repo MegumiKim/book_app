@@ -1,11 +1,12 @@
 import { Link } from "react-router-dom";
+import catImage from "../../../public/cat-sm.jpg";
 
 function PageNotFound() {
   return (
     <main className="sm:flex gap-10 sm:my-10 ">
       <div className="max-w-[500px] ">
         <img
-          src="../../../public/cat-sm.jpg"
+          src={catImage}
           alt="cat sitting on top of a pile of books"
           className="rounded-full"
         />

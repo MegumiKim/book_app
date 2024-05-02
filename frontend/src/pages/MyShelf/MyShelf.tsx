@@ -75,20 +75,16 @@ const MyShelf = () => {
         <div className="text-red-400 text-xl">Failed to fetch data :-/</div>
       )}
 
-      <div role="tablist" className="tabs tabs-bordered mb-10 ">
+      <div role="tablist" className="tab-list mb-10 ">
         <button
-          className={`tab hover:bg-slate-700 h-10 ${
-            selectedTab === "toRead" && "tab-active"
-          }`}
+          className={`tab ${selectedTab === "toRead" && "selected-tab"}`}
           onClick={(e) => toggleBookShelf(e)}
           data-shelf="toReads"
         >
           To Read <span>({toReadShelf?.length})</span>
         </button>
         <button
-          className={`tab hover:bg-slate-700 h-10 ${
-            selectedTab === "haveReads" && "tab-active"
-          }`}
+          className={`tab ${selectedTab === "haveReads" && "selected-tab"}`}
           onClick={toggleBookShelf}
           data-shelf="haveReads"
         >

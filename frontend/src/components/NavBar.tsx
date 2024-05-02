@@ -4,6 +4,8 @@ import { defaultUser, UserContext } from "../context/UserContext";
 import { SearchResultContext } from "../context/SearchResultContext";
 import Modal from "./Modal";
 import { deleteUserAccount } from "../APICalls/DeleteAccount";
+import bookIconOpen from "../../public/icons/book_icon_open.svg";
+import bookIconClose from "../../public/icons/book_icon_close.svg";
 
 const NavBar = () => {
   const navigate = useNavigate();
@@ -117,9 +119,7 @@ const NavBar = () => {
         <div className="relative">
           <button onClick={toggleMenuOpen} className="menu-btn">
             <img
-              src={`../../public/icons/book_icon_${
-                menuOpen ? "open" : "close"
-              }.svg`}
+              src={menuOpen ? bookIconOpen : bookIconClose}
               alt={`menu ${menuOpen ? "open" : "close"}`}
             />
             <small>Menu</small>
