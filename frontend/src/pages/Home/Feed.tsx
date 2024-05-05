@@ -29,7 +29,7 @@ function Feed() {
   }, [data]);
 
   return (
-    <section>
+    <section className="mt-32">
       {loading && (
         <div className="w-full justify-center flex flex-col gap-4 mb-10">
           <p className="m-auto">Loading...</p>
