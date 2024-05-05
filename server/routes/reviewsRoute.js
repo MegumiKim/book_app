@@ -22,7 +22,7 @@ router.get(
 
 //Get the latest user action
 router.get(
-  "/latest-item",
+  "/feed",
 
   asyncHandler(async (req, res) => {
     const sqlFilePath = path.join(

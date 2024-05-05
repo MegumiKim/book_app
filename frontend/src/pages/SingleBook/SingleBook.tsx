@@ -32,7 +32,7 @@ const SingleBook = () => {
   };
 
   return (
-    <main className="px-5 my-10 container mx-auto max-w-screen-md lg:max-w-[1024px]">
+    <main className="px-5 container mx-auto max-w-screen-md lg:max-w-[1024px]">
       {loading && <p className="loading-spinner">Loading...</p>}
       {error && <h1>Failed to load page :-/</h1>}
       {book && (

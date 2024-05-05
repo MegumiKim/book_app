@@ -33,8 +33,8 @@ function SignUp() {
 
   const handleGuestLogin = () => {
     const guestAccount = {
-      name: "Guest",
-      user_id: 1,
+      name: "megumi",
+      user_id: 40,
     };
     setUser(guestAccount);
     navigate("/");
@@ -50,7 +50,8 @@ function SignUp() {
         <div className="my-5">
           <h1>Sign up</h1>
           <Link to="/login" className=" my-6 gap-4 ">
-            Have already an account? <span className="underline">Log in</span>
+            Have already an account?{" "}
+            <span className="underline text-orange-400">Log in</span>
           </Link>
         </div>
         <div className="mb-6 mt-2">
@@ -97,10 +98,10 @@ function SignUp() {
         </div>
 
         <p className={error ? "text-red-400 text-lg mt-5" : "opacity-0"}>
-          Failed to sign up. User name exists.
+          Failed to sign up.
           <Link to="/" className=" block">
             If you are already an user, please{" "}
-            <span className="underline">log in</span>
+            <span className="underline ">log in</span>
           </Link>
         </p>
       </form>

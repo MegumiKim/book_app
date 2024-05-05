@@ -22,8 +22,7 @@ function UserReviews({ book_id }: UserReviewsProps) {
 
   // Fetch reviews data
   const { data } = useFetch<FetchedDataType>(reviewsURL);
-  const reviewsData = data?.data;
-
+  const reviewsData = data?.data || [];
   const reviews = reviewsData?.map((review, i) => (
     <div className="border-l-4 pl-4" key={i}>
       <div className="flex gap-3 align-bottom">
@@ -35,8 +34,7 @@ function UserReviews({ book_id }: UserReviewsProps) {
   ));
 
   return (
-    data?.results &&
-    data.results > 0 && (
+    reviewsData?.length > 0 && (
       <section className="outline outline-slate-400 outline-1 rounded-lg p-5">
         <h2 className="">Reviews</h2>
         <div className="grid sm:grid-cols-2 gap-4 mt-5">{reviews}</div>

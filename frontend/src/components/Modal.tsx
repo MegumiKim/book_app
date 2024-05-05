@@ -11,7 +11,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="custom_modal_backdrop">
+    <div className="custom_modal_backdrop z-10">
       <div className="custom_modal">
         <button
           onClick={onClose}

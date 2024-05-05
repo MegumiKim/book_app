@@ -60,7 +60,7 @@ const ReviewForm = (props: {
   return (
     <form
       onSubmit={(e) => submitReviewForm(review, e)}
-      className="mx-auto max-w-xl flex flex-col gap-4"
+      className="mx-auto max-w-xl flex flex-col gap-4 review-form"
     >
       <h3 className="font-bold text-2xl mb-4">Write a review</h3>
 

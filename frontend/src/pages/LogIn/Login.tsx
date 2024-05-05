@@ -45,15 +45,15 @@ function Login() {
 
   const handleGuestLogin = () => {
     const guestAccount = {
-      name: "Guest",
-      user_id: 1,
+      name: "megumi",
+      user_id: 40,
     };
     setUser(guestAccount);
     navigate("/");
   };
 
   return (
-    <main className="sm:flex gap-10 justify-start">
+    <main className="">
       <div className="background" id="background3"></div>
       <form
         className="max-w-md my-10 text-white mx-5 flex-1"
@@ -63,7 +63,7 @@ function Login() {
           <h1>Log In</h1>
           <Link to="/signup" className=" my-6 gap-4 ">
             Don't have an account yet?{" "}
-            <span className="underline">Sign up</span>
+            <span className="underline text-orange-400">Sign up</span>
           </Link>
         </div>
 

@@ -2,7 +2,6 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import NavBar from "./components/NavBar";
 import Home from "./pages/Home/Home";
 import SingleBook from "./pages/SingleBook/SingleBook";
-import MyPage from "./pages/MyPage/MyPage";
 import MyShelf from "./pages/MyShelf/MyShelf";
 import Login from "./pages/LogIn/Login";
 import PageNotFound from "./pages/PageNotFound/PageNotFound";
@@ -23,7 +22,6 @@ const App = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/" element={<Home />} />
           <Route path="/search" element={<SearchResults />} />
-          <Route path="/user" element={<MyPage />} />
           <Route path="/user/:id" element={<MyShelf />} />
           <Route path="/details/:id" element={<SingleBook />} />
           <Route path="*" element={<PageNotFound />} />

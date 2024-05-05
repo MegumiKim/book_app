@@ -1,38 +1,21 @@
-# [BookJournal]('https://bookjournal.megumi.no/)
+# [BookJournal]('https://books.megumi.no/)
 
 <img src="./frontend/public/bookjournal.jpg" alt="project image" width="400" />
 
-BookJournal is a full-stack personal project built with MERN stack. The project is aimed at providing a platform for book enthusiasts to search, save, and write reviews for their favorite books.
-Currently the bookshelf is shared by all users but the future plan includes expanding the project to support multiple users with authentication and review sharing functionality.
+DreamBooks is a web application for book club members to manage their bookshelf (a private Goodreads app).
+The web application allows users to create accounts, explore books, maintain reading list and post reviews and get recommendations.
+The actual book data is from GoogleBook API.
+
+This is a personal full stack project and an implementation of both frontend and backend tools, including database integration, API creation, and cloud deployment on AWS.
+
+The app is fully functional but still in beta phase with ongoing developments to enhance functionality and user experience!
 
 ## Tech Stack
 
-- **MongoDB**: Database for storing book and user data.
+- **Postgres**: Database for storing book and user data.
 - **Express**: Web framework for building the backend.
 - **React**: Frontend library for building the user interface.
 - **Node.js**: JavaScript runtime for server-side development.
 - **DaisyUI**: UI components for a modern and responsive design.
 - **TypeScript**: Strict syntactical superset of JavaScript for improved development.
-
-## Getting Started
-
-1. Clone the repository:
-
-```
-git clone https://github.com/your-username/book-journal.git
-```
-
-2. Navigate to the project frontend directory:
-
-```
-cd book-journal/frontend
-```
-
-3. Install dependencies and run:
-
-   ```
-   npm install
-   npm run dev
-   ```
-
-4. Now, you're ready to explore and contribute to the BookJournal project!
+- **AWS**: Cloud deployment
