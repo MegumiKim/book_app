@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import { UserContext } from "../../context/UserContext";
 import { BASE_URL } from "../../utils/constant.ts";
 import { useNavigate } from "react-router-dom";
+import removeIcon from "../../../public/icons/remove.svg";
 
 interface AddToReadBtnProps {
   id: string;
@@ -33,7 +34,8 @@ export const RemoveBtn: React.FC<AddToReadBtnProps> = ({ id }) => {
 
   return (
     <div>
-      <button className="btn btn-outline block w-full" onClick={remove}>
+      <button className="btn btn-outline flex w-full" onClick={remove}>
+        <img src={removeIcon} alt="remove" className="max-w-[20px]" />
         Remove from bookshelf
       </button>
       <p>{err}</p>

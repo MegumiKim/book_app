@@ -101,27 +101,25 @@ module.exports = router;
 
 //Delete
 router.delete("/:id", async (req, res) => {
+  const userId = parseInt(req.params.id);
+
+  if (userId === 40) {
+    res.status(400).send("Error: You cannot delete this account.");
+    return; // Stop further execution
+  }
+
   try {
-    await db.query("DELETE FROM users WHERE user_id = $1", [req.params.id]);
-    res.status(204).json({
-      status: "success",
-    });
+    const result = await db.query("DELETE FROM users WHERE user_id = $1", [
+      userId,
+    ]);
+
+    if (result.rowCount === 0) {
+      res.status(404).send("User not found.");
+    } else {
+      res.send("User deleted successfully.");
+    }
   } catch (error) {
-    console.log(error);
+    console.error("Database error:", error);
+    res.status(500).send("Failed to delete user.");
   }
 });
-
-// // get books in an user's shelf
-// router.get("/books:id", async (req, res) => {
-//   try {
-//     const results = await db.query("select * from users;");
-
-//     res.status(200).json({
-//       status: "success",
-//       results: results.rows.length,
-//       users: results.rows,
-//     });
-//   } catch (error) {
-//     console.log(error);
-//   }
-// });

@@ -19,7 +19,7 @@ body {
 
 main {
   margin: 0px auto;
-  padding: 0 5%;
+  padding: 5%;
   width: 100%;
   z-index: 10;
   /* overflow-y: visible; */
@@ -94,8 +94,9 @@ nav ul *:hover {
 } */
 
 h1 {
-  font-size: 2.5em;
+  font-size: 2em;
 }
+
 h2 {
   font-size: 1.5em;
   line-height: 1;
@@ -172,8 +173,9 @@ textarea {
   transition: background-color 0.3s ease;
   display: flex;
   flex-shrink: 0;
-  /* background: #000; */
+  padding: 1em;
   height: 100%;
+  border-radius: 1em;
   /* align-items: end; */
 }
 
@@ -327,6 +329,9 @@ figure::after {
   content: ",";
 }
 
+.non-input {
+  cursor: unset;
+}
 button:disabled {
   cursor: default;
   opacity: 0.8 !important;
@@ -339,6 +344,9 @@ button:disabled:hover {
 }
 
 @media (min-width: 800px) {
+  h1 {
+    font-size: 2.5em;
+  }
   nav {
     padding: 2em 5%;
   }

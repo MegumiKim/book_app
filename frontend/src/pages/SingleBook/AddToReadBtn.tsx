@@ -3,6 +3,7 @@ import { UserContext } from "../../context/UserContext";
 import { BASE_URL } from "../../utils/constant.ts";
 import { postAPI } from "../../APICalls/postAPI";
 import { VolumeInfoType } from "../../types";
+import addBookIcon from "../../../public/icons/add_book.svg";
 
 interface AddToReadBtnProps {
   volumeInfo: VolumeInfoType;
@@ -34,9 +35,12 @@ export const AddToReadBtn: React.FC<AddToReadBtnProps> = ({
 
   return (
     <button
-      className="btn btn-outline block w-full"
+      className="btn btn-outline w-full flex align-baseline"
       onClick={(e) => addToRead(e)}
     >
+      <div className="max-w-[20px]">
+        <img src={addBookIcon} alt="add icon" className="max-full" />
+      </div>
       Add To Read
     </button>
   );

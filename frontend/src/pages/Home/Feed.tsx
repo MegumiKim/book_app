@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import { BASE_URL } from "../../utils/constant";
 import { useFetch } from "../../hooks/useFetch";
 import BookCard from "../../components/BookCard";
-
+import RatingStars from "../../components/RatingStars";
+import userIcon from "../../../public/icons/user.svg";
 interface Book {
   name: string;
   created_at: string;
@@ -44,19 +45,29 @@ function Feed() {
       <div className="bookshelf">
         {latest.length &&
           latest.map((item, i) => (
-            <div className="flex flex-col gap-3 mt-3 outline-1 rounded-md ">
-              <h3 className="text-white">
-                <span>{item.name} </span>
-                {item.status === "to read" ? "wants to read" : "has finished"}
+            <div
+              className="flex flex-col gap-3 mt-3 outline-1 rounded-md "
+              key={i}
+            >
+              <h3 className="text-white flex gap-2 align-baseline">
+                <div className="max-w-[20px] w-full ">
+                  <img src={userIcon} alt="user icon" />
+                </div>
+                <span>{item.name}</span>
+                {item.status === "to read" && "wants to read"}
+                {item.rating && (
+                  <span className="flex gap-1">
+                    rated a book
+                    <RatingStars rating={item.rating} />
+                  </span>
+                )}
               </h3>
               <BookCard
                 id={item.google_book_id}
                 title={item.title}
                 thumbnail={item.imageurl || ""}
                 genre={item.genre}
-                avr_rating={item.rating}
                 author={item.author || ""}
-                key={i}
               />
             </div>
           ))}

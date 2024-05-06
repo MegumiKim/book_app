@@ -23,6 +23,7 @@ const NavBar = () => {
       await deleteUserAccount(user.user_id);
       setUser(defaultUser);
       localStorage.removeItem("myBooks");
+      localStorage.removeItem("user");
       setModalOpen(false);
       navigate("/signup");
     } catch (error) {
@@ -162,10 +163,10 @@ const NavBar = () => {
               <button onClick={handleDeleteAccount} className="btn btn-outline">
                 Yes, I want to delete
               </button>
-              {deleteError && (
-                <p className="text-red-500">Failed to Delete Account</p>
-              )}
             </div>
+            {deleteError && (
+              <p className="text-red-500">Failed to Delete Account</p>
+            )}
           </Modal>
         </div>
       )}
