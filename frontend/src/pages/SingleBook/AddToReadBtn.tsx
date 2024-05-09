@@ -3,7 +3,7 @@ import { UserContext } from "../../context/UserContext";
 import { BASE_URL } from "../../utils/constant.ts";
 import { postAPI } from "../../APICalls/postAPI";
 import { VolumeInfoType } from "../../types";
-import addBookIcon from "../../../public/icons/add_book.svg";
+import addBookIcon from "../../assets/add_book.svg";
 
 interface AddToReadBtnProps {
   volumeInfo: VolumeInfoType;

@@ -18,7 +18,7 @@ const BookCard: React.FC<BookCardProps> = ({
     <Link to={`/details/${id}`} className="book-card" key={created_at}>
       <figure>
         <img
-          src={thumbnail || "/man.jpg"}
+          src={thumbnail || "./man.jpg"}
           alt={`Cover of the ${title}`}
           // className="thumb"
         />

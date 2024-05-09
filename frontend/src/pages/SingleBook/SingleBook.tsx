@@ -8,14 +8,22 @@ import UserReviews from "./UserReviews.tsx";
 import { ButtonGroup } from "./BtnGroup.tsx";
 import { GoogleBookDataType } from "../../types.ts";
 import Recommendations from "./Recommendations.tsx";
+import { BASE_URL } from "../../utils/constant.ts";
+
+export interface reviewDataType {
+  google_book_id: string | undefined;
+  status: string | undefined;
+  review?: string;
+  rating?: number | null;
+  name?: string | undefined;
+  user_id?: number | null | undefined;
+}
 
 const SingleBook = () => {
   const { id } = useParams();
-
   const bookURL = `${
     import.meta.env.VITE_REACT_APP_GOOGLE_BOOK_API
   }volumes/${id}`;
-
   // Fetch book data
   const { data, loading, error } = useFetch<GoogleBookDataType>(bookURL);
 
@@ -23,11 +31,29 @@ const SingleBook = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    fetchReviews();
   }, [id]);
   // const [setReviewUpdated] = useState(false);
   const [isModalOpen, setModalOpen] = useState(false);
 
-  const handleReviewPosted: () => void = () => {
+  const [reviews, setReviews] = useState<reviewDataType[]>([]);
+
+  const fetchReviews = async () => {
+    // Fetch reviews from your API
+    const reviewsURL = `${BASE_URL}reviews/${id}`;
+    try {
+      const response = await fetch(reviewsURL);
+      const data = await response.json();
+      console.log(data);
+
+      setReviews(data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleReviewPosted = async (newReview: reviewDataType) => {
+    setReviews((prevReviews) => [...prevReviews, newReview]);
     setModalOpen(false);
   };
 
@@ -80,7 +106,7 @@ const SingleBook = () => {
                 )}
                 {book.categories && <p className="">{book.categories[0]}</p>}
 
-                <div className="flex divide-x-2 divide-gray-500 gap-2">
+                <div className="md:flex md:divide-x-2 divide-gray-500 gap-2">
                   <p>{book.publishedDate ? book.publishedDate : "N/A"}</p>
                   {book.publisher && <p className="pl-2"> {book.publisher}</p>}
                 </div>
@@ -99,7 +125,7 @@ const SingleBook = () => {
           </div>
 
           {/* User Reviws */}
-          <UserReviews book_id={id} />
+          <UserReviews reviews={reviews} />
           {/* Review Modal */}
           <Modal isOpen={isModalOpen} onClose={() => setModalOpen(false)}>
             <ReviewForm data={data} onReviewPosted={handleReviewPosted} />

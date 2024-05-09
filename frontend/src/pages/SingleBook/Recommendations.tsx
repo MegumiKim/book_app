@@ -19,10 +19,10 @@ function Recommendations({
   const { data } = useFetch<DataType>(URL);
 
   const recommendations =
-    data?.items.filter((item) => item.id != id).slice(0, 6) || [];
+    data?.items?.filter((item) => item.id != id).slice(0, 6) || [];
 
   return (
-    recommendations && (
+    recommendations?.length > 0 && (
       <section className=" outline-slate-400 mt-10">
         <h2 className="my-5">Other Books in {genre}</h2>
         <div className="bookshelf">

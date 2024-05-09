@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import { UserContext } from "../../context/UserContext";
 import { BASE_URL } from "../../utils/constant.ts";
 import { useNavigate } from "react-router-dom";
-import removeIcon from "../../../public/icons/remove.svg";
+import removeIcon from "../../assets/remove.svg";
 
 interface AddToReadBtnProps {
   id: string;

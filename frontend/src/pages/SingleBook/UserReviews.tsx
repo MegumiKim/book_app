@@ -1,43 +1,22 @@
 import RatingStars from "../../components/RatingStars.tsx";
-import { useFetch } from "../../hooks/useFetch.tsx";
-import { BASE_URL } from "../../utils/constant.ts";
+import { reviewDataType } from "./SingleBook.tsx";
 
-interface reviewDataType {
-  name: string;
-  rating: number;
-  review: string;
-}
-
-interface FetchedDataType {
-  results: number;
-  data: reviewDataType[];
-}
-
-interface UserReviewsProps {
-  book_id: string | undefined;
-}
-
-function UserReviews({ book_id }: UserReviewsProps) {
-  const reviewsURL = `${BASE_URL}reviews/${book_id}`;
-
-  // Fetch reviews data
-  const { data } = useFetch<FetchedDataType>(reviewsURL);
-  const reviewsData = data?.data || [];
-  const reviews = reviewsData?.map((review, i) => (
-    <div className="border-l-4 pl-4" key={i}>
-      <div className="flex gap-3 align-bottom">
-        <p>By {review.name}</p>
-        <RatingStars rating={review.rating} />
-      </div>
-      <p className="max-h-48 overflow-scroll mt-5">{review.review}</p>
-    </div>
-  ));
-
+function UserReviews({ reviews }: { reviews: reviewDataType[] }) {
   return (
-    reviewsData?.length > 0 && (
-      <section className="outline outline-slate-400 outline-1 rounded-lg p-5">
-        <h2 className="">Reviews</h2>
-        <div className="grid sm:grid-cols-2 gap-4 mt-5">{reviews}</div>
+    reviews?.length > 0 && (
+      <section>
+        <h2>Reviews</h2>
+        <div className="grid grid-flow-col sm:grid-cols-2 mt-5 gap-5">
+          {reviews.map((review: reviewDataType, i: number) => (
+            <div key={i} className="border-s-4 px-5">
+              <div className="flex gap-5 align-center">
+                <p className="font-bold">{review.name}</p>
+                <RatingStars rating={review.rating || 0} />
+              </div>
+              <p className="p-3">{review.review}</p>
+            </div>
+          ))}
+        </div>
       </section>
     )
   );

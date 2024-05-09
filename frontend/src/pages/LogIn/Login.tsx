@@ -45,8 +45,8 @@ function Login() {
 
   const handleGuestLogin = () => {
     const guestAccount = {
-      name: "megumi",
-      user_id: 40,
+      name: "Guest",
+      user_id: 1,
     };
     setUser(guestAccount);
     navigate("/");

@@ -1,16 +1,15 @@
 // import { useEffect, useState } from "react";
 import { KeyboardEvent, useContext, useState } from "react";
-import { SearchResultContext } from "../../context/SearchResultContext";
-import { GoogleBookDataType } from "../../types";
+import {
+  SearchResultContext,
+  SearchResultContextType,
+} from "../../context/SearchResultContext";
+
 import RandomQuote from "./RandomQuote";
 import { useNavigate } from "react-router-dom";
 import Feed from "./Feed";
-// import Feed from "./Feed";
-
-interface SearchResultContextType {
-  searchResult: GoogleBookDataType[];
-  setSearchResult: React.Dispatch<React.SetStateAction<[]>>;
-}
+import Categories from "./Categories";
+import searchIcon from "../../assets/search.svg";
 
 const Home = () => {
   const { setSearchResult } = useContext(
@@ -57,31 +56,34 @@ const Home = () => {
     }
   }
 
-  function clearInput() {
-    setInputValue("");
-  }
-
   return (
     <main className="" id="home">
       <div className="background" id="background"></div>
       <div className="flex flex-col gap-10 align-middle mt-10 md:mt-0">
         <RandomQuote />
 
-        <div className="w-full mx-auto sm:max-w-[500px]">
+        <div className="w-full mx-auto sm:max-w-[500px] relative">
           <input
             type="text"
             placeholder="Book Search"
             value={inputValue}
             onKeyDown={handleKeyPress}
             onChange={(e) => setInputValue(e.target.value)}
-            onClick={clearInput}
+            // onClick={clearInput}
             className="input w-full "
             autoFocus
           />
           {error && <p className="text-green-50 text-end m-2">{error}</p>}
+          <button
+            className="w-7 absolute top-2 right-3 cursor-pointer"
+            onClick={() => searchBook(inputValue)}
+            aria-label="search book"
+          >
+            <img src={searchIcon} alt="search" />
+          </button>
         </div>
       </div>
-
+      <Categories />
       <Feed />
     </main>
   );

@@ -3,7 +3,7 @@ import { GoogleBookDataType } from "../types";
 
 // Assuming SearchResultType is the type of your search result
 
-interface SearchResultContextType {
+export interface SearchResultContextType {
   searchResult: GoogleBookDataType[];
   setSearchResult: React.Dispatch<React.SetStateAction<GoogleBookDataType[]>>;
 }

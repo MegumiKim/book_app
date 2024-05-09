@@ -1,12 +1,7 @@
-import {
-  FormEvent,
-  KeyboardEvent,
-  MouseEvent,
-  SetStateAction,
-  useState,
-} from "react";
+import { FormEvent, KeyboardEvent, SetStateAction, useState } from "react";
 import CreatableSelect from "react-select/creatable";
 import { categories } from "../../utils/bookCategories";
+import searchIcon from "../../assets/search.svg";
 
 interface BookSearchProps {
   handleSearch: (result: []) => void;
@@ -51,7 +46,7 @@ const BookSearch: React.FC<BookSearchProps> = ({ handleSearch }) => {
     try {
       const result = await fetch(URL);
       const json = await result.json();
-      console.log(URL, json);
+
       if (result.ok) {
         if (json.totalItems === 0) {
           setError("No book found :-/");
@@ -61,6 +56,11 @@ const BookSearch: React.FC<BookSearchProps> = ({ handleSearch }) => {
         }
 
         handleSearch(json.items);
+        setTitle("");
+        setAuthor("");
+        setError("");
+        setLatest(false);
+        setFree(false);
       } else {
         throw new Error();
       }
@@ -70,11 +70,11 @@ const BookSearch: React.FC<BookSearchProps> = ({ handleSearch }) => {
     }
   }
 
-  function handleClear(e: MouseEvent<HTMLButtonElement>) {
-    e.preventDefault();
-    setTitle("");
-    setError("");
-  }
+  // function handleClear(e: MouseEvent<HTMLButtonElement>) {
+  //   e.preventDefault();
+  //   setTitle("");
+  //   setError("");
+  // }
 
   const handleCategoryChange = (
     newValue: { value: string; label: string } | null
@@ -120,12 +120,11 @@ const BookSearch: React.FC<BookSearchProps> = ({ handleSearch }) => {
               onChange={(e) => setTitle(e.target.value)}
             />
             <button
-              type="button"
-              aria-label="clear"
-              className="btn btn-xs absolute right-3 top-3"
-              onClick={(e) => handleClear(e)}
+              className="w-7 absolute top-2 right-3 cursor-pointer"
+              aria-label="search book"
+              type="submit"
             >
-              X
+              <img src={searchIcon} alt="search" />
             </button>
           </div>
           <div className="form-control">
@@ -152,7 +151,7 @@ const BookSearch: React.FC<BookSearchProps> = ({ handleSearch }) => {
               <input
                 id="author"
                 type="text"
-                className="input  w-full bg-white h-[38px] focus:bg-opacity-90 rounded-sm "
+                className="input w-full bg-white h-[38px] focus:bg-opacity-90 rounded-sm text-slate-700"
                 value={author}
                 onChange={(e) => setAuthor(e.target.value)}
               />
@@ -163,12 +162,14 @@ const BookSearch: React.FC<BookSearchProps> = ({ handleSearch }) => {
                 className="text-slate-800 leading-tight overflow-visible z-10"
                 isClearable
                 isSearchable
-                onChange={() => handleCategoryChange}
+                onChange={(selectedCategory) =>
+                  handleCategoryChange(selectedCategory)
+                }
                 options={categories}
                 value={selectedCategory}
                 placeholder="Select or type..."
-                getNewOptionData={(inputValue, optionLabel) => ({
-                  label: optionLabel,
+                getNewOptionData={(inputValue) => ({
+                  label: inputValue,
                   value: inputValue.toLowerCase().replace(/\W/g, ""),
                 })}
               />

@@ -5,10 +5,11 @@ import { useContext } from "react";
 import { UserContext } from "../../context/UserContext.tsx";
 import { BASE_URL } from "../../utils/constant.ts";
 import { postAPI } from "../../APICalls/postAPI.ts";
+import { reviewDataType } from "./SingleBook.tsx";
 
 const ReviewForm = (props: {
   data: GoogleBookDataType;
-  onReviewPosted: () => void;
+  onReviewPosted: (newReview: reviewDataType) => void;
 }) => {
   const book = props.data.volumeInfo;
   const book_id = props.data.id;
@@ -25,6 +26,7 @@ const ReviewForm = (props: {
   const review = {
     google_book_id: book_id,
     status: "have read",
+    // name: user.name,
     review: reviewText,
     rating: selectedRating,
     title: book.title,
@@ -39,22 +41,20 @@ const ReviewForm = (props: {
       status: string | undefined;
       review?: string;
       rating?: number | null;
+      name?: string | undefined;
+      user_id?: number | null | undefined;
       title: string | undefined;
       author: string | undefined;
       genre: string | undefined;
-      imageUrl: string | undefined;
       username?: string | undefined;
-      password?: string | undefined;
-      name?: string | undefined;
       imageurl?: string | undefined;
-      user_id?: number | null | undefined;
     },
     e: FormEvent<HTMLFormElement>
   ) => {
     e.preventDefault();
-    postAPI(reviewURL, body);
+    const response = await postAPI(reviewURL, body);
 
-    onReviewPosted();
+    onReviewPosted(response.data);
   };
 
   return (

@@ -103,7 +103,7 @@ module.exports = router;
 router.delete("/:id", async (req, res) => {
   const userId = parseInt(req.params.id);
 
-  if (userId === 40) {
+  if (userId === 1) {
     res.status(400).send("Error: You cannot delete this account.");
     return; // Stop further execution
   }

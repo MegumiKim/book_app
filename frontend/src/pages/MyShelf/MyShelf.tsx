@@ -77,14 +77,16 @@ const MyShelf = () => {
 
       <div role="tablist" className="tab-list mb-10 ">
         <button
-          className={`tab ${selectedTab === "toRead" && "selected-tab"}`}
+          className={`tab gap-1 ${selectedTab === "toRead" && "selected-tab"}`}
           onClick={(e) => toggleBookShelf(e)}
           data-shelf="toReads"
         >
           To Read <span>({toReadShelf?.length})</span>
         </button>
         <button
-          className={`tab ${selectedTab === "haveReads" && "selected-tab"}`}
+          className={`tab gap-1 ${
+            selectedTab === "haveReads" && "selected-tab"
+          }`}
           onClick={toggleBookShelf}
           data-shelf="haveReads"
         >
@@ -105,7 +107,7 @@ const MyShelf = () => {
                 key={book.google_book_id}
               />
             ))
-          : "No book is added in your bookshelf"}
+          : "No book found"}
       </div>
     </main>
   );

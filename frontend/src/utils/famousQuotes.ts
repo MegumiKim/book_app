@@ -67,18 +67,6 @@ export const famousQuotes = [
   },
 
   {
-    quote:
-      "Happiness can be found, even in the darkest of times, if one only remembers to turn on the light.",
-    by: "J.K. Rowling",
-  },
-
-  {
-    quote:
-      "Life appears to me too short to be spent in nursing animosity or registering wrongs.",
-    by: "Charlotte Brontë",
-  },
-
-  {
     quote: "Beware; for I am fearless, and therefore powerful.",
     by: "Mary Shelley",
   },

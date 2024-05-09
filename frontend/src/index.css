@@ -210,6 +210,26 @@ figure::after {
   /* z-index: 1; */
 }
 
+.category-card {
+  border: #b98989 3px solid;
+  border-radius: 20px;
+  align-self: center;
+  text-align: center;
+  color: white;
+  padding: 0 1em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 1;
+  transition: background 0.3s ease-in;
+  font-weight: bold;
+}
+
+.category-card:hover {
+  background: #b98989;
+  color: var(--bg-color-dark);
+}
+
 .bookshelf {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(1fr));

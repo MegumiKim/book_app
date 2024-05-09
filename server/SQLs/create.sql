@@ -13,6 +13,7 @@
     google_book_id VARCHAR(255) PRIMARY KEY NOT NULL,
     title VARCHAR(255),
     author VARCHAR(255),
+    genre VARCHAR(255) NOT NULL DEFAULT 'Unknown',
     imageUrl TEXT
 );
 

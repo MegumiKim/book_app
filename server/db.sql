@@ -27,12 +27,6 @@ CREATE TABLE user_book_relationships (
 -- Create an ENUM type for the book status
 CREATE TYPE book_status AS ENUM ('have read', 'reading', 'to read');
 
-
-
-
-
-
-
 INSERT INTO reviews(books_id, name, comment, rating) values (1,'megumi', 'good', 3);
 SELECT * FROM books WHERE id = 1;
 

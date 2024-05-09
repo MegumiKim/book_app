@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import catImage from "../../../public/cat-sm.jpg";
+import catImage from "../../assets/cat-sm.jpg";
 
 function PageNotFound() {
   return (

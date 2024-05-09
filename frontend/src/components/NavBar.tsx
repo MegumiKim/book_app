@@ -4,8 +4,8 @@ import { defaultUser, UserContext } from "../context/UserContext";
 import { SearchResultContext } from "../context/SearchResultContext";
 import Modal from "./Modal";
 import { deleteUserAccount } from "../APICalls/DeleteAccount";
-import bookIconOpen from "../../public/icons/book_icon_open.svg";
-import bookIconClose from "../../public/icons/book_icon_close.svg";
+import bookIconOpen from "../assets/book_icon_open.svg";
+import bookIconClose from "../assets/book_icon_close.svg";
 
 const NavBar = () => {
   const navigate = useNavigate();
