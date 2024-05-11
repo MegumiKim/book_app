@@ -30,7 +30,7 @@ function Feed() {
   }, [data]);
 
   return (
-    <section className="mt-32">
+    <section className="mt-20 md:mt-32">
       {loading && (
         <div className="w-full justify-center flex flex-col gap-4 mb-10">
           <p className="m-auto">Loading...</p>
@@ -41,7 +41,9 @@ function Feed() {
         <div className="text-red-400 text-xl">Failed to fetch data :-/</div>
       )}
 
-      <h2 className="text-white mb-5">Community Updates</h2>
+      <h2 className="text-white mb-10 md:mb-20 font-bold text-center">
+        Community Updates
+      </h2>
       <div className="bookshelf">
         {latest.length > 0 &&
           latest.map((item, i) => (
