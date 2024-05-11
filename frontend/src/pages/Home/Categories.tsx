@@ -21,7 +21,6 @@ function Categories() {
     try {
       const result = await fetch(URL);
       const json = await result.json();
-      console.log(URL, json);
       if (!result.ok) {
         throw new Error();
       } else {
@@ -37,8 +36,8 @@ function Categories() {
     }
   }
   return (
-    <section className="my-10 md:my-32">
-      <div className="grid grid-cols-3 sm:grid-cols-5 justify-around gap-10">
+    <section className="my-20 sm:my-32">
+      <div className="grid grid-cols-3 sm:grid-cols-5 justify-center gap-5 lg:gap-10">
         {categories.map((category) => (
           <div
             key={category}

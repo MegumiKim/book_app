@@ -21,11 +21,13 @@ export const AddToReadBtn: React.FC<AddToReadBtnProps> = ({
   const body = {
     google_book_id: id,
     status: "to read",
-    title: volumeInfo.title,
-    author: volumeInfo.authors?.[0],
-    genre: volumeInfo.categories?.[0],
+    title: volumeInfo.title || "",
+    author: volumeInfo.authors?.[0] || "",
+    genre: volumeInfo.categories?.[0] || "",
     imageUrl: volumeInfo.imageLinks?.thumbnail,
   };
+
+  console.log(body);
 
   async function addToRead(e: MouseEvent<HTMLButtonElement>) {
     postAPI(URL, body);
