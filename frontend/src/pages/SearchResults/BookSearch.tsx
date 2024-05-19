@@ -1,17 +1,22 @@
-import { FormEvent, KeyboardEvent, SetStateAction, useState } from "react";
+import {
+  FormEvent,
+  KeyboardEvent,
+  SetStateAction,
+  useState,
+  useContext,
+} from "react";
 import CreatableSelect from "react-select/creatable";
 import { categories } from "../../utils/bookCategories";
 import searchIcon from "../../assets/search.svg";
-
-interface BookSearchProps {
-  handleSearch: (result: [], URL: string) => void;
-}
+import { SearchResultContext } from "../../context/SearchResultContext";
+import { useNavigate } from "react-router-dom";
+import { GoogleBookDataType } from "../../types";
 
 interface SelectedCategory {
   value: string;
   label: string;
 }
-const BookSearch: React.FC<BookSearchProps> = ({ handleSearch }) => {
+const BookSearch = () => {
   const [showAdvancedSearch, setShowAdvancedSearch] = useState(false);
   const [selectedCategory, setSelectedCategory] =
     useState<SelectedCategory | null>(null);
@@ -20,6 +25,8 @@ const BookSearch: React.FC<BookSearchProps> = ({ handleSearch }) => {
   const [free, setFree] = useState(false);
   const [latest, setLatest] = useState(false);
   const [error, setError] = useState("");
+  const { setSearchResult } = useContext(SearchResultContext);
+  const navigate = useNavigate();
 
   async function searchBook(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -51,16 +58,30 @@ const BookSearch: React.FC<BookSearchProps> = ({ handleSearch }) => {
         if (json.totalItems === 0) {
           setError("No book found :-/");
 
-          handleSearch([], URL);
           return;
         }
 
-        handleSearch(json.items, URL);
+        const uniqueIds = new Set<string>();
+        const filteredResults = json.items.filter(
+          (result: GoogleBookDataType) => {
+            if (!uniqueIds.has(result.id)) {
+              uniqueIds.add(result.id);
+              return true; // keep this result, it's unique so far
+            }
+            return false; // skip this result, it's a duplicate
+          }
+        );
+
+        setSearchResult({ url: URL, results: filteredResults });
+
+        // handleSearch(json.items, URL);
         setTitle("");
         setAuthor("");
         setError("");
         setLatest(false);
         setFree(false);
+
+        navigate("/search");
       } else {
         throw new Error();
       }
@@ -69,12 +90,6 @@ const BookSearch: React.FC<BookSearchProps> = ({ handleSearch }) => {
       console.error(error);
     }
   }
-
-  // function handleClear(e: MouseEvent<HTMLButtonElement>) {
-  //   e.preventDefault();
-  //   setTitle("");
-  //   setError("");
-  // }
 
   const handleCategoryChange = (
     newValue: { value: string; label: string } | null
@@ -109,7 +124,7 @@ const BookSearch: React.FC<BookSearchProps> = ({ handleSearch }) => {
         <div className="flex justify-between">
           <p className="text-red-400 font-bold">{error}</p>{" "}
         </div>
-        <div className="flex flex-col gap-3 sm:flex-row">
+        <div className="">
           <div className="relative flex-1">
             <input
               type="text"
@@ -128,14 +143,12 @@ const BookSearch: React.FC<BookSearchProps> = ({ handleSearch }) => {
             </button>
           </div>
           <div className="form-control">
-            <label className="cursor-pointer flex self-end sm:flex-col">
-              <p className=" text-slate-200 label-text sm:order-2">
-                Show Advanced Search
-              </p>
+            <label className="cursor-pointer mt-3 self-end flex justify-end gap-2">
+              <p className=" text-slate-200 label-text ">Advanced Search</p>
               <input
                 id="showAdvancedSearch"
                 type="checkbox"
-                className="toggle toggle-secondary ms-3 sm:ms-0 sm:order-1"
+                className="toggle toggle-secondary "
                 onChange={() =>
                   setShowAdvancedSearch((prevState) => !prevState)
                 }

@@ -145,7 +145,7 @@ h2 {
 }
 
 .custom_modal {
-  background-color: rgb(78, 78, 78);
+  background-color: var(--bg-color-dark);
   padding: 20px;
   border-radius: 5px;
   max-width: 500px;

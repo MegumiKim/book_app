@@ -21,18 +21,21 @@ function Categories() {
     try {
       const result = await fetch(URL);
       const json = await result.json();
+
       if (!result.ok) {
         throw new Error();
       } else {
         if (json.totalItems === 0) {
           return;
         }
-        setSearchResult(json.items);
-        navigate("/search");
+
+        setSearchResult({ url: URL, results: json.items });
       }
     } catch (error) {
       console.error(error);
       // setError("Failed to Fetch Data");
+    } finally {
+      navigate("/search");
     }
   }
   return (

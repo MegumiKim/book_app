@@ -2,57 +2,45 @@ import BookCard from "../../components/BookCard";
 import { useContext, useState } from "react";
 import { SearchResultContext } from "../../context/SearchResultContext";
 import BookSearch from "./BookSearch";
-import { GoogleBookDataType } from "../../types";
 
 function SearchResults() {
   const { searchResult, setSearchResult } = useContext(SearchResultContext);
-  const [URL, setURL] = useState("");
   const [paginationIndex, setPaginationIndex] = useState(10);
+  const [err, setErr] = useState("");
 
-  const handleSearch = (results: GoogleBookDataType[], URL: string) => {
-    setURL(URL);
-    if (results.length > 0) {
-      const uniqueIds = new Set<string>();
-      const filteredResults = results.filter((result) => {
-        if (!uniqueIds.has(result.id)) {
-          uniqueIds.add(result.id);
-          return true; // keep this result, it's unique so far
-        }
-        return false; // skip this result, it's a duplicate
-      });
-
-      setSearchResult(filteredResults);
-    } else {
-      setSearchResult([]);
-    }
-  };
+  console.log(searchResult);
 
   async function handleLoadMore() {
-    const paginationURL = `${URL}&startIndex=${paginationIndex}`;
+    setErr("");
+    const paginationURL = `${searchResult.url}&startIndex=${paginationIndex}`;
 
     try {
       const result = await fetch(paginationURL);
+      const json = await result.json();
 
       if (result.ok) {
-        const json = await result.json();
-
-        setSearchResult((prev) => [...prev, ...json.items]);
+        // setSearchResult({ url: paginationURL, results: json.items });
+        setSearchResult((prev) => ({
+          url: prev.url,
+          results: [...prev.results, ...json.items],
+        }));
       }
     } catch (error) {
-      console.log(error);
+      setErr("Failed to fetch books");
     }
     setPaginationIndex(paginationIndex + 10);
   }
 
   return (
     <main className="flex flex-col gap-10">
-      <BookSearch
-        handleSearch={(result: [], URL) => handleSearch(result, URL)}
-      />
-      {searchResult?.length > 0 ? (
+      <BookSearch />
+
+      {err !== "" && <p>{err}</p>}
+
+      {searchResult?.results?.length > 0 ? (
         <div className="flex flex-col">
           <div className="bookshelf">
-            {searchResult.map((item) => (
+            {searchResult.results.map((item) => (
               <BookCard
                 key={item.id}
                 title={item.volumeInfo.title}
@@ -69,7 +57,7 @@ function SearchResults() {
           </div>
           <button
             className="btn btn-outline mx-auto my-10 text-slate-200"
-            onClickCapture={handleLoadMore}
+            onClick={handleLoadMore}
           >
             Load More
           </button>

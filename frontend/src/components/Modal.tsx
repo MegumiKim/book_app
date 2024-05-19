@@ -13,10 +13,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
   return (
     <div className="custom_modal_backdrop z-10">
       <div className="custom_modal">
-        <button
-          onClick={onClose}
-          className="modal_close_btn btn btn-square btn-outline"
-        >
+        <button onClick={onClose} className="btn btn-square btn-outline mb-5">
           Close
         </button>
         {children}
