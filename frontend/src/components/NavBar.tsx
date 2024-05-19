@@ -42,7 +42,7 @@ const NavBar = () => {
   }, [menuOpen]);
 
   function handleLogOut() {
-    setSearchResult([]);
+    setSearchResult({ url: "", results: [] });
     setUser(defaultUser);
     localStorage.removeItem("myBooks");
     setMenuOpen(false);
