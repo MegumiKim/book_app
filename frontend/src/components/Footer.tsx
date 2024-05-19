@@ -1,5 +1,5 @@
 function Footer() {
-  return <footer>DreamBooks</footer>;
+  return <footer>BookJournal</footer>;
 }
 
 export default Footer;

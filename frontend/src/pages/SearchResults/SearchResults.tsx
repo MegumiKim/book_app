@@ -1,15 +1,16 @@
 import BookCard from "../../components/BookCard";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { SearchResultContext } from "../../context/SearchResultContext";
-import BookSearch from "../Home/BookSearch";
+import BookSearch from "./BookSearch";
 import { GoogleBookDataType } from "../../types";
 
 function SearchResults() {
   const { searchResult, setSearchResult } = useContext(SearchResultContext);
+  const [URL, setURL] = useState("");
+  const [paginationIndex, setPaginationIndex] = useState(10);
 
-  const handleSearch = (results: GoogleBookDataType[]) => {
-    console.log(results);
-
+  const handleSearch = (results: GoogleBookDataType[], URL: string) => {
+    setURL(URL);
     if (results.length > 0) {
       const uniqueIds = new Set<string>();
       const filteredResults = results.filter((result) => {
@@ -19,7 +20,6 @@ function SearchResults() {
         }
         return false; // skip this result, it's a duplicate
       });
-      // console.log(filteredResults);
 
       setSearchResult(filteredResults);
     } else {
@@ -27,9 +27,28 @@ function SearchResults() {
     }
   };
 
+  async function handleLoadMore() {
+    const paginationURL = `${URL}&startIndex=${paginationIndex}`;
+
+    try {
+      const result = await fetch(paginationURL);
+
+      if (result.ok) {
+        const json = await result.json();
+
+        setSearchResult((prev) => [...prev, ...json.items]);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+    setPaginationIndex(paginationIndex + 10);
+  }
+
   return (
     <main className="flex flex-col gap-10">
-      <BookSearch handleSearch={(result: []) => handleSearch(result)} />
+      <BookSearch
+        handleSearch={(result: [], URL) => handleSearch(result, URL)}
+      />
       {searchResult?.length > 0 ? (
         <div className="flex flex-col">
           <div className="bookshelf">
@@ -48,12 +67,12 @@ function SearchResults() {
               />
             ))}
           </div>
-          {/* <button
-          className="btn btn-outline mx-auto my-10 text-slate-200"
-          onClickCapture={handleLoadMore}
-        >
-          Load More
-        </button> */}
+          <button
+            className="btn btn-outline mx-auto my-10 text-slate-200"
+            onClickCapture={handleLoadMore}
+          >
+            Load More
+          </button>
         </div>
       ) : (
         ""

@@ -9,6 +9,7 @@ import { ButtonGroup } from "./BtnGroup.tsx";
 import { GoogleBookDataType } from "../../types.ts";
 import Recommendations from "./Recommendations.tsx";
 import { BASE_URL } from "../../utils/constant.ts";
+import placeHolderImage from "../../assets/man.jpg";
 
 export interface reviewDataType {
   google_book_id: string | undefined;
@@ -72,11 +73,7 @@ const SingleBook = () => {
               <img
                 className="object-cover "
                 alt={`book cover of ${book.title}`}
-                src={
-                  book.imageLinks?.thumbnail
-                    ? book.imageLinks.thumbnail
-                    : "/night.jpg"
-                }
+                src={book.imageLinks?.thumbnail || placeHolderImage}
               />
             </figure>
 

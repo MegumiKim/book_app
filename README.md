@@ -2,7 +2,7 @@
 
 <img src="./frontend/public/bookjournal.jpg" alt="project image" width="400" />
 
-DreamBooks is a web application for book club members to manage their bookshelf (a private Goodreads app).
+BookJournal is a web application for book club members to manage their bookshelf (a private Goodreads app).
 The web application allows users to create accounts, explore books, maintain reading list and post reviews and get recommendations.
 The actual book data is from GoogleBook API.
 

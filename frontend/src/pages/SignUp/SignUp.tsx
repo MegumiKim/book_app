@@ -1,4 +1,4 @@
-import { FormEvent, useContext, useState } from "react";
+import { FocusEvent, FormEvent, useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { UserContext } from "../../context/UserContext";
 import { useNavigate } from "react-router-dom";
@@ -10,6 +10,7 @@ function SignUp() {
   const [password, setPassword] = useState("");
   const disabled = username.length > 3 && password.length > 3 ? false : true;
   const [error, setError] = useState(false);
+  const [inputErr, setInputErr] = useState("");
   const { setUser } = useContext(UserContext);
 
   const navigate = useNavigate();
@@ -40,6 +41,17 @@ function SignUp() {
     navigate("/");
   };
 
+  function validateInput(
+    e: FocusEvent<HTMLInputElement, Element>,
+    message: string
+  ) {
+    if (e.target.value.length < 4) {
+      setInputErr(message);
+    } else {
+      setInputErr("");
+    }
+  }
+
   return (
     <main>
       <div className="background" id="background2"></div>
@@ -50,28 +62,31 @@ function SignUp() {
         <div className="my-5">
           <h1>Sign up</h1>
           <Link to="/login" className=" my-6 gap-4 ">
-            Have already an account?{" "}
+            Do you have already an account?{" "}
             <span className="underline text-orange-400">Log in</span>
           </Link>
         </div>
         <div className="mb-6 mt-2">
           <label htmlFor="username" className="block mb-2">
             Username
+            <p className="ml-2 text-red-500 inline">{inputErr}</p>
           </label>
           <input
             type="text"
             id="username"
             min={4}
             required
-            placeholder="ExampleUser"
+            placeholder="George Orwell"
             className=" border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
+            onBlur={(e) => validateInput(e, "minimum 4 characters")}
           />
         </div>
+
         <div className="mb-6">
           <label htmlFor="password" className="block mb-2">
-            Password
+            Password (minimum 4 characters)
           </label>
           <input
             type="password"

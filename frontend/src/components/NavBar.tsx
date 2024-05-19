@@ -35,15 +35,6 @@ const NavBar = () => {
     setMenuOpen(false);
   }, [location.pathname]);
 
-  // useEffect(() => {
-  //   if (menuOpen && focusedIndex !== -1) {
-  //     const items = document.querySelectorAll("ul li a, ul li button");
-  //     const focusableItem = items[focusedIndex];
-  //     if(focusableItem){
-  //       focusableItem}
-  //   }
-  // }, [menuOpen]);
-
   useEffect(() => {
     if (!menuOpen) {
       setFocusedIndex(-1);
@@ -74,48 +65,22 @@ const NavBar = () => {
     },
   ];
 
-  // const handleKeyDown = (event) => {
-  //   if (!menuOpen) return;
-
-  //   switch (event.key) {
-  //     case "ArrowDown":
-  //       event.preventDefault(); // Prevent page scrolling
-  //       setFocusedIndex((prevIndex) => (prevIndex + 1) % menuItems.length);
-
-  //       break;
-  //     case "ArrowUp":
-  //       event.preventDefault(); // Prevent page scrolling
-  //       setFocusedIndex(
-  //         (prevIndex) => (prevIndex - 1 + menuItems.length) % menuItems.length
-  //       );
-  //       break;
-  //     case "Enter":
-  //       const item = menuItems[focusedIndex];
-
-  //       if (item.path) {
-  //         navigate(item.path);
-  //       } else if (item.action) {
-  //         item.action();
-  //       }
-  //       setMenuOpen(false);
-  //       break;
-  //     case "Escape":
-  //       event.preventDefault();
-  //       setMenuOpen(false);
-  //       break;
-  //   }
-  // };
-
   return (
     <nav className="">
       <button>
         <Link to="/" role="button" tabIndex={0} className="logo">
-          DreamBooks
+          BookJournal
         </Link>
       </button>
 
       {user_id === null ? (
-        <Link to={"/login"}>Log in</Link>
+        <div>
+          {location.pathname === "/login" ? (
+            <Link to={"/signup"}>Sign up</Link>
+          ) : (
+            <Link to={"/login"}>Log in</Link>
+          )}
+        </div>
       ) : (
         <div className="relative">
           <button onClick={toggleMenuOpen} className="menu-btn">
@@ -125,10 +90,7 @@ const NavBar = () => {
             />
             <small>Menu</small>
           </button>
-          <ul
-            className={menuOpen ? "flex" : "hidden"}
-            // onKeyDown={(e) => handleKeyDown(e)}
-          >
+          <ul className={menuOpen ? "flex" : "hidden"}>
             {menuItems.map((item, index) => (
               <li key={index}>
                 {item.path ? (

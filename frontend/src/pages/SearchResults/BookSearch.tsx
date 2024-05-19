@@ -4,7 +4,7 @@ import { categories } from "../../utils/bookCategories";
 import searchIcon from "../../assets/search.svg";
 
 interface BookSearchProps {
-  handleSearch: (result: []) => void;
+  handleSearch: (result: [], URL: string) => void;
 }
 
 interface SelectedCategory {
@@ -51,11 +51,11 @@ const BookSearch: React.FC<BookSearchProps> = ({ handleSearch }) => {
         if (json.totalItems === 0) {
           setError("No book found :-/");
 
-          handleSearch([]);
+          handleSearch([], URL);
           return;
         }
 
-        handleSearch(json.items);
+        handleSearch(json.items, URL);
         setTitle("");
         setAuthor("");
         setError("");
