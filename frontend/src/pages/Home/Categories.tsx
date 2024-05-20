@@ -1,4 +1,4 @@
-import SearchLink from "./searchLink";
+import BookSearchLinkBtn from "./BookSearchLinkBtn";
 
 function Categories() {
   const categories = ["fiction", "history", "mystery", "science", "romance"];
@@ -11,14 +11,14 @@ function Categories() {
       <div className="grid grid-cols-3 sm:grid-cols-5 justify-center gap-5 lg:gap-10">
         {categories.map((category) => (
           <div key={category} className={`category-card ${category}`}>
-            <SearchLink
+            <BookSearchLinkBtn
               URL={
                 import.meta.env.VITE_REACT_APP_GOOGLE_BOOK_API +
                 `volumes?q=+subject:${category}`
               }
             >
               {category.toUpperCase()}
-            </SearchLink>
+            </BookSearchLinkBtn>
           </div>
         ))}
       </div>

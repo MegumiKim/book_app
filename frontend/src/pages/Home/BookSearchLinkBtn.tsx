@@ -8,7 +8,7 @@ type SearchLinkProps = {
   URL: string;
 };
 
-const SearchLink: React.FC<SearchLinkProps> = ({ children, URL }) => {
+const BookSearchLinkBtn: React.FC<SearchLinkProps> = ({ children, URL }) => {
   const { setSearchResult } = useContext(SearchResultContext);
 
   const navigate = useNavigate();
@@ -38,4 +38,4 @@ const SearchLink: React.FC<SearchLinkProps> = ({ children, URL }) => {
   return <button onClick={handleClick}>{children}</button>;
 };
 
-export default SearchLink;
+export default BookSearchLinkBtn;

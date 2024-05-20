@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { famousQuotes } from "../../utils/famousQuotes";
-import SearchLink from "./searchLink";
+import BookSearchLinkBtn from "./BookSearchLinkBtn";
 
 const RandomQuote = () => {
   const [quote, setQuote] = useState({ quote: "", by: "" });
@@ -21,7 +21,7 @@ const RandomQuote = () => {
       </h2>
 
       <div className="w-full text-center my-5 text-yellow-200 font-bold">
-        <SearchLink URL={URL}>- {quote.by}</SearchLink>
+        <BookSearchLinkBtn URL={URL}>- {quote.by}</BookSearchLinkBtn>
       </div>
     </section>
   );
