@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import RatingStars from "./RatingStars";
 import { BookCardProps } from "../types";
+import placeHolderImage from "../assets/man.jpg";
 
 const BookCard: React.FC<BookCardProps> = ({
   id,
@@ -17,7 +18,10 @@ const BookCard: React.FC<BookCardProps> = ({
   return (
     <Link to={`/details/${id}`} className="book-card" key={created_at}>
       <figure>
-        <img src={thumbnail || "./man.jpg"} alt={`Cover of the ${title}`} />
+        <img
+          src={thumbnail || placeHolderImage}
+          alt={`Cover of the ${title}`}
+        />
       </figure>
       <div className="content">
         <div>

@@ -8,8 +8,6 @@ function SearchResults() {
   const [paginationIndex, setPaginationIndex] = useState(10);
   const [err, setErr] = useState("");
 
-  console.log(searchResult);
-
   async function handleLoadMore() {
     setErr("");
     const paginationURL = `${searchResult.url}&startIndex=${paginationIndex}`;

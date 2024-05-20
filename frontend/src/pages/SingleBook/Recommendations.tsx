@@ -23,8 +23,8 @@ function Recommendations({
 
   return (
     recommendations?.length > 0 && (
-      <section className=" outline-slate-400 mt-10">
-        <h2 className="my-5">Other Books in {genre}</h2>
+      <section className=" outline-slate-400 mt-20">
+        <h2 className="my-10">Other Books in {genre}</h2>
         <div className="bookshelf">
           {recommendations.map((item) => (
             <BookCard

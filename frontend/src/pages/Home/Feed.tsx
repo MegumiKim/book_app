@@ -41,7 +41,7 @@ function Feed() {
         <div className="text-red-400 text-xl">Failed to fetch data :-/</div>
       )}
 
-      <h2 className="text-white mb-10 md:mb-20 font-bold text-center">
+      <h2 className="text-white mb-10  font-bold text-center">
         Community Updates
       </h2>
       <div className="bookshelf">

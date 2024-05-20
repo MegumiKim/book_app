@@ -3,87 +3,93 @@ export const famousQuotes = [
     quote: "All that glitters is not gold.",
     by: "William Shakespeare",
   },
-
   {
-    quote: "The only way out of the labyrinth of suffering is to forgive.",
-    by: "John Green",
+    quote: "To be, or not to be.",
+    by: "William Shakespeare",
   },
-
-  {
-    quote: "In the end, we only regret the chances we didn't take.",
-    by: "Lewis Carroll",
-  },
-
-  {
-    quote: "Not all those who wander are lost.",
-    by: "J.R.R. Tolkien",
-  },
-
-  {
-    quote: "It is never too late to be wise.",
-    by: "Daniel Defoe",
-  },
-
   {
     quote: "I think, therefore I am.",
     by: "René Descartes",
   },
-
   {
-    quote:
-      "Ignorance is the curse of God; knowledge is the wing wherewith we fly to heaven.",
-    by: "William Shakespeare",
+    quote: "The only thing we have to fear is fear itself.",
+    by: "Franklin D. Roosevelt",
   },
-
   {
-    quote: "It is better to be feared than loved, if you cannot be both.",
-    by: "Niccolò Machiavelli",
+    quote: "That which does not kill us makes us stronger.",
+    by: "Friedrich Nietzsche",
   },
-
   {
-    quote: "There is no greater agony than bearing an untold story inside you.",
-    by: "Maya Angelou",
+    quote: "I am the master of my fate.",
+    by: "William Ernest Henley",
   },
-
   {
-    quote: "Whatever our souls are made of, his and mine are the same.",
-    by: "Emily Brontë",
+    quote: "Not all those who wander are lost.",
+    by: "J.R.R. Tolkien",
   },
-
   {
-    quote: "We are all in the gutter, but some of us are looking at the stars.",
+    quote: "A thing of beauty is a joy forever.",
+    by: "John Keats",
+  },
+  {
+    quote: "To err is human; to forgive, divine.",
+    by: "Alexander Pope",
+  },
+  {
+    quote: "The unexamined life is not worth living.",
+    by: "Socrates",
+  },
+  {
+    quote: "To love and be loved is to feel the sun.",
+    by: "Victor Hugo",
+  },
+  {
+    quote: "All animals are equal, but some are more equal.",
+    by: "George Orwell",
+  },
+  {
+    quote: "It was the best of times, it was the worst of times.",
+    by: "Charles Dickens",
+  },
+  {
+    quote: "I wandered lonely as a cloud.",
+    by: "William Wordsworth",
+  },
+  {
+    quote: "To infinity and beyond!",
+    by: "Buzz Lightyear",
+  },
+  {
+    quote: "Knowledge is power.",
+    by: "Francis Bacon",
+  },
+  {
+    quote: "All for one and one for all.",
+    by: "Alexandre Dumas",
+  },
+  {
+    quote: "Hell is other people.",
+    by: "Jean-Paul Sartre",
+  },
+  {
+    quote: "Time is the longest distance between two places.",
+    by: "Tennessee Williams",
+  },
+  {
+    quote: "To live is the rarest thing in the world.",
     by: "Oscar Wilde",
   },
 
   {
-    quote: "Man is the only creature who refuses to be what he is.",
-    by: "Albert Camus",
+    quote: "It is a truth universally acknowledged.",
+    by: "Jane Austen",
   },
-
   {
-    quote:
-      "If we wait until we're ready, we'll be waiting for the rest of our lives.",
-    by: "Lemony Snicket",
+    quote: "Stay hungry, stay foolish.",
+    by: "Steve Jobs",
   },
-
   {
-    quote: "Beware; for I am fearless, and therefore powerful.",
-    by: "Mary Shelley",
-  },
-
-  {
-    quote: "I am no bird; and no net ensnares me.",
-    by: "Charlotte Brontë",
-  },
-
-  {
-    quote: "To love another person is to see the face of God.",
-    by: "Victor Hugo",
-  },
-
-  {
-    quote:
-      "So we beat on, boats against the current, borne back ceaselessly into the past.",
-    by: "F. Scott Fitzgerald",
+    quote: "The world breaks everyone.",
+    by: "Ernest Hemingway",
   },
 ];

@@ -28,12 +28,8 @@ export const postAPI = async (
     const json = await response.json();
 
     if (response.ok) {
-      console.log(json);
-
       return json;
     } else {
-      console.log(response);
-
       throw new Error(json?.error || "Failed to fetch data");
     }
   } catch (e) {

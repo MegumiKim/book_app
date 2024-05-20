@@ -20,7 +20,6 @@ interface FetchResponse {
 
 const MyShelf = () => {
   const { id } = useParams();
-  // const navigate = useNavigate();
   const { user } = useContext(UserContext);
 
   const [bookShelf, setBookShelf] = useState<Book[]>([]);
@@ -30,7 +29,6 @@ const MyShelf = () => {
 
   const bookShelfURL = BASE_URL + "reviews/user/" + id;
   const { data, loading, error } = useFetch<FetchResponse>(bookShelfURL);
-  // const {myBooks, setMyBooks} = useContext(MYS)
 
   useEffect(() => {
     const toReads = data?.data.filter(
@@ -60,10 +58,12 @@ const MyShelf = () => {
 
   return (
     <main className="">
-      <div className="flex justify-between">
-        <h2 className="text-lg">Welcome Back {user.name}!</h2>
-      </div>
-      <h1 className="mb-5">Book shelf ({data?.data.length}) </h1>
+      <h2 className="text-lg text-orange-400 text-end ">
+        Welcome Back {user.name}!
+      </h2>
+      <h1 className=" text-white font-bold mb-10">
+        My Shelf ({data?.data.length}){" "}
+      </h1>
 
       {loading && (
         <div className="w-full justify-center flex flex-col gap-4 mb-10">

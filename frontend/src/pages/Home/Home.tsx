@@ -23,7 +23,9 @@ const Home = () => {
           />
         </div>
         <Modal isOpen={isModalOpen} onClose={() => setModalOpen(false)}>
-          <BookSearch />
+          <div className="mt-14">
+            <BookSearch />
+          </div>
         </Modal>
       </div>
       <Categories />

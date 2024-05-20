@@ -1,4 +1,4 @@
-import { MouseEvent, useContext } from "react";
+import { MouseEvent, useContext, useEffect, useRef } from "react";
 import { UserContext } from "../../context/UserContext";
 import { BASE_URL } from "../../utils/constant.ts";
 import { postAPI } from "../../APICalls/postAPI";
@@ -14,9 +14,16 @@ export const AddToReadBtn: React.FC<AddToReadBtnProps> = ({
   volumeInfo,
   id,
 }) => {
+  const buttonRef = useRef<HTMLButtonElement>(null);
   const { user } = useContext(UserContext);
   const user_id = user.user_id;
   const URL = BASE_URL + `reviews/user/${user_id}`;
+
+  useEffect(() => {
+    if (buttonRef.current) {
+      buttonRef.current.innerText = "Add To Read";
+    }
+  }, [id]);
 
   const body = {
     google_book_id: id,
@@ -27,8 +34,6 @@ export const AddToReadBtn: React.FC<AddToReadBtnProps> = ({
     imageUrl: volumeInfo.imageLinks?.thumbnail,
   };
 
-  console.log(body);
-
   async function addToRead(e: MouseEvent<HTMLButtonElement>) {
     postAPI(URL, body);
     const target = e.target as HTMLButtonElement;
@@ -37,6 +42,7 @@ export const AddToReadBtn: React.FC<AddToReadBtnProps> = ({
 
   return (
     <button
+      ref={buttonRef}
       className="btn btn-outline w-full flex align-baseline"
       onClick={(e) => addToRead(e)}
     >

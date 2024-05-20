@@ -34,7 +34,7 @@ export const ButtonGroup: React.FC<ButtonGroupProps> = ({
       }
     };
     fetchData();
-  }, [readingStatus, book_id]);
+  }, [readingStatus, book_id, bookData]);
 
   // Ensure readingStatus uses the new typet
 

@@ -22,10 +22,12 @@ export interface reviewDataType {
 
 const SingleBook = () => {
   const { id } = useParams();
+
   const bookURL = `${
     import.meta.env.VITE_REACT_APP_GOOGLE_BOOK_API
   }volumes/${id}`;
   // Fetch book data
+
   const { data, loading, error } = useFetch<GoogleBookDataType>(bookURL);
 
   const book = data?.volumeInfo;
@@ -45,7 +47,6 @@ const SingleBook = () => {
     try {
       const response = await fetch(reviewsURL);
       const data = await response.json();
-      console.log(data);
 
       setReviews(data.data);
     } catch (error) {
@@ -89,7 +90,7 @@ const SingleBook = () => {
               {/* Meta data */}
               <div className="flex flex-col gap-2 mx-auto md:mx-0 text-center md:text-start">
                 {/* Authors */}
-                <ul className="author-list flex gap-2 text-orange-300 text-lg m-auto md:m-0">
+                <ul className="author-list justify-center md:justify-start">
                   {book.authors?.map((author: string) => (
                     <li key={author} className="">
                       {author}
@@ -121,7 +122,7 @@ const SingleBook = () => {
             ></div>
           </div>
 
-          {/* User Reviws */}
+          {/* User Reviews */}
           <UserReviews reviews={reviews} />
           {/* Review Modal */}
           <Modal isOpen={isModalOpen} onClose={() => setModalOpen(false)}>

@@ -34,7 +34,7 @@ export const RemoveBtn: React.FC<AddToReadBtnProps> = ({ id }) => {
 
   return (
     <div>
-      <button className="btn btn-outline flex w-full" onClick={remove}>
+      <button className="btn btn-outline w-full" onClick={remove}>
         <img src={removeIcon} alt="remove" className="max-w-[20px]" />
         Remove from bookshelf
       </button>
