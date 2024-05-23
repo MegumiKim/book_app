@@ -10,6 +10,7 @@ import { GoogleBookDataType } from "../../types.ts";
 import Recommendations from "./Recommendations.tsx";
 import { BASE_URL } from "../../utils/constant.ts";
 import placeHolderImage from "../../assets/man.jpg";
+import BookSearchLinkBtn from "../Home/BookSearchLinkBtn.tsx";
 
 export interface reviewDataType {
   google_book_id: string | undefined;
@@ -50,7 +51,7 @@ const SingleBook = () => {
 
       setReviews(data.data);
     } catch (error) {
-      console.log(error);
+      error;
     }
   };
 
@@ -93,7 +94,14 @@ const SingleBook = () => {
                 <ul className="author-list justify-center md:justify-start">
                   {book.authors?.map((author: string) => (
                     <li key={author} className="">
-                      {author}
+                      <BookSearchLinkBtn
+                        URL={
+                          import.meta.env.VITE_REACT_APP_GOOGLE_BOOK_API +
+                          `volumes?q=+author:${author}`
+                        }
+                      >
+                        {author}
+                      </BookSearchLinkBtn>
                     </li>
                   ))}
                 </ul>
@@ -102,7 +110,18 @@ const SingleBook = () => {
                     <RatingStars rating={book.averageRating} />
                   </div>
                 )}
-                {book.categories && <p className="">{book.categories[0]}</p>}
+                {book.categories && (
+                  <p className="search-link text-blue-300">
+                    <BookSearchLinkBtn
+                      URL={
+                        import.meta.env.VITE_REACT_APP_GOOGLE_BOOK_API +
+                        `volumes?q=+subject:${book?.categories?.[0]}`
+                      }
+                    >
+                      {book?.categories?.[0]}
+                    </BookSearchLinkBtn>
+                  </p>
+                )}
 
                 <div className="md:flex md:divide-x-2 divide-gray-500 gap-2">
                   <p>{book.publishedDate ? book.publishedDate : "N/A"}</p>

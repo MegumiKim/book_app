@@ -38,9 +38,9 @@ function SearchResults() {
       {searchResult?.results?.length > 0 ? (
         <div className="flex flex-col">
           <div className="bookshelf">
-            {searchResult.results.map((item) => (
+            {searchResult.results.map((item, i) => (
               <BookCard
-                key={item.id}
+                key={i}
                 title={item.volumeInfo.title}
                 author={item.volumeInfo.authors?.[0]}
                 genre={item.volumeInfo.categories?.[0]}

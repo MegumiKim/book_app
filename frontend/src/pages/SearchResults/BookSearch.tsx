@@ -119,7 +119,7 @@ const BookSearch = () => {
     <section className="items-center flex flex-col text-slate-200 overflow-visible sm:min-w-[500px]">
       <form
         onSubmit={(e) => searchBook(e)}
-        className="flex flex-col gap-3 bg-slate-800 p-4 sm:p-6 bg-opacity-80 rounded-lg w-full overflow-visible"
+        className="flex flex-col gap-3 p-4 sm:p-6 bg-opacity-80 rounded-lg w-full overflow-visible search-input"
       >
         <div className="flex justify-between">
           <p className="text-red-400 font-bold">{error}</p>{" "}

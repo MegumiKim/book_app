@@ -10,10 +10,11 @@ type SearchLinkProps = {
 
 const BookSearchLinkBtn: React.FC<SearchLinkProps> = ({ children, URL }) => {
   const { setSearchResult } = useContext(SearchResultContext);
-
   const navigate = useNavigate();
 
   async function handleClick() {
+    console.log("click");
+
     try {
       const result = await fetch(URL);
       const json = await result.json();
@@ -26,16 +27,21 @@ const BookSearchLinkBtn: React.FC<SearchLinkProps> = ({ children, URL }) => {
         }
 
         setSearchResult({ url: URL, results: json.items });
+        navigate("/search");
       }
     } catch (error) {
       console.error(error);
       // setError("Failed to Fetch Data");
-    } finally {
-      navigate("/search");
     }
   }
-
-  return <button onClick={handleClick}>{children}</button>;
+  return (
+    <button
+      onClick={handleClick}
+      className="w-full h-full underline text-nowrap"
+    >
+      {children}
+    </button>
+  );
 };
 
 export default BookSearchLinkBtn;

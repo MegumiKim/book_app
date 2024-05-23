@@ -61,9 +61,10 @@ const MyShelf = () => {
       <h2 className="text-lg text-orange-400 text-end ">
         Welcome Back {user.name}!
       </h2>
-      <h1 className=" text-white font-bold mb-10">
-        My Shelf ({data?.data.length}){" "}
-      </h1>
+      <div className="font-bold mb-10 text-center">
+        <h1 className=" text-white ">My Shelf</h1>
+        <p>{`- ${data?.data.length} -` || ""}</p>
+      </div>
 
       {loading && (
         <div className="w-full justify-center flex flex-col gap-4 mb-10">

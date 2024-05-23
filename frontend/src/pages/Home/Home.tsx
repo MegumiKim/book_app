@@ -10,7 +10,7 @@ const Home = () => {
   const [isModalOpen, setModalOpen] = useState(false);
 
   return (
-    <main className="" id="home">
+    <main id="home">
       <div className="background" id="background"></div>
       <div className="flex flex-col gap-10 align-middle mt-10 md:mt-0">
         <RandomQuote />
